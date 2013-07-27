@@ -24,8 +24,8 @@ then
     exit 1
     fi
 
-JAR1="$FUSEKI_HOME/fuseki/fuseki-server.jar"
-JAR2="$FUSEKI_HOME/fuseki/jena-fuseki-*-server.jar"
+JAR1="$FUSEKI_HOME/fuseki-server.jar"
+JAR2="$FUSEKI_HOME/jena-fuseki-*-server.jar"
 JAR=""
 
 for J in "$JAR1" "$JAR2"

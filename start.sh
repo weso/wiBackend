@@ -1,5 +1,6 @@
 #vars
 GIT_DIR="computex"
+FUSEKI_DIR="fuseki"
 GIT_REPO="https://github.com/weso/computex.git"
 PLAY_DIR="play" 
 MVN_DIR="mvn" 
@@ -14,8 +15,10 @@ else
 fi
 
 #Starts Fuseki:
-fuseki/fuseki-server --config=fuseki/ConfigFile.ttl --pages=fuseki/pages
+cd ${FUSEKI_DIR}
+./fuseki-server --config=ConfigFile.ttl
 
+cd ..
 #Starts play [Uncomment]
 #cd ${PLAY_DIR}
 #play run
