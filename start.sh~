@@ -6,15 +6,15 @@ MVN_DIR="mvn"
 
 #Fetch the latest computex repository:
 if [[ -d "${GIT_DIR}" && ! -L "${GIT_DIR}" ]] ; then
+	git clone ${GIT_REPO}
+else
 	cd ${GIT_DIR}
 	git pull origin master
 	cd ..
-else
-	git clone ${GIT_REPO}
 fi
 
 #Starts Fuseki:
-fuseki/fuseki-server --config=fuseki/ConfigFile.ttl --pages=fuseki/pages
+fuseki/fuseki-server --config=fuseki/ConfigFile.ttl
 
 #Starts play [Uncomment]
 #cd ${PLAY_DIR}
