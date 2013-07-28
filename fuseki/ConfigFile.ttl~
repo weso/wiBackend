@@ -21,7 +21,7 @@ tdb:GraphTDB    rdfs:subClassOf  ja:Model .
     fuseki:name                     "computex" ;   
     fuseki:serviceQuery             "query" ;    
     fuseki:serviceReadGraphStore    "data" ;     
-    fuseki:dataset           	    <#computex> ;
+    fuseki:dataset           <#computex> ;
     .
 
 <#computex>    rdf:type ja:RDFDataset ;

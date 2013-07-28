@@ -1,0 +1,8 @@
+#Backup Files
+*~ 
+
+#Junk File
+*.DS_Store
+
+#Computex is not part of wiBackend. Therefore:
+computex/

@@ -14,14 +14,13 @@ else
 	git clone ${GIT_REPO}
 fi
 
+#Set FUSEKI_HOME Environment Variable
+export FUSEKI_HOME="${FUSEKI_HOME:-${FUSEKI_DIR}}"
 #Starts Fuseki:
-cd ${FUSEKI_DIR}
-./fuseki-server --config=ConfigFile.ttl
+${FUSEKI_DIR}/fuseki-server --config=${FUSEKI_DIR}/ConfigFile.ttl
 
-cd ..
-#Starts play [Uncomment]
-#cd ${PLAY_DIR}
-#play run
+#Starts Play Project [Uncomment]
+#(cd ${PLAY_DIR; play run)
 
-#Start Spring [Uncomment]
+#Start Maven Project [Uncomment]
 #mvn tomcat run -f ${MVN_DIR}/pom.xml
