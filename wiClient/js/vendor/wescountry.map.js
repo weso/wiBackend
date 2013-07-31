@@ -31,7 +31,7 @@ var wesCountryMap = function()
 	    },
 	    onRegionOut: function(e, code) {
 		    wesCountryMap.highlightOutCountryText(code);
-	    },
+	    },   
 	    selectedRegions : [ ],
 	    regionStyle: regionStyle
 	};
@@ -206,8 +206,9 @@ var wesCountryMap = function()
 	
 	// Ready
 	
-	$(function()
+	this.initMap = function(onclick)
 	{
+		options.onRegionClick = onclick;
     	$('#world-map').vectorMap(options);
       
     	$('#world-map path').each(function (key, value) 
@@ -217,7 +218,7 @@ var wesCountryMap = function()
     						});
     						
     	wesCountryMap.init();
-    });
+    };
 	
 	return this;
 }();
