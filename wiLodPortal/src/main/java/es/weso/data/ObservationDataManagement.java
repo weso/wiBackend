@@ -41,4 +41,24 @@ public interface ObservationDataManagement {
 	 * @return The {@link Observation} that matches with the URI slice
 	 */
 	public Observation getObservationByURI(String uri);
+
+	/**
+	 * Gets the country codes of all the countries inside the region of the
+	 * specified country that have the given indicator
+	 * 
+	 * @param code
+	 * @param indicator
+	 * @return
+	 */
+	public Collection<String> getCountriesInRegion(String code, String indicator);
+	
+	/**
+	 * Gets the country codes of all the countries outside the region of the
+	 * specified country that have the given indicator
+	 * 
+	 * @param code
+	 * @param indicator
+	 * @return
+	 */
+	public Collection<String> getCountriesOutsideRegion(String code, String indicator);
 }

@@ -1,5 +1,6 @@
 package es.weso.business.impl;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -79,6 +80,26 @@ public class ObservationManager implements ObservationManagement {
 
 	public Observation getObservationByURI(String uri) {
 		return observationDataManager.getObservationByURI(uri);
+	}
+
+	@Override
+	public Collection<Observation> getBarchart(String code, Integer year, String indicator) {
+		Collection<String> countries = new ArrayDeque<String>(5);
+		countries.add(code);
+		Collection<String> countriesInRegion = observationDataManager.getCountriesInRegion(code, indicator);
+		Collection<String> countriesOutsideRegion = observationDataManager.getCountriesOutsideRegion(code, indicator);
+		countries.add(countriesInRegion.iterator().next());
+		countries.add(countriesOutsideRegion.iterator().next());
+		String worst = "";
+		for (String str : countriesInRegion) {
+			worst = str;
+		}
+		countries.add(worst);
+		for (String str : countriesOutsideRegion) {
+			worst = str;
+		}
+		countries.add(worst);
+		return getAllObservationsByCountries(countries, Collections.singleton(indicator), Collections.singleton(year));
 	}
 
 }

@@ -3,8 +3,11 @@ package es.weso.data.impl;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 
+import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 
 import es.weso.data.ObservationDataManagement;
@@ -39,6 +42,33 @@ public class ObservationDataManager extends AbstractDataManager implements
 	public Observation getObservationByURI(String uri) {
 		return querySolutionToObservation(client.executeQuery(
 				Conf.getQuery("observation", uri)).next());
+	}
+
+	@Override
+	public Collection<String> getCountriesInRegion(String code, String indicator) {
+		@SuppressWarnings("unchecked")
+		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters("otherCountriesInRegion",
+				Collections.singleton(code), Collections.singleton(indicator)));
+		Collection<String> codes = new LinkedList<String>();
+		while(rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			codes.add(qs.getLiteral("otherCode").getString());
+		}
+		return codes;
+	}
+
+	@Override
+	public Collection<String> getCountriesOutsideRegion(String code,
+			String indicator) {
+		@SuppressWarnings("unchecked")
+		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters("otherCountriesOutsideRegion",
+				Collections.singleton(code), Collections.singleton(indicator)));
+		Collection<String> codes = new LinkedList<String>();
+		while(rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			codes.add(qs.getLiteral("otherCode").getString());
+		}
+		return codes;
 	}
 
 }

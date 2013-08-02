@@ -8,7 +8,8 @@ MVN_DIR="mvn"
 #Fetch the latest computex repository:
 if [[ -d "${GIT_DIR}" && ! -L "${GIT_DIR}" ]] ; then
 	cd ${GIT_DIR}
-	git pull origin master
+#	Uncomment the line below as soon as the 100 countries example is integrated in computex
+#	git pull origin master
 	cd ..
 else
 	git clone ${GIT_REPO}

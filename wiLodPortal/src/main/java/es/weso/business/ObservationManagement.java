@@ -132,4 +132,16 @@ public interface ObservationManagement {
 	 * @return The {@link Observation} that matches with the URI slice
 	 */
 	public Observation getObservationByURI(String uri);
+
+	/**
+	 * Gets the {@link Observation}s to display in a barchart (the one of the
+	 * country, the lowest, the highest, the lowest in the region and the
+	 * highest in the region)
+	 * 
+	 * @param code
+	 * @param year
+	 * @param indicator
+	 * @return
+	 */
+	public Collection<Observation> getBarchart(String code, Integer year, String indicator);
 }

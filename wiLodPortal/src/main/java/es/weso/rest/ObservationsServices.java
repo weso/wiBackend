@@ -34,7 +34,7 @@ public class ObservationsServices {
 		ObservationsServices.observationManager = observationManager;
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String getObservations(ModelMap model) {
 		model.addAttribute("observations", new ItemCollection<Observation>(
 				observationManager.getAllObservations()));
@@ -73,6 +73,14 @@ public class ObservationsServices {
 								parseCountryCodes(country),
 								parseObservations(observation),
 								parseYears(year))));
+		return "observations";
+	}
+	
+	@RequestMapping(value = "/barchart/{code}/{year}/{indicator}", method = RequestMethod.GET)
+	public String getBarchart(@PathVariable String code,
+			@PathVariable String year, @PathVariable String indicator,
+			ModelMap model) {
+		model.addAttribute("observations", observationManager.getBarchart(code, Integer.parseInt(year), indicator));
 		return "observations";
 	}
 

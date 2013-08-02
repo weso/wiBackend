@@ -136,7 +136,7 @@
 				<configuration>
 					<mode>war</mode>
 					<url>http://localhost:8080/manager/text</url>
-					<server>localhost</server>
+					<server>TomcatServer</server>
 					<path>/${project.build.finalName}</path>
 				</configuration>
 			</plugin>
