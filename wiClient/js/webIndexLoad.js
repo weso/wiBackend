@@ -1,7 +1,9 @@
+var URL_BASE = "http://localhost:8080/wiLodPortal";
+
 $(function(){
 	$.ajax({
 	  type: "GET",
-	  url: "http://156.35.82.101:9006/wiLodPortal/observations/ESP",
+	  url: URL_BASE + "/observations/ESP",
 	  dataType: "json",
 	  contentType: "application/javascript; charset=UTF-8"
 	}).done(function ( data ) {
@@ -44,6 +46,6 @@ function processCountryData(data) {
 	new IndicatorList(accordion, [ indicatorList ], autocompleteTags);
 	
 	new YearSelector("year-selector", minYear, maxYear, maxYear);
-	setBasicYearSelector("year-select", yeminYear, maxYearars)
+	setBasicYearSelector("year-select", minYear, maxYear)
 }
 

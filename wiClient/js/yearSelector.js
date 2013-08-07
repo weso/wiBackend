@@ -1,4 +1,4 @@
-function setBasicYearSelector(container, yeminYear, maxYearars) {
+function setBasicYearSelector(container, minYear, maxYear) {
 	var yearSelector = document.getElementById(container);
 	
 	for (var i = minYear; i <= maxYear; i++)

@@ -85,7 +85,7 @@ function IndicatorList(accordion, indicatorList, autocompleteTags)
 					a.onclick = function() { setAsActive(this, depth + 1); };
 				}
 			}
-		console.log(section)	
+			
 			return section;
 		}
 	}
