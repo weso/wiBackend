@@ -1,0 +1,578 @@
+2013-08-07 11:08:49  INFO context.ContextLoader - Root WebApplicationContext: initialization started
+2013-08-07 11:08:49  INFO support.AbstractApplicationContext - Refreshing Root WebApplicationContext: startup date [Wed Aug 07 11:08:49 CEST 2013]; root of context hierarchy
+2013-08-07 11:08:49  INFO xml.XmlBeanDefinitionReader - Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/root-context.xml]
+2013-08-07 11:08:51  INFO support.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2cae3600: defining beans [countryGroupServices,countryServices,observationServices,observationsServices,namedRegion,countryGroupManager,countryManager,observationManager,countryDataManager,countryGroupDataManager,observationDataManager]; root of factory hierarchy
+2013-08-07 11:08:51  WARN xmemcached.XMemcachedClient - XMemcachedClient use Text protocol
+2013-08-07 11:08:52  INFO impl.SelectorManager - Creating 4 reactors...
+2013-08-07 11:08:52  WARN impl.AbstractController - The Controller started at localhost/127.0.0.1:0 ...
+2013-08-07 11:08:52 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:08:52 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:08:52 ERROR xmemcached.XMemcachedClient - connect to 127.0.0.1:11211 error
+java.util.concurrent.ExecutionException: java.net.ConnectException: Connection refused
+	at com.google.code.yanf4j.core.impl.FutureImpl.get(FutureImpl.java:145)
+	at net.rubyeye.xmemcached.XMemcachedClient.connect(XMemcachedClient.java:555)
+	at net.rubyeye.xmemcached.XMemcachedClient.<init>(XMemcachedClient.java:842)
+	at net.rubyeye.xmemcached.XMemcachedClientBuilder.build(XMemcachedClientBuilder.java:340)
+	at es.weso.util.JenaMemcachedClient.createClient(JenaMemcachedClient.java:71)
+	at es.weso.util.JenaMemcachedClient.<init>(JenaMemcachedClient.java:49)
+	at es.weso.util.JenaMemcachedClient.create(JenaMemcachedClient.java:42)
+	at es.weso.data.impl.CountryGroupDataManager.<init>(CountryGroupDataManager.java:23)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:148)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1000)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:953)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:487)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:626)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:389)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:294)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:112)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:901)
+	at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:877)
+	at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:633)
+	at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:976)
+	at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:1653)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.net.ConnectException: Connection refused
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:692)
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:397)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:08:52 ERROR xmemcached.XMemcachedClient - Connect to 127.0.0.1:11211 fail
+java.util.concurrent.ExecutionException: java.net.ConnectException: Connection refused
+	at com.google.code.yanf4j.core.impl.FutureImpl.get(FutureImpl.java:145)
+	at net.rubyeye.xmemcached.XMemcachedClient.connect(XMemcachedClient.java:555)
+	at net.rubyeye.xmemcached.XMemcachedClient.<init>(XMemcachedClient.java:842)
+	at net.rubyeye.xmemcached.XMemcachedClientBuilder.build(XMemcachedClientBuilder.java:340)
+	at es.weso.util.JenaMemcachedClient.createClient(JenaMemcachedClient.java:71)
+	at es.weso.util.JenaMemcachedClient.<init>(JenaMemcachedClient.java:49)
+	at es.weso.util.JenaMemcachedClient.create(JenaMemcachedClient.java:42)
+	at es.weso.data.impl.CountryGroupDataManager.<init>(CountryGroupDataManager.java:23)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:148)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1000)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:953)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:487)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:626)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:389)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:294)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:112)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:901)
+	at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:877)
+	at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:633)
+	at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:976)
+	at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:1653)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.net.ConnectException: Connection refused
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:692)
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:397)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:08:52  INFO context.ContextLoader - Root WebApplicationContext: initialization completed in 3089 ms
+2013-08-07 11:08:52  INFO servlet.FrameworkServlet - FrameworkServlet 'appServlet': initialization started
+2013-08-07 11:08:52  INFO support.AbstractApplicationContext - Refreshing WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Aug 07 11:08:52 CEST 2013]; parent: Root WebApplicationContext
+2013-08-07 11:08:52  INFO xml.XmlBeanDefinitionReader - Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/appServlet/servlet-context.xml]
+2013-08-07 11:08:53  INFO support.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@59078d62: defining beans [countryGroupServices,countryServices,observationServices,observationsServices,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0,org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#0,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,org.springframework.web.servlet.view.InternalResourceViewResolver#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@2cae3600
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getCountryGroups(org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/regions],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getAllRegions(org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/regions/{name}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getCountriesFromRegion(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/organizations],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getAllOrganizations(org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/organizations/{name}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getCountriesFromOrganization(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/countries/{code}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryServices.getCountry(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/countries],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryServices.getAllCountries(org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observation/{uri}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationServices.getObservationByUri(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/{country}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/{country}/{year}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(java.lang.String,java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/{country}/{year}/{observation}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(java.lang.String,java.lang.String,java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:08:53  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(org.springframework.ui.ModelMap)
+2013-08-07 11:08:54  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 1 times
+2013-08-07 11:08:54 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:08:54 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:08:54 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:08:55  INFO handler.AbstractUrlHandlerMapping - Mapped URL path [/static/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+2013-08-07 11:08:55  INFO jaxb.Jaxb2Marshaller - Creating JAXBContext by scanning packages [es.weso.model]
+2013-08-07 11:08:56  INFO servlet.FrameworkServlet - FrameworkServlet 'appServlet': initialization completed in 3568 ms
+2013-08-07 11:08:56  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 2 times
+2013-08-07 11:08:56 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:08:56 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:08:56 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:00  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 3 times
+2013-08-07 11:09:00 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:09:00 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:00 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:06  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 4 times
+2013-08-07 11:09:06 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:09:06 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:06 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:14  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 5 times
+2013-08-07 11:09:14 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:14 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:14 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:09:24  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 6 times
+2013-08-07 11:09:24 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:24 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:24 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:09:36  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 7 times
+2013-08-07 11:09:36 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:09:36 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:36 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:50  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 8 times
+2013-08-07 11:09:50 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:09:50 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:50 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:09:55  INFO impl.AbstractController - Controller has been stopped.
+2013-08-07 11:09:55  INFO support.AbstractApplicationContext - Closing WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Aug 07 11:08:52 CEST 2013]; parent: Root WebApplicationContext
+2013-08-07 11:09:55  INFO support.DefaultSingletonBeanRegistry - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@59078d62: defining beans [countryGroupServices,countryServices,observationServices,observationsServices,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0,org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#0,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,org.springframework.web.servlet.view.InternalResourceViewResolver#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@2cae3600
+2013-08-07 11:09:55  INFO support.AbstractApplicationContext - Closing Root WebApplicationContext: startup date [Wed Aug 07 11:08:49 CEST 2013]; root of context hierarchy
+2013-08-07 11:09:55  INFO support.DefaultSingletonBeanRegistry - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2cae3600: defining beans [countryGroupServices,countryServices,observationServices,observationsServices,namedRegion,countryGroupManager,countryManager,observationManager,countryDataManager,countryGroupDataManager,observationDataManager]; root of factory hierarchy
+2013-08-07 11:10:17  INFO context.ContextLoader - Root WebApplicationContext: initialization started
+2013-08-07 11:10:18  INFO support.AbstractApplicationContext - Refreshing Root WebApplicationContext: startup date [Wed Aug 07 11:10:18 CEST 2013]; root of context hierarchy
+2013-08-07 11:10:18  INFO xml.XmlBeanDefinitionReader - Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/root-context.xml]
+2013-08-07 11:10:20  INFO support.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@715ef489: defining beans [countryGroupServices,countryServices,observationServices,observationsServices,namedRegion,countryGroupManager,countryManager,observationManager,countryDataManager,countryGroupDataManager,observationDataManager]; root of factory hierarchy
+2013-08-07 11:10:21  WARN xmemcached.XMemcachedClient - XMemcachedClient use Text protocol
+2013-08-07 11:10:21  INFO impl.SelectorManager - Creating 4 reactors...
+2013-08-07 11:10:21  WARN impl.AbstractController - The Controller started at localhost/127.0.0.1:0 ...
+2013-08-07 11:10:21 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:21 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:21 ERROR xmemcached.XMemcachedClient - connect to 127.0.0.1:11211 error
+java.util.concurrent.ExecutionException: java.net.ConnectException: Connection refused
+	at com.google.code.yanf4j.core.impl.FutureImpl.get(FutureImpl.java:145)
+	at net.rubyeye.xmemcached.XMemcachedClient.connect(XMemcachedClient.java:555)
+	at net.rubyeye.xmemcached.XMemcachedClient.<init>(XMemcachedClient.java:842)
+	at net.rubyeye.xmemcached.XMemcachedClientBuilder.build(XMemcachedClientBuilder.java:340)
+	at es.weso.util.JenaMemcachedClient.createClient(JenaMemcachedClient.java:71)
+	at es.weso.util.JenaMemcachedClient.<init>(JenaMemcachedClient.java:49)
+	at es.weso.util.JenaMemcachedClient.create(JenaMemcachedClient.java:42)
+	at es.weso.data.impl.CountryGroupDataManager.<init>(CountryGroupDataManager.java:23)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:148)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1000)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:953)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:487)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:626)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:389)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:294)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:112)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:901)
+	at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:877)
+	at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:633)
+	at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:976)
+	at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:1653)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.net.ConnectException: Connection refused
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:692)
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:397)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:21 ERROR xmemcached.XMemcachedClient - Connect to 127.0.0.1:11211 fail
+java.util.concurrent.ExecutionException: java.net.ConnectException: Connection refused
+	at com.google.code.yanf4j.core.impl.FutureImpl.get(FutureImpl.java:145)
+	at net.rubyeye.xmemcached.XMemcachedClient.connect(XMemcachedClient.java:555)
+	at net.rubyeye.xmemcached.XMemcachedClient.<init>(XMemcachedClient.java:842)
+	at net.rubyeye.xmemcached.XMemcachedClientBuilder.build(XMemcachedClientBuilder.java:340)
+	at es.weso.util.JenaMemcachedClient.createClient(JenaMemcachedClient.java:71)
+	at es.weso.util.JenaMemcachedClient.<init>(JenaMemcachedClient.java:49)
+	at es.weso.util.JenaMemcachedClient.create(JenaMemcachedClient.java:42)
+	at es.weso.data.impl.CountryGroupDataManager.<init>(CountryGroupDataManager.java:23)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:148)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1000)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:953)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:487)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:626)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:389)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:294)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:112)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:901)
+	at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:877)
+	at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:633)
+	at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:976)
+	at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:1653)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.net.ConnectException: Connection refused
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:692)
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:397)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:21  INFO context.ContextLoader - Root WebApplicationContext: initialization completed in 4108 ms
+2013-08-07 11:10:22  INFO servlet.FrameworkServlet - FrameworkServlet 'appServlet': initialization started
+2013-08-07 11:10:22  INFO support.AbstractApplicationContext - Refreshing WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Aug 07 11:10:22 CEST 2013]; parent: Root WebApplicationContext
+2013-08-07 11:10:22  INFO xml.XmlBeanDefinitionReader - Loading XML bean definitions from ServletContext resource [/WEB-INF/spring/appServlet/servlet-context.xml]
+2013-08-07 11:10:23  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 1 times
+2013-08-07 11:10:23 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:10:23 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:23 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:24  INFO support.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@207a010b: defining beans [countryGroupServices,countryServices,observationServices,observationsServices,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0,org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#0,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,org.springframework.web.servlet.view.InternalResourceViewResolver#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@715ef489
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getCountryGroups(org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/regions],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getAllRegions(org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/regions/{name}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getCountriesFromRegion(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/organizations],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getAllOrganizations(org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/groups/organizations/{name}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryGroupServices.getCountriesFromOrganization(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/countries/{code}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryServices.getCountry(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/countries],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.CountryServices.getAllCountries(org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observation/{uri}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationServices.getObservationByUri(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/{country}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/{country}/{year}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(java.lang.String,java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/{country}/{year}/{observation}],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(java.lang.String,java.lang.String,java.lang.String,org.springframework.ui.ModelMap)
+2013-08-07 11:10:24  INFO handler.AbstractHandlerMethodMapping - Mapped "{[/observations/],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String es.weso.rest.ObservationsServices.getObservations(org.springframework.ui.ModelMap)
+2013-08-07 11:10:25  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 2 times
+2013-08-07 11:10:25 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:10:25 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:25 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:29  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 3 times
+2013-08-07 11:10:29 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:29 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:29 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:10:31  INFO handler.AbstractUrlHandlerMapping - Mapped URL path [/static/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+2013-08-07 11:10:31  INFO jaxb.Jaxb2Marshaller - Creating JAXBContext by scanning packages [es.weso.model]
+2013-08-07 11:10:33  INFO servlet.FrameworkServlet - FrameworkServlet 'appServlet': initialization completed in 11194 ms
+2013-08-07 11:10:35  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 4 times
+2013-08-07 11:10:35 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:10:35 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:35 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:43  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 5 times
+2013-08-07 11:10:43 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:10:43 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:43 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:53  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 6 times
+2013-08-07 11:10:53 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:10:53 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:10:53 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:11:05  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 7 times
+2013-08-07 11:11:05 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:11:05 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:11:05 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:11:19  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 8 times
+2013-08-07 11:11:19 ERROR impl.MemcachedConnector$SessionMonitor - Reconnect to 127.0.0.1:11211 fail
+2013-08-07 11:11:19 ERROR impl.MemcachedConnector$InnerControllerStateListener - Exception occured in controller
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:11:19 ERROR impl.Reactor - Reactor dispatch events error
+java.io.IOException: Connect to 127.0.0.1:11211 fail,Connection refused
+	at net.rubyeye.xmemcached.impl.MemcachedConnector.onConnect(MemcachedConnector.java:416)
+	at com.google.code.yanf4j.nio.impl.Reactor.dispatchEvent(Reactor.java:302)
+	at com.google.code.yanf4j.nio.impl.Reactor.run(Reactor.java:141)
+2013-08-07 11:11:35  WARN impl.MemcachedConnector$SessionMonitor - Trying to connect to 127.0.0.1:11211 for 9 times
+2013-08-07 11:11:35  WARN impl.MemcachedConnector - Add a session: 127.0.0.1:11211
+2013-08-07 11:13:36  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:14:03  INFO util.JenaMemcachedClient - Trying to get Query1301847733 from cache
+2013-08-07 11:14:03  INFO util.JenaMemcachedClient - Query1301847733 was not stored in the cache, querying SPARQL endpoint
+2013-08-07 11:14:25  INFO util.JenaMemcachedClient - Trying to get Query1301847733 from cache
+2013-08-07 11:30:21  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ES/2011/C] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:30:27  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ES/2011/C.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:30:51  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ES/2009/C.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:31:11  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ES/2011/B.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:32:37  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ESP/2011/B.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:32:45  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ESP/2009/B.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:33:19  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ESP/2009/C.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:35:17  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ESP/2009/C.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:35:19  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ESP/2009/C.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:35:21  INFO util.JenaMemcachedClient - Trying to get Query1301847733 from cache
+2013-08-07 11:35:48  INFO util.JenaMemcachedClient - Trying to get Query1383105513 from cache
+2013-08-07 11:35:48  INFO util.JenaMemcachedClient - Query1383105513 was not stored in the cache, querying SPARQL endpoint
+2013-08-07 11:35:54  INFO util.JenaMemcachedClient - Trying to get Query1668241416 from cache
+2013-08-07 11:35:54  INFO util.JenaMemcachedClient - Query1668241416 was not stored in the cache, querying SPARQL endpoint
+2013-08-07 11:36:04  INFO util.JenaMemcachedClient - Trying to get Query374839744 from cache
+2013-08-07 11:36:04  INFO util.JenaMemcachedClient - Query374839744 was not stored in the cache, querying SPARQL endpoint
+2013-08-07 11:36:11  INFO util.JenaMemcachedClient - Trying to get Query1211634687 from cache
+2013-08-07 11:36:11  INFO util.JenaMemcachedClient - Query1211634687 was not stored in the cache, querying SPARQL endpoint
+2013-08-07 11:36:16  INFO util.JenaMemcachedClient - Trying to get Query1668241416 from cache
+2013-08-07 11:36:20  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ESP/2009/C.json] in DispatcherServlet with name 'appServlet'
+2013-08-07 11:37:47  WARN servlet.DispatcherServlet - No mapping found for HTTP request with URI [/wiLodPortal/observations/barchart/ESP/2009/A.json] in DispatcherServlet with name 'appServlet'
