@@ -7,3 +7,7 @@
 #Computex is not part of wiBackend. Therefore:
 computex/
 wiLodPortal/target/
+
+start_OS_X.sh
+
+wiLodPortal/logs/webindex-pubby-log.log

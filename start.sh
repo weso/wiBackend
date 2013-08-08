@@ -11,8 +11,8 @@ if [[ -d "${GIT_DIR}" && ! -L "${GIT_DIR}" ]] ; then
 #	Uncomment the line below as soon as the 100 countries example is integrated in computex
 #	git pull origin master
 	cd ..
-else
-	git clone ${GIT_REPO}
+#else
+#	git clone ${GIT_REPO}
 fi
 
 #Set FUSEKI_HOME Environment Variable
