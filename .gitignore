@@ -11,3 +11,5 @@ wiLodPortal/target/
 start_OS_X.sh
 
 wiLodPortal/logs/webindex-pubby-log.log
+
+start_OS_X.command
