@@ -51,7 +51,9 @@ public abstract class AbstractDataManager {
 	protected Observation querySolutionToObservation(QuerySolution qs) {
 		Observation obs = new Observation();
 		obs.setUri(getURI(qs, "obs"));
-		obs.setCountry(querySolutionToNamedUriCountry(qs));
+		obs.setCountryCode(getString(qs, "countryCode"));
+		obs.setCountryUri(getURI(qs, "country"));
+		obs.setCountryName(getString(qs, "countryLabel"));
 		obs.setIndicator(querySolutionToNamedUriIndicator(qs));
 		obs.setName(getString(qs, "label"));
 		obs.setValue(getDouble(qs, "value"));

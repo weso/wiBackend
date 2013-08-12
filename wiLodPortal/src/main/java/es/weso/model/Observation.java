@@ -2,7 +2,6 @@ package es.weso.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 /**
  * Representation of an observation for the web index project
  * 
@@ -13,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Observation {
 
-	private String name, uri;
-	private NamedUri country, indicator;
+	private String name, uri, countryName, countryUri, countryCode;
+	private NamedUri indicator;
 	private double value;
 	private int year, trend;
 	private Rank rank;
@@ -35,12 +34,28 @@ public class Observation {
 		this.uri = uri;
 	}
 
-	public NamedUri getCountry() {
-		return country;
+	public String getCountryName() {
+		return countryName;
 	}
 
-	public void setCountry(NamedUri country) {
-		this.country = country;
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public String getCountryUri() {
+		return countryUri;
+	}
+
+	public void setCountryUri(String countryUri) {
+		this.countryUri = countryUri;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public NamedUri getIndicator() {
