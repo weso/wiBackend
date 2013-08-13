@@ -47,10 +47,11 @@ public class ObservationDataManager extends AbstractDataManager implements
 	@Override
 	public Collection<String> getCountriesInRegion(String code, String indicator) {
 		@SuppressWarnings("unchecked")
-		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters("otherCountriesInRegion",
-				Collections.singleton(code), Collections.singleton(indicator)));
+		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters(
+				"otherCountriesInRegion", Collections.singleton(code),
+				Collections.singleton(indicator)));
 		Collection<String> codes = new LinkedList<String>();
-		while(rs.hasNext()) {
+		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
 			codes.add(qs.getLiteral("otherCode").getString());
 		}
@@ -61,14 +62,31 @@ public class ObservationDataManager extends AbstractDataManager implements
 	public Collection<String> getCountriesOutsideRegion(String code,
 			String indicator) {
 		@SuppressWarnings("unchecked")
-		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters("otherCountriesOutsideRegion",
-				Collections.singleton(code), Collections.singleton(indicator)));
+		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters(
+				"otherCountriesOutsideRegion", Collections.singleton(code),
+				Collections.singleton(indicator)));
 		Collection<String> codes = new LinkedList<String>();
-		while(rs.hasNext()) {
+		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
 			codes.add(qs.getLiteral("otherCode").getString());
 		}
 		return codes;
+	}
+
+	@Override
+	public Collection<Observation> getRanking(String indicator, Integer year) {
+		@SuppressWarnings("unchecked")
+		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters("ranking",
+				Collections.singleton(indicator),
+				Collections.singleton(year.toString())));
+		int i = 1;
+		Collection<Observation> observations = new HashSet<Observation>();
+		while (rs.hasNext()) {
+			Observation obs = querySolutionToObservation(rs.next());
+			obs.setRank(i++);
+			observations.add(obs);
+		}
+		return observations;
 	}
 
 }

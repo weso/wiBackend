@@ -13,7 +13,6 @@ import es.weso.model.Country;
 import es.weso.model.CountryGroup;
 import es.weso.model.NamedUri;
 import es.weso.model.Observation;
-import es.weso.model.Rank;
 import es.weso.model.ValuedNamedUri;
 import es.weso.util.Conf;
 import es.weso.util.JenaMemcachedClient;
@@ -58,9 +57,6 @@ public abstract class AbstractDataManager {
 		obs.setName(getString(qs, "label"));
 		obs.setValue(getDouble(qs, "value"));
 		obs.setYear(getInt(qs, "year"));
-		Rank rank = new Rank();
-		// TODO Calcular rank y tendencia
-		obs.setRank(rank);
 		return obs;
 	}
 

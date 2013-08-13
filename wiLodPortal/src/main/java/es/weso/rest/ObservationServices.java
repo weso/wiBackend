@@ -27,7 +27,39 @@ public class ObservationServices {
 
 	@RequestMapping(value = "/{uri}", method = RequestMethod.GET)
 	public String getObservationByUri(@PathVariable String uri, ModelMap model) {
-		model.addAttribute("observations", observationManager.getObservationByURI(uri));
+		model.addAttribute("observation",
+				observationManager.getObservationByURI(uri));
+		return "observation";
+	}
+
+	@RequestMapping(value = "/{country}/{year}/{indicator}", method = RequestMethod.GET)
+	public String getObservations(@PathVariable String country,
+			@PathVariable String year, @PathVariable String indicator,
+			ModelMap model) {
+		model.addAttribute("ranking",
+				observationManager.getRanking(indicator, Integer.parseInt(year)));
+		model.addAttribute("history",
+				observationManager.getHistory(country, indicator));
+		model.addAttribute("observations", observationManager.getBarchart(
+				country, Integer.parseInt(year), indicator));
+		try {
+			model.addAttribute(
+					"previousObservations",
+					observationManager.getBarchart(country,
+							Integer.parseInt(year) - 1, indicator));
+		} catch (IllegalArgumentException iae) {
+			model.addAttribute("previousObservations",
+					"There are no previous observations");
+		}
+		try {
+			model.addAttribute(
+					"followingObservations",
+					observationManager.getBarchart(country,
+							Integer.parseInt(year) + 1, indicator));
+		} catch (IllegalArgumentException iae) {
+			model.addAttribute("followingObservations",
+					"There are no following observations");
+		}
 		return "observations";
 	}
 }
