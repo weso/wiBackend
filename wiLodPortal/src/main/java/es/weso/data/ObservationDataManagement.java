@@ -61,4 +61,12 @@ public interface ObservationDataManagement {
 	 * @return
 	 */
 	public Collection<String> getCountriesOutsideRegion(String code, String indicator);
+	
+	/**
+	 * Gets the ranking of an indicator for a specific year
+	 * @param indicator
+	 * @param year
+	 * @return
+	 */
+	public Collection<Observation> getRanking(String indicator, Integer year);
 }

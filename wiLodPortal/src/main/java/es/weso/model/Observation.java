@@ -15,8 +15,8 @@ public class Observation {
 	private String name, uri, countryName, countryUri, countryCode;
 	private NamedUri indicator;
 	private double value;
-	private int year, trend;
-	private Rank rank;
+	private int year;
+	private int rank;
 
 	public String getName() {
 		return name;
@@ -82,19 +82,11 @@ public class Observation {
 		this.year = year;
 	}
 
-	public int getTrend() {
-		return trend;
-	}
-
-	public void setTrend(int trend) {
-		this.trend = trend;
-	}
-
-	public Rank getRank() {
+	public int getRank() {
 		return rank;
 	}
 
-	public void setRank(Rank rank) {
+	public void setRank(int rank) {
 		this.rank = rank;
 	}
 

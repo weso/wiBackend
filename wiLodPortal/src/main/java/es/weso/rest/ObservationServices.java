@@ -36,6 +36,10 @@ public class ObservationServices {
 	public String getObservations(@PathVariable String country,
 			@PathVariable String year, @PathVariable String indicator,
 			ModelMap model) {
+		model.addAttribute("ranking",
+				observationManager.getRanking(indicator, Integer.parseInt(year)));
+		model.addAttribute("history",
+				observationManager.getHistory(country, indicator));
 		model.addAttribute("observations", observationManager.getBarchart(
 				country, Integer.parseInt(year), indicator));
 		try {

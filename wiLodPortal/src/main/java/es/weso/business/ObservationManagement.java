@@ -144,4 +144,20 @@ public interface ObservationManagement {
 	 * @return
 	 */
 	public Collection<Observation> getBarchart(String code, Integer year, String indicator);
+
+	/**
+	 * Gets the ranking of an indicator in a specific year
+	 * @param country
+	 * @param parseInt
+	 * @return
+	 */
+	public Collection<Observation> getRanking(String indicator, int year);
+
+	/**
+	 * Gets the historic of a country for a specific indicator
+	 * @param country
+	 * @param indicator
+	 * @return
+	 */
+	public Collection<Observation> getHistory(String country, String indicator);
 }

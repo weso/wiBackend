@@ -83,11 +83,14 @@ public class ObservationManager implements ObservationManagement {
 	}
 
 	@Override
-	public Collection<Observation> getBarchart(String code, Integer year, String indicator) {
+	public Collection<Observation> getBarchart(String code, Integer year,
+			String indicator) {
 		Collection<String> countries = new ArrayDeque<String>(5);
 		countries.add(code);
-		Collection<String> countriesInRegion = observationDataManager.getCountriesInRegion(code, indicator);
-		Collection<String> countriesOutsideRegion = observationDataManager.getCountriesOutsideRegion(code, indicator);
+		Collection<String> countriesInRegion = observationDataManager
+				.getCountriesInRegion(code, indicator);
+		Collection<String> countriesOutsideRegion = observationDataManager
+				.getCountriesOutsideRegion(code, indicator);
 		countries.add(countriesInRegion.iterator().next());
 		countries.add(countriesOutsideRegion.iterator().next());
 		String worst = "";
@@ -99,7 +102,18 @@ public class ObservationManager implements ObservationManagement {
 			worst = str;
 		}
 		countries.add(worst);
-		return getAllObservationsByCountries(countries, Collections.singleton(indicator), Collections.singleton(year));
+		return getAllObservationsByCountries(countries,
+				Collections.singleton(indicator), Collections.singleton(year));
 	}
 
+	@Override
+	public Collection<Observation> getRanking(String indicator, int year) {
+		return observationDataManager.getRanking(indicator, year);
+	}
+
+	@Override
+	public Collection<Observation> getHistory(String country, String indicator) {
+		return getAllObservationsByCountries(Collections.singleton(country),
+				Collections.singleton(indicator));
+	}
 }
