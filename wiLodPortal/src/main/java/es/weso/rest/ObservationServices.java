@@ -1,5 +1,8 @@
 package es.weso.rest;
 
+import java.util.ArrayDeque;
+import java.util.Collection;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.weso.business.ObservationManagement;
+import es.weso.model.Observation;
+import es.weso.model.ObservationWithoutIndicator;
 
 /**
  * Web services to retrieve {@link es.weso.model.Observation observations}
@@ -36,30 +41,40 @@ public class ObservationServices {
 	public String getObservations(@PathVariable String country,
 			@PathVariable String year, @PathVariable String indicator,
 			ModelMap model) {
-		model.addAttribute("ranking",
-				observationManager.getRanking(indicator, Integer.parseInt(year)));
-		model.addAttribute("history",
-				observationManager.getHistory(country, indicator));
-		model.addAttribute("observations", observationManager.getBarchart(
-				country, Integer.parseInt(year), indicator));
+		model.addAttribute("ranking", deleteIndicator(observationManager
+				.getRanking(indicator, Integer.parseInt(year))));
+		model.addAttribute("history", deleteIndicator(observationManager
+				.getHistory(country, indicator)));
+		model.addAttribute(
+				"observations",
+				deleteIndicator(observationManager.getBarchart(country,
+						Integer.parseInt(year), indicator)));
 		try {
-			model.addAttribute(
-					"previousObservations",
-					observationManager.getBarchart(country,
-							Integer.parseInt(year) - 1, indicator));
+			model.addAttribute("previousObservations",
+					deleteIndicator(observationManager.getBarchart(country,
+							Integer.parseInt(year) - 1, indicator)));
 		} catch (IllegalArgumentException iae) {
 			model.addAttribute("previousObservations",
 					"There are no previous observations");
 		}
 		try {
-			model.addAttribute(
-					"followingObservations",
-					observationManager.getBarchart(country,
-							Integer.parseInt(year) + 1, indicator));
+			model.addAttribute("followingObservations",
+					deleteIndicator(observationManager.getBarchart(country,
+							Integer.parseInt(year) + 1, indicator)));
 		} catch (IllegalArgumentException iae) {
 			model.addAttribute("followingObservations",
 					"There are no following observations");
 		}
 		return "observations";
+	}
+
+	private Collection<ObservationWithoutIndicator> deleteIndicator(
+			Collection<Observation> observations) {
+		Collection<ObservationWithoutIndicator> obs = new ArrayDeque<ObservationWithoutIndicator>(
+				observations.size());
+		for (Observation o : observations) {
+			obs.add(new ObservationWithoutIndicator(o));
+		}
+		return obs;
 	}
 }

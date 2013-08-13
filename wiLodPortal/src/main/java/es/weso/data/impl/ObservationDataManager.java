@@ -45,10 +45,12 @@ public class ObservationDataManager extends AbstractDataManager implements
 	}
 
 	@Override
-	public Collection<String> getCountriesInRegion(String code, String indicator) {
+	public Collection<String> getCountriesInRegion(String code,
+			String indicator, Integer year) {
 		@SuppressWarnings("unchecked")
 		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters(
 				"otherCountriesInRegion", Collections.singleton(code),
+				Collections.singleton(year.toString()),
 				Collections.singleton(indicator)));
 		Collection<String> codes = new LinkedList<String>();
 		while (rs.hasNext()) {
@@ -60,10 +62,11 @@ public class ObservationDataManager extends AbstractDataManager implements
 
 	@Override
 	public Collection<String> getCountriesOutsideRegion(String code,
-			String indicator) {
+			String indicator, Integer year) {
 		@SuppressWarnings("unchecked")
 		ResultSet rs = client.executeQuery(Conf.getQueryWithFilters(
 				"otherCountriesOutsideRegion", Collections.singleton(code),
+				Collections.singleton(year.toString()),
 				Collections.singleton(indicator)));
 		Collection<String> codes = new LinkedList<String>();
 		while (rs.hasNext()) {

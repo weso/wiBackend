@@ -88,18 +88,18 @@ public class ObservationManager implements ObservationManagement {
 		Collection<String> countries = new ArrayDeque<String>(5);
 		countries.add(code);
 		Collection<String> countriesInRegion = observationDataManager
-				.getCountriesInRegion(code, indicator);
+				.getCountriesInRegion(code, indicator, year);
 		Collection<String> countriesOutsideRegion = observationDataManager
-				.getCountriesOutsideRegion(code, indicator);
+				.getCountriesOutsideRegion(code, indicator, year);
 		countries.add(countriesInRegion.iterator().next());
 		countries.add(countriesOutsideRegion.iterator().next());
 		String worst = "";
 		for (String str : countriesInRegion) {
-			worst = str;
+				worst = str;
 		}
 		countries.add(worst);
 		for (String str : countriesOutsideRegion) {
-			worst = str;
+				worst = str;
 		}
 		countries.add(worst);
 		return getAllObservationsByCountries(countries,

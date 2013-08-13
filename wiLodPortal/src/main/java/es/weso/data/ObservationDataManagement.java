@@ -48,9 +48,10 @@ public interface ObservationDataManagement {
 	 * 
 	 * @param code
 	 * @param indicator
+	 * @param year
 	 * @return
 	 */
-	public Collection<String> getCountriesInRegion(String code, String indicator);
+	public Collection<String> getCountriesInRegion(String code, String indicator, Integer year);
 	
 	/**
 	 * Gets the country codes of all the countries outside the region of the
@@ -58,9 +59,10 @@ public interface ObservationDataManagement {
 	 * 
 	 * @param code
 	 * @param indicator
+	 * @param year
 	 * @return
 	 */
-	public Collection<String> getCountriesOutsideRegion(String code, String indicator);
+	public Collection<String> getCountriesOutsideRegion(String code, String indicator, Integer year);
 	
 	/**
 	 * Gets the ranking of an indicator for a specific year
