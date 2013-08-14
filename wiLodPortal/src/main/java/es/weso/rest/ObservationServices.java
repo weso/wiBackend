@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import es.weso.business.IndicatorManagement;
 import es.weso.business.ObservationManagement;
+import es.weso.model.Indicator;
 import es.weso.model.Observation;
 import es.weso.model.ObservationWithoutIndicator;
 
@@ -25,9 +27,14 @@ import es.weso.model.ObservationWithoutIndicator;
 public class ObservationServices {
 
 	private static ObservationManagement observationManager;
+	private static IndicatorManagement indicationManager;
 
 	public void setObservationManager(ObservationManagement observationManager) {
 		ObservationServices.observationManager = observationManager;
+	}
+
+	public void setIndicatorManager(IndicatorManagement indicationManager) {
+		ObservationServices.indicationManager = indicationManager;
 	}
 
 	@RequestMapping(value = "/{uri}", method = RequestMethod.GET)
@@ -49,23 +56,26 @@ public class ObservationServices {
 				"observations",
 				deleteIndicator(observationManager.getBarchart(country,
 						Integer.parseInt(year), indicator)));
-		try {
-			model.addAttribute("previousObservations",
-					deleteIndicator(observationManager.getBarchart(country,
-							Integer.parseInt(year) - 1, indicator)));
-		} catch (IllegalArgumentException iae) {
-			model.addAttribute("previousObservations",
-					"There are no previous observations");
+		Indicator ind = indicationManager.getIndicator(indicator);
+		model.addAttribute("indicator", ind);
+		int firstYear = Integer.parseInt(year) - 1;
+		int secondYear = Integer.parseInt(year) + 1;
+		if (ind.getStart() >= Integer.parseInt(year)) {
+			firstYear = secondYear;
+			secondYear++;
 		}
-		try {
-			model.addAttribute("followingObservations",
-					deleteIndicator(observationManager.getBarchart(country,
-							Integer.parseInt(year) + 1, indicator)));
-		} catch (IllegalArgumentException iae) {
-			model.addAttribute("followingObservations",
-					"There are no following observations");
+		if (ind.getEnd() <= Integer.parseInt(year)) {
+			secondYear = firstYear;
+			firstYear--;
 		}
-		return "observations";
+		model.addAttribute("relatedObservations1",
+				deleteIndicator(observationManager.getBarchart(country,
+						firstYear, indicator)));
+		model.addAttribute(
+				"relatedObservations2",
+				deleteIndicator(observationManager.getBarchart(country,
+						secondYear, indicator)));
+		return "observation";
 	}
 
 	private Collection<ObservationWithoutIndicator> deleteIndicator(

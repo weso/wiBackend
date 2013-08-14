@@ -9,8 +9,7 @@ import es.weso.data.ObservationDataManagement;
 import es.weso.model.Observation;
 
 /**
- * Defines the operations that can be performed related to {@link Observation}
- * retrieval
+ * Implementation of {@link Observation} management operations
  * 
  * @author Alejandro Montes García
  * @since 03/07/2013
@@ -95,11 +94,11 @@ public class ObservationManager implements ObservationManagement {
 		countries.add(countriesOutsideRegion.iterator().next());
 		String worst = "";
 		for (String str : countriesInRegion) {
-				worst = str;
+			worst = str;
 		}
 		countries.add(worst);
 		for (String str : countriesOutsideRegion) {
-				worst = str;
+			worst = str;
 		}
 		countries.add(worst);
 		return getAllObservationsByCountries(countries,

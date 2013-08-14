@@ -11,6 +11,7 @@ import com.hp.hpl.jena.query.ResultSet;
 
 import es.weso.model.Country;
 import es.weso.model.CountryGroup;
+import es.weso.model.Indicator;
 import es.weso.model.NamedUri;
 import es.weso.model.Observation;
 import es.weso.model.ValuedNamedUri;
@@ -122,6 +123,16 @@ public abstract class AbstractDataManager {
 		g.setUri(getURI(qs, "region"));
 		g.setCountries(s);
 		return g;
+	}
+	
+	protected Indicator querySolutionToIndicator(QuerySolution qs) {
+		Indicator indicator = new Indicator();
+		indicator.setComment(getString(qs, "comment"));
+		indicator.setEnd(getInt(qs, "end"));
+		indicator.setStart(getInt(qs, "start"));
+		indicator.setHigherBetter(getURI(qs, "high").endsWith("igh"));
+		indicator.setUri(getURI(qs, "indicator"));
+		return indicator;
 	}
 
 	private ValuedNamedUri querySolutionToValuedNamedUri(QuerySolution qs) {

@@ -29,7 +29,7 @@ tdb:GraphTDB    rdfs:subClassOf  ja:Model .
     ja:defaultGraph
       [ rdfs:label "example.ttl" ;
         a ja:MemoryModel ;
-        ja:content [ja:externalContent <file:../computex/ontology/examples/example.ttl> ] ;
-	#	ja:content [ja:externalContent <file:../fuseki/Data/computex100.ttl>] ;
+        #	ja:content [ja:externalContent <file:../computex/ontology/examples/example.ttl> ] ;
+	ja:content [ja:externalContent <file:../fuseki/Data/computex100.ttl>] ;
       ] ;
     .

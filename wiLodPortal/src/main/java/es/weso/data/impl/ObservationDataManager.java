@@ -15,6 +15,13 @@ import es.weso.model.Observation;
 import es.weso.util.Conf;
 import es.weso.util.JenaMemcachedClient;
 
+/**
+ * Implementation of {@link Observation} data retrieval operations
+ * 
+ * @author Alejandro Montes García
+ * @since 08/07/2013
+ * @version 1.0
+ */
 public class ObservationDataManager extends AbstractDataManager implements
 		ObservationDataManagement {
 
