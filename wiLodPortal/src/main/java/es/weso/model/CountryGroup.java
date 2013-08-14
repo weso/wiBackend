@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.Gson;
+
 /**
  * Representation of a country group for the web index project
  * 
@@ -73,6 +75,11 @@ public class CountryGroup {
 		} else if (!uri.equals(other.uri))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

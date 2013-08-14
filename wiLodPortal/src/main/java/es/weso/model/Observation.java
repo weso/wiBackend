@@ -2,6 +2,8 @@ package es.weso.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.Gson;
+
 /**
  * Representation of an observation for the web index project
  * 
@@ -89,5 +91,9 @@ public class Observation {
 	public void setRank(int rank) {
 		this.rank = rank;
 	}
-
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
+	}
 }

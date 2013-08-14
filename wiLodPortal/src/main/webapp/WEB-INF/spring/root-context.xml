@@ -17,19 +17,22 @@
 			<ref bean="countryManager" />
 		</property>
 	</bean>
-	
+
 	<bean id="observationServices" class="es.weso.rest.ObservationServices">
 		<property name="observationManager">
 			<ref bean="observationManager" />
 		</property>
+		<property name="indicatorManager">
+			<ref bean="indicatorManager" />
+		</property>
 	</bean>
-	
+
 	<bean id="observationsServices" class="es.weso.rest.ObservationsServices">
 		<property name="observationManager">
 			<ref bean="observationManager" />
 		</property>
 	</bean>
-	
+
 	<bean id="namedRegion" class="es.weso.wirouter.country.NamedRegion">
 		<property name="countryGroupManager">
 			<ref bean="countryGroupManager" />
@@ -41,7 +44,7 @@
 			<ref bean="countryGroupDataManager" />
 		</property>
 	</bean>
-	
+
 	<bean id="countryManager" class="es.weso.business.impl.CountryManager">
 		<property name="countryDataManager">
 			<ref bean="countryDataManager" />
@@ -50,14 +53,21 @@
 			<ref bean="countryGroupDataManager" />
 		</property>
 	</bean>
-	
+
 	<bean id="observationManager" class="es.weso.business.impl.ObservationManager">
 		<property name="observationDataManager">
 			<ref bean="observationDataManager" />
 		</property>
 	</bean>
 	
-	<bean id="countryDataManager" class="es.weso.data.impl.CountryDataManager"/>
-	<bean id="countryGroupDataManager" class="es.weso.data.impl.CountryGroupDataManager"/>
-	<bean id="observationDataManager" class="es.weso.data.impl.ObservationDataManager"/>
+	<bean id="indicatorManager" class="es.weso.business.impl.IndicatorManager">
+		<property name="indicatorDataManager">
+			<ref bean="indicatorDataManager" />
+		</property>
+	</bean>
+
+	<bean id="countryDataManager" class="es.weso.data.impl.CountryDataManager" />
+	<bean id="countryGroupDataManager" class="es.weso.data.impl.CountryGroupDataManager" />
+	<bean id="observationDataManager" class="es.weso.data.impl.ObservationDataManager" />
+	<bean id="indicatorDataManager" class="es.weso.data.impl.IndicatorDataManager" />
 </beans>

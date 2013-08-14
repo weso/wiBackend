@@ -2,6 +2,8 @@ package es.weso.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.Gson;
+
 /**
  * Triple name-uri-value
  * 
@@ -20,5 +22,9 @@ public class ValuedNamedUri extends NamedUri {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
+	}
 }
