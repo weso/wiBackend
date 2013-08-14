@@ -19,5 +19,7 @@
 	<p>${relatedObservations1}</p>
 	<h2>RelatedObservations2</h2>
 	<p>${relatedObservations2}</p>
+	<h2>Stats</h2>
+	<p>${stats}</p>
 </body>
 </html>
