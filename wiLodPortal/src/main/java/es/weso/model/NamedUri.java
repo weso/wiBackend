@@ -2,6 +2,8 @@ package es.weso.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.Gson;
+
 /**
  * Pair name-uri to allow navigation
  * 
@@ -28,6 +30,11 @@ public class NamedUri {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

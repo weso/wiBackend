@@ -5,6 +5,8 @@ import java.util.Collections;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.Gson;
+
 /**
  * Generic wrapper to keep JAXB happy
  * 
@@ -31,6 +33,11 @@ public class ItemCollection<T> {
 
 	public void setCollection(Collection<T> collection) {
 		this.collection = collection;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

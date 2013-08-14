@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.Gson;
+
 /**
  * Representation of a country for the web index project
  * 
@@ -80,6 +82,11 @@ public class Country {
 
 	public void setLon(double lon) {
 		this.lon = lon;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 	@Override
