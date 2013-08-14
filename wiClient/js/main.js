@@ -176,7 +176,7 @@ var auxRegions = [];
 function loadCharts()
 {
 	var connector = new D3Connector();
-
+/*
 	var p = new Params();
 
 	for (var i = 0; i < graphData.length; i++)
@@ -206,9 +206,9 @@ function loadCharts()
 	
 	// ELIMINAR
 	auxRegions.push(p.regions);
-	
+*/	
 	// Indicator
-	
+/*	
 	p = new Params();
 	
 	p.regions[4] = new Region("United States", [9]);
@@ -245,7 +245,8 @@ function loadCharts()
 	
 	// ELIMINAR
 	auxRegions.push(p.regions);
-	
+*/	
+/*	
 	p = new Params();
 	
 	p.regions[4] = new Region("United States", [9]);
@@ -319,9 +320,9 @@ function loadCharts()
 	
 		// ELIMINAR
 	auxRegions.push(p.regions);
-	
+*/	
 	// Progression
-	
+/*	
 	p = new Params();
 	
 	p.regions[5] = new Region("2007", [8]);
@@ -349,12 +350,6 @@ function loadCharts()
 	p.options.showYAxisLabel = false;
 	p.options.showLabels = false;
 	p.options.showBarLabels = true;
-	/*
-	p.options.mean = 6.84;
-	p.options.meanColour = "#91bf39";
-	p.options.median = 7;
-	p.options.medianColour = "#111";
-	*/
 
 	chart = new connector.drawBarChart(p);
 	barCharts.push(chart);
@@ -376,7 +371,7 @@ function loadCharts()
 	p.options.colours = ["#91bf39", "#91bf39", "#91bf39", "#91bf39", "#91bf39", "#91bf39"];
 
 	new connector.drawLineChart(p);
-	
+*/	
 	// Organization comparison
 
 	p = new Params();

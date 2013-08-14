@@ -1,3 +1,103 @@
+function YearSelector(container, height, minYear, maxYear) {
+	var selectedYear = maxYear - minYear;
+	var years = [];
+	var names = [];
+	var width = null;
+	
+	var moving = false;
+	
+	function init() {
+		container = document.getElementById(container);
+		width = container.offsetWidth;
+
+		var divSections = document.createElement("div");
+		container.appendChild(divSections);
+		
+		var divNames = document.createElement("div");
+		container.appendChild(divNames);
+		
+		divSections.className = divNames.className = "slider-year-container"
+		
+		divSections.style.width = divNames.style.width = width + "px";
+		divSections.style.height = height + "px";
+		
+		var numYears = maxYear - minYear + 1;
+		
+		var yearWidth = parseInt(width / numYears);
+		var lastYearWidth = width - (yearWidth * (numYears - 1));
+		
+		// Slider sections
+		for (var i = 0; i < numYears; i++) {
+			var year = document.createElement("div");
+			var name = document.createElement("div");
+			
+			year.href = name.href = "#";
+			
+			year.className = i < numYears - 1 ?  "slider-year" : "slider-year-selected";
+			name.className = i < numYears - 1 ?  "slider-year-name" : "slider-year-name-selected";
+			year.onclick = name.onclick = yearOnClick;
+			
+			name.innerHTML = minYear + i;
+			
+			divSections.appendChild(year);
+			divNames.appendChild(name);
+			
+			var _width = i < numYears - 1 ? yearWidth : lastYearWidth;
+			
+			year.style.width = name.style.width = _width + "px";
+			year.style.height = height + "px";
+			
+			years[i] = year;
+			names[i] = name;
+			
+			year.year = name.year = i;
+			
+			year.onmousedown = yearOnMouseDown;
+			year.onmouseup = yearOnMouseUp;
+			year.onmousemove = yearOnMouseMove;
+		}
+		
+		$(divSections).mouseleave(function() {
+			moving = false;
+		});
+	}
+	
+	function yearOnMouseMove() {	
+		if (moving && this.year != selectedYear) {
+			changeYear(this.year);
+		}
+	}
+
+	function yearOnMouseDown() {
+		if (this.year == selectedYear)
+			moving = true;
+	}
+	
+	function yearOnMouseUp() {
+		moving = false;
+	}
+	
+	function yearOnClick() {
+		changeYear(this.year);
+		
+		event.stopPropagation();
+	}
+	
+	function changeYear(year) {
+		var previousSelected = selectedYear;
+		selectedYear = year;
+		
+		years[previousSelected].className = "slider-year";
+		years[selectedYear].className = "slider-year-selected";
+		
+		names[previousSelected].className = "slider-year-name";
+		names[selectedYear].className = "slider-year-name-selected";
+	}
+	
+	init();
+}
+
+/*
 function setBasicYearSelector(container, minYear, maxYear) {
 	var yearSelector = document.getElementById(container);
 	
@@ -89,3 +189,4 @@ function YearSelector(container, minYear, maxYear, selectedYear)
 		}
 	}
 }
+*/

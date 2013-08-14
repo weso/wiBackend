@@ -399,7 +399,7 @@ function D3Connector() {
 	
 			if (params.options.mean) {
 				var value = height - height * (mean / topValue);
-				var textPos = mean > median ? value - 5 : value + 12;
+				var textPos = mean >= median ? value - 5 : value + 12;
 	
 				var g = svg.append("g").attr("class", "mean");
 	
