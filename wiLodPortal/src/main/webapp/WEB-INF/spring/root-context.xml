@@ -69,5 +69,5 @@
 	<bean id="countryDataManager" class="es.weso.data.impl.CountryDataManager" />
 	<bean id="countryGroupDataManager" class="es.weso.data.impl.CountryGroupDataManager" />
 	<bean id="observationDataManager" class="es.weso.data.impl.ObservationDataManager" />
-	<bean id="observationDataManager" class="es.weso.data.impl.IndicatorDataManager" />
+	<bean id="indicatorDataManager" class="es.weso.data.impl.IndicatorDataManager" />
 </beans>

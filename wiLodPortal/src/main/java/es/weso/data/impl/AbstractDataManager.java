@@ -132,6 +132,7 @@ public abstract class AbstractDataManager {
 		indicator.setStart(getInt(qs, "start"));
 		indicator.setHigherBetter(getURI(qs, "high").endsWith("igh"));
 		indicator.setUri(getURI(qs, "indicator"));
+		indicator.setLabel(getString(qs, "indicatorLabel"));
 		return indicator;
 	}
 

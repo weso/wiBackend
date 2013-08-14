@@ -27,14 +27,14 @@ import es.weso.model.ObservationWithoutIndicator;
 public class ObservationServices {
 
 	private static ObservationManagement observationManager;
-	private static IndicatorManagement indicationManager;
+	private static IndicatorManagement indicatorManager;
 
 	public void setObservationManager(ObservationManagement observationManager) {
 		ObservationServices.observationManager = observationManager;
 	}
 
-	public void setIndicatorManager(IndicatorManagement indicationManager) {
-		ObservationServices.indicationManager = indicationManager;
+	public void setIndicatorManager(IndicatorManagement indicatorManager) {
+		ObservationServices.indicatorManager = indicatorManager;
 	}
 
 	@RequestMapping(value = "/{uri}", method = RequestMethod.GET)
@@ -56,7 +56,7 @@ public class ObservationServices {
 				"observations",
 				deleteIndicator(observationManager.getBarchart(country,
 						Integer.parseInt(year), indicator)));
-		Indicator ind = indicationManager.getIndicator(indicator);
+		Indicator ind = indicatorManager.getIndicator(indicator);
 		model.addAttribute("indicator", ind);
 		int firstYear = Integer.parseInt(year) - 1;
 		int secondYear = Integer.parseInt(year) + 1;
@@ -64,15 +64,19 @@ public class ObservationServices {
 			firstYear = secondYear;
 			secondYear++;
 		}
-		if (ind.getEnd() <= Integer.parseInt(year)) {
+		if (ind.getEnd() <= Integer.parseInt(year)
+				|| Integer.parseInt(year) == 2011) { // TODO Esto es porque el
+														// indicador dice que
+														// acaba en 2012 pero en
+														// realidad no hay datos
+														// de 2012 aún, borrar la segunda parte del OR
 			secondYear = firstYear;
 			firstYear--;
 		}
 		model.addAttribute("relatedObservations1",
 				deleteIndicator(observationManager.getBarchart(country,
 						firstYear, indicator)));
-		model.addAttribute(
-				"relatedObservations2",
+		model.addAttribute("relatedObservations2",
 				deleteIndicator(observationManager.getBarchart(country,
 						secondYear, indicator)));
 		return "observation";
