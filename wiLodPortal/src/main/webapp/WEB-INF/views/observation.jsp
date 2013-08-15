@@ -21,5 +21,7 @@
 	<p>${relatedObservations2}</p>
 	<h2>Stats</h2>
 	<p>${stats}</p>
+	<h2>Indicators</h2>
+	<p>${indicatorHirearchy}</p>
 </body>
 </html>

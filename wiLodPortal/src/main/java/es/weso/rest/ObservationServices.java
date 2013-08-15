@@ -66,6 +66,7 @@ public class ObservationServices {
 						Integer.parseInt(year), indicator)));
 		Indicator ind = indicatorManager.getIndicator(indicator);
 		model.addAttribute("indicator", ind);
+		model.addAttribute("indicatorHirearchy", indicatorManager.getAllIndicators());
 		int firstYear = Integer.parseInt(year) - 1;
 		int secondYear = Integer.parseInt(year) + 1;
 		if (ind.getStart() >= Integer.parseInt(year)) {

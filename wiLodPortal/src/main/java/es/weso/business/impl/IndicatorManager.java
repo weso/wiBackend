@@ -1,8 +1,11 @@
 package es.weso.business.impl;
 
+import java.util.Collection;
+
 import es.weso.business.IndicatorManagement;
 import es.weso.data.IndicatorDataManagement;
 import es.weso.model.Indicator;
+import es.weso.model.JSONHashMap;
 
 /**
  * Implementation of {@link Indicator} management operations
@@ -23,5 +26,10 @@ public class IndicatorManager implements IndicatorManagement {
 	@Override
 	public Indicator getIndicator(String label) {
 		return indicatorDataManager.getIndicator(label);
+	}
+
+	@Override
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators() {
+		return indicatorDataManager.getAllIndicators();
 	}
 }
