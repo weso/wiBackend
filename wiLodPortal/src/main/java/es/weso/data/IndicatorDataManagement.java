@@ -1,6 +1,9 @@
 package es.weso.data;
 
+import java.util.Collection;
+
 import es.weso.model.Indicator;
+import es.weso.model.JSONHashMap;
 
 /**
  * Defines the operations that can be performed related to {@link Indicator}
@@ -13,9 +16,18 @@ import es.weso.model.Indicator;
 public interface IndicatorDataManagement {
 
 	/**
-	 * Retrieves an {@link Indicator} from the SPARQL endpoint with the given label
+	 * Retrieves an {@link Indicator} from the SPARQL endpoint with the given
+	 * label
+	 * 
 	 * @param label
 	 * @return
 	 */
 	public Indicator getIndicator(String label);
+
+	/**
+	 * Gets all the {@link Indicator}s in a hierarchical structure
+	 * 
+	 * @return
+	 */
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators();
 }

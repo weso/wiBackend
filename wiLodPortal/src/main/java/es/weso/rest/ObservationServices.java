@@ -14,6 +14,7 @@ import es.weso.business.ObservationManagement;
 import es.weso.model.Indicator;
 import es.weso.model.Observation;
 import es.weso.model.ObservationWithoutIndicator;
+import es.weso.model.Stats;
 
 /**
  * Web services to retrieve {@link es.weso.model.Observation observations}
@@ -48,8 +49,15 @@ public class ObservationServices {
 	public String getObservations(@PathVariable String country,
 			@PathVariable String year, @PathVariable String indicator,
 			ModelMap model) {
-		model.addAttribute("ranking", deleteIndicator(observationManager
-				.getRanking(indicator, Integer.parseInt(year))));
+		Collection<ObservationWithoutIndicator> ranking = deleteIndicator(observationManager
+				.getRanking(indicator, Integer.parseInt(year)));
+		double[] values = new double[ranking.size()];
+		int i = 0;
+		for(ObservationWithoutIndicator obs : ranking) {
+			values[i++] = obs.getValue();
+		}
+		model.addAttribute("stats", new Stats(values));
+		model.addAttribute("ranking", ranking);
 		model.addAttribute("history", deleteIndicator(observationManager
 				.getHistory(country, indicator)));
 		model.addAttribute(
@@ -58,6 +66,7 @@ public class ObservationServices {
 						Integer.parseInt(year), indicator)));
 		Indicator ind = indicatorManager.getIndicator(indicator);
 		model.addAttribute("indicator", ind);
+		model.addAttribute("indicatorHirearchy", indicatorManager.getAllIndicators());
 		int firstYear = Integer.parseInt(year) - 1;
 		int secondYear = Integer.parseInt(year) + 1;
 		if (ind.getStart() >= Integer.parseInt(year)) {

@@ -1,6 +1,9 @@
 package es.weso.business;
 
+import java.util.Collection;
+
 import es.weso.model.Indicator;
+import es.weso.model.JSONHashMap;
 
 /**
  * Defines the operations that can be performed related to {@link Indicator}
@@ -14,8 +17,16 @@ public interface IndicatorManagement {
 
 	/**
 	 * Gets an {@link Indicator} by its label
+	 * 
 	 * @param label
 	 * @return
 	 */
 	public Indicator getIndicator(String label);
+
+	/**
+	 * Gets all the {@link Indicator}s in a hierarchical structure
+	 * 
+	 * @return
+	 */
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators();
 }

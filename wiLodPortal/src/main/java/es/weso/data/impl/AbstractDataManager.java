@@ -171,7 +171,7 @@ public abstract class AbstractDataManager {
 		}
 	}
 
-	private String getString(QuerySolution qs, String literal) {
+	protected String getString(QuerySolution qs, String literal) {
 		try {
 			return qs.getLiteral(literal).getString();
 		} catch (NullPointerException npe) {
