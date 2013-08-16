@@ -33,8 +33,8 @@ function YearSelector(container, height, minYear, maxYear, selectedYear, callbac
 			
 			year.href = name.href = "#";
 			
-			year.className = i < numYears - 1 ?  "slider-year" : "slider-year-selected";
-			name.className = i < numYears - 1 ?  "slider-year-name" : "slider-year-name-selected";
+			year.className = i != selectedYear ?  "slider-year" : "slider-year-selected";
+			name.className = i != selectedYear ?  "slider-year-name" : "slider-year-name-selected";
 			year.onclick = name.onclick = yearOnClick;
 			
 			name.innerHTML = minYear + i;

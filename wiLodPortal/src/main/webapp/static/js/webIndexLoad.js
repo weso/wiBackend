@@ -12,8 +12,17 @@ var charts = [];
 
 $(function(){
 	//loadIndicatorInfo(COUNTRYCODE, INDICATOR, YEAR, MINYEAR, MAXYEAR);
-console.log(webIndexData);	
-	processCountryData(webIndexData, countryCode, indicator);
+
+	processCountryData(webIndexData, webIndexData.countryCode, webIndexData.indicator.label, webIndexData.year);
+	
+	$.ajax({
+	  type: "GET",
+	  url: URL_BASE + "/observations/" +  webIndexData.countryCode + "/" + webIndexData.year,
+	  dataType: "json",
+	  contentType: "application/javascript; charset=UTF-8"
+	}).done(function ( data ) {
+		processCountryListData(data, webIndexData.countryCode, webIndexData.indicator.label);
+	});
 });
 
 function loadIndicatorInfo(countryCode, indicator, year, minYear, maxYear) {
@@ -27,6 +36,56 @@ function loadIndicatorInfo(countryCode, indicator, year, minYear, maxYear) {
 	}).done(function ( data ) {
 		processCountryData(data, countryCode, indicator);
 	});
+}
+
+function processCountryListData(data, countryCode, indicatorName, year) {
+	var indicatorsPerYear = [];
+	var maxYear = 0;
+	var minYear = Number.MAX_VALUE;
+	
+	var progressionData = [];
+
+	for (var i = 0; i < data.observations.collection.length; i++)
+	{
+		var value = data.observations.collection[i];
+		var year = value.year;
+		
+		if (year > maxYear)
+			maxYear = year;
+			
+		if (year < minYear)
+			minYear = year;
+//console.log(value.indicator.name)		
+		var indicator = value.indicator;
+if (indicator.name.length > 1) continue;
+		// Rebuild URI
+		indicator.uri = URL_BASE + "/observation/" +  countryCode + "/" + year + "/" + indicator.name;
+	
+		if (!indicatorsPerYear[year])
+			indicatorsPerYear[year] = [];
+			
+		indicatorsPerYear[year].push(indicator);
+		
+		if (indicatorName == indicator.name) {
+			var index = 0;
+			
+			while (index < progressionData.length && year > progressionData[index].year) {
+				index++;
+			}
+			
+			progressionData.splice(index, 0, { year : year, value : value.value });
+		}
+	}
+
+	var accordion = $("#accordion");
+	
+	var autocompleteTags = [];
+
+	var indicatorList = new Object();
+	indicatorList.name = "Indicators";
+	indicatorList.indicators = indicatorsPerYear[maxYear];
+
+	new IndicatorList(accordion, [ indicatorList ], autocompleteTags);
 }
 
 function processCountryData(data, countryCode, indicator, year) {
@@ -81,6 +140,9 @@ function processCountryData(data, countryCode, indicator, year) {
 	new YearSelector("year-selector", 15, data.indicator.start, data.indicator.end - 1, year, new AfterClick(countryCode, indicator));
 	//setBasicYearSelector("year-select", data.indicator.start, data.indicator.end - 1);
 	
+	// World ranking
+	//processRanking(data, countryCode, indicator);
+	
 	// Country comparison
 	processComparingCountries(data, countryCode, indicator);
 	
@@ -128,6 +190,8 @@ function processComparingCountries(data, countryCode, indicator) {
 	auxRegions.push(p.regions);
 */
 
+	// World ranking
+
 	// Indicator
 	var p = new Params();
 	p.options.groupPadding = 40;
@@ -137,6 +201,66 @@ function processComparingCountries(data, countryCode, indicator) {
 	p.options.showBarLabels = true;
 	
 	processComparingBarChart(data, p, "#indicator-main-indicator", countryCode, indicator);
+}
+
+function processRanking(data, countryCode, indicator) {
+	var p = new Params();
+	p.options.groupPadding = 0;
+	p.options.barPadding = 1;
+	p.options.margins = [10, 0, 40, 30];
+	p.options.height = 150;
+	p.options.showBarLabels = false;
+	
+	//processComparingBarChart(data, p, "#indicator-world-position", countryCode, indicator);
+	
+	//	var p = new Params();
+	p.options.groupPadding = 0;
+	p.options.barPadding = 20;
+	p.options.margins = [10, 0, 40, 0];
+	p.options.height = 220;
+	p.options.showBarLabels = true;
+	
+	p.regions = [];
+	p.indexes = [];
+	p.options.colours = [];
+	
+	var rainbow = new Rainbow();
+	rainbow.setSpectrum('#343465', '#269e45', '#deb722', '#932b2f');
+	rainbow.setNumberRange(0, graphData.length);
+
+	var rainbowColours = rainbow.getColours(); 
+	
+	for (var i = 0; i < data.ranking.length; i++) {
+		var _countryCode = data.ranking[i].countryCode;
+		var year = data.ranking[i].year;
+		var value = data.ranking[i].value;
+		var url = URL_BASE + "/observation/" +  data.ranking[i].countryCode + "/" + year + "/" + indicator;
+		
+		var region = new Region(year, [value], [url]);
+		var colour =  _countryCode == countryCode ? "#333" : rainbowColours[i];
+
+		// Data is inserted in order
+		
+		p.regions.push(region);
+		p.indexes.push(year);
+		p.options.colours.push(colour);
+	}
+	
+	var connector = new D3Connector();
+	
+	p.container = "#indicator-world-position";
+	p.labels = ["Indicador 1"];
+
+	p.options.showLabels = true;
+	p.options.showXAxisLabel = true;
+	p.options.showYAxisLabel = true;
+	p.options.showValueOnBar = true;
+
+	p.options.showYAxisLabel = false;
+	p.options.showLabels = false;
+
+	var chart = new connector.drawBarChart(p);
+	charts.push(chart);
 }
 
 function processPreviousComparingCountries(data, countryCode, indicator) {
@@ -176,8 +300,9 @@ function processProgressionBarChart(data, container, countryCode, indicator) {
 	for (var i = 0; i < data.history.length; i++) {
 		var year = data.history[i].year;
 		var value = data.history[i].value;
+		var url = URL_BASE + "/observation/" +  data.history[i].countryCode + "/" + year + "/" + indicator;
 		
-		var region = new Region(year, [value]);
+		var region = new Region(year, [value], [url]);
 		var colour = "#c9e1ab";
 
 		// Data is inserted in order
@@ -219,8 +344,10 @@ function processComparingBarChart(data, p, container, countryCode, indicator) {
 		var _countryCode = data.observations[i].countryCode;
 		var countryName = data.observations[i].countryName;
 		var value = data.observations[i].value;
+		var year = data.observations[i].year;
+		var url = URL_BASE + "/observation/" +  _countryCode + "/" + year + "/" + indicator;
 		
-		var region = new Region(countryName, [value]);
+		var region = new Region(countryName, [value], [url]);
 		var colour = _countryCode == countryCode ? "#333" : "#91bf39";
 		
 		mean += value;
