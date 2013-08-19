@@ -25,6 +25,9 @@
 		<property name="indicatorManager">
 			<ref bean="indicatorManager" />
 		</property>
+		<property name="countryManager">
+			<ref bean="countryManager" />
+		</property>
 	</bean>
 
 	<bean id="observationsServices" class="es.weso.rest.ObservationsServices">
@@ -59,7 +62,7 @@
 			<ref bean="observationDataManager" />
 		</property>
 	</bean>
-	
+
 	<bean id="indicatorManager" class="es.weso.business.impl.IndicatorManager">
 		<property name="indicatorDataManager">
 			<ref bean="indicatorDataManager" />

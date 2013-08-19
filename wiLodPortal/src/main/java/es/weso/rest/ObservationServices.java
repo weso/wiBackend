@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import es.weso.business.CountryManagement;
 import es.weso.business.IndicatorManagement;
 import es.weso.business.ObservationManagement;
 import es.weso.model.Indicator;
@@ -29,6 +30,11 @@ public class ObservationServices {
 
 	private static ObservationManagement observationManager;
 	private static IndicatorManagement indicatorManager;
+	private static CountryManagement countryManager;
+
+	public void setCountryManager(CountryManagement countryManager) {
+		ObservationServices.countryManager = countryManager;
+	}
 
 	public void setObservationManager(ObservationManagement observationManager) {
 		ObservationServices.observationManager = observationManager;
@@ -49,36 +55,45 @@ public class ObservationServices {
 	public String getObservations(@PathVariable String country,
 			@PathVariable String year, @PathVariable String indicator,
 			ModelMap model) {
+		int intYear = Integer.parseInt(year);
 		Collection<ObservationWithoutIndicator> ranking = deleteIndicator(observationManager
-				.getRanking(indicator, Integer.parseInt(year)));
+				.getRanking(indicator, intYear));
 		double[] values = new double[ranking.size()];
 		int i = 0;
-		for(ObservationWithoutIndicator obs : ranking) {
+		for (ObservationWithoutIndicator obs : ranking) {
 			values[i++] = obs.getValue();
 		}
 		model.addAttribute("stats", new Stats(values));
+		model.addAttribute("country", countryManager.getCountry(country));
 		model.addAttribute("ranking", ranking);
-		model.addAttribute("history", deleteIndicator(observationManager
-				.getHistory(country, indicator)));
-		model.addAttribute(
-				"observations",
-				deleteIndicator(observationManager.getBarchart(country,
-						Integer.parseInt(year), indicator)));
+		Collection<ObservationWithoutIndicator> history = deleteIndicator(observationManager
+				.getHistory(country, indicator));
+		model.addAttribute("trend", getTrend(intYear, history));
+		model.addAttribute("history", history);
+		model.addAttribute("observations", deleteIndicator(observationManager
+				.getBarchart(country, intYear, indicator)));
 		Indicator ind = indicatorManager.getIndicator(indicator);
 		model.addAttribute("indicator", ind);
-		model.addAttribute("indicatorHirearchy", indicatorManager.getAllIndicators());
-		int firstYear = Integer.parseInt(year) - 1;
-		int secondYear = Integer.parseInt(year) + 1;
-		if (ind.getStart() >= Integer.parseInt(year)) {
+		model.addAttribute("indicatorHirearchy",
+				indicatorManager.getAllIndicators());
+		int firstYear = intYear - 1;
+		int secondYear = intYear + 1;
+		if (ind.getStart() >= intYear) {
 			firstYear = secondYear;
 			secondYear++;
 		}
-		if (ind.getEnd() <= Integer.parseInt(year)
-				|| Integer.parseInt(year) == 2011) { // TODO Esto es porque el
-														// indicador dice que
-														// acaba en 2012 pero en
-														// realidad no hay datos
-														// de 2012 aún, borrar la segunda parte del OR
+		if (ind.getEnd() <= intYear || intYear == 2011) { // FIXME Esto es
+															// porque
+															// el
+															// indicador dice
+															// que
+															// acaba en 2012
+															// pero en
+															// realidad no hay
+															// datos
+															// de 2012 aún,
+															// borrar la segunda
+															// parte del OR
 			secondYear = firstYear;
 			firstYear--;
 		}
@@ -89,6 +104,23 @@ public class ObservationServices {
 				deleteIndicator(observationManager.getBarchart(country,
 						secondYear, indicator)));
 		return "observation";
+	}
+
+	private double getTrend(int intYear,
+			Collection<ObservationWithoutIndicator> history) {
+		double currentValue = 0, pastValue = 0;
+		int valuesFound = 0;
+		for (ObservationWithoutIndicator obs : history) {
+			if (obs.getYear() == intYear - 1) {
+				pastValue = obs.getValue();
+				valuesFound++;
+			}
+			if (obs.getYear() == intYear) {
+				currentValue = obs.getValue();
+				valuesFound++;
+			}
+		}
+		return valuesFound == 2 ? currentValue - pastValue : 0;
 	}
 
 	private Collection<ObservationWithoutIndicator> deleteIndicator(
