@@ -16,6 +16,7 @@ import es.weso.model.Indicator;
 import es.weso.model.Observation;
 import es.weso.model.ObservationWithoutIndicator;
 import es.weso.model.Stats;
+import es.weso.model.Trend;
 
 /**
  * Web services to retrieve {@link es.weso.model.Observation observations}
@@ -68,7 +69,7 @@ public class ObservationServices {
 		model.addAttribute("ranking", ranking);
 		Collection<ObservationWithoutIndicator> history = deleteIndicator(observationManager
 				.getHistory(country, indicator));
-		model.addAttribute("trend", getTrend(intYear, history));
+		model.addAttribute("trend", new Trend(getTrend(intYear, history)));
 		model.addAttribute("history", history);
 		model.addAttribute("observations", deleteIndicator(observationManager
 				.getBarchart(country, intYear, indicator)));
@@ -103,7 +104,7 @@ public class ObservationServices {
 		model.addAttribute("relatedObservations2",
 				deleteIndicator(observationManager.getBarchart(country,
 						secondYear, indicator)));
-		return "observation";
+		return "redirect:/observation/obs1";
 	}
 
 	private double getTrend(int intYear,
