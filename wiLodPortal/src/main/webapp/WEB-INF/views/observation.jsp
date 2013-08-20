@@ -35,6 +35,7 @@
 		<link rel="stylesheet" href="<c:url value="/static/css/foundation.min.css" />">
 		<link rel="stylesheet" href="<c:url value="/static/css/app.css" />">
 		<link rel="stylesheet" href="<c:url value="/static/css/wesCountry.css" />">
+		<link rel="stylesheet" href="<c:url value="/static/css/flags.css" />">
 		<script src="<c:url value="/static/js/vendor/custom.modernizr.js" />"></script>
 		<script>
 			document.write('<script src=<c:url value="/static/js/vendor/" />' + ('__proto__' in {} ? 'zepto' : 'jquery') + '.js><\/script>');
@@ -112,7 +113,8 @@
 						<span id="country-title">Spain</span>
 					</div>
 					<div id="flag" class="large-4 small-4 columns">
-						<img src="<c:url value="/static/img/spain.png" />" alt="Country flag" />
+					<!--	<img src="<c:url value="/static/img/spain.png" />" alt="Country flag" /> -->
+						<img src="<c:url value="/static/img/blank.png" />" class="flag flag-ind" alt="Country flag"
 					</div>
 				</div>
 			</div>
