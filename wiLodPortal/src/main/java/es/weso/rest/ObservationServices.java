@@ -2,6 +2,9 @@ package es.weso.rest;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,18 +50,16 @@ public class ObservationServices {
 
 	@RequestMapping(value = "/{uri}", method = RequestMethod.GET)
 	public String getObservationByUri(@PathVariable String uri, ModelMap model) {
-		model.addAttribute("observation",
-				observationManager.getObservationByURI(uri));
+		Observation obs = observationManager.getObservationByURI(uri);
+		fillModel(model, obs.getCountryCode(), obs.getYear(), obs
+				.getIndicator().getName());
 		return "observation";
 	}
 
-	@RequestMapping(value = "/{country}/{year}/{indicator}", method = RequestMethod.GET)
-	public String getObservations(@PathVariable String country,
-			@PathVariable String year, @PathVariable String indicator,
-			ModelMap model) {
-		int intYear = Integer.parseInt(year);
+	private void fillModel(ModelMap model, String country, int year,
+			String indicator) {
 		Collection<ObservationWithoutIndicator> ranking = deleteIndicator(observationManager
-				.getRanking(indicator, intYear));
+				.getRanking(indicator, year));
 		double[] values = new double[ranking.size()];
 		int i = 0;
 		for (ObservationWithoutIndicator obs : ranking) {
@@ -69,32 +70,32 @@ public class ObservationServices {
 		model.addAttribute("ranking", ranking);
 		Collection<ObservationWithoutIndicator> history = deleteIndicator(observationManager
 				.getHistory(country, indicator));
-		model.addAttribute("trend", new Trend(getTrend(intYear, history)));
+		model.addAttribute("trend", new Trend(getTrend(year, history)));
 		model.addAttribute("history", history);
 		model.addAttribute("observations", deleteIndicator(observationManager
-				.getBarchart(country, intYear, indicator)));
+				.getBarchart(country, year, indicator)));
 		Indicator ind = indicatorManager.getIndicator(indicator);
 		model.addAttribute("indicator", ind);
 		model.addAttribute("indicatorHirearchy",
 				indicatorManager.getAllIndicators());
-		int firstYear = intYear - 1;
-		int secondYear = intYear + 1;
-		if (ind.getStart() >= intYear) {
+		int firstYear = year - 1;
+		int secondYear = year + 1;
+		if (ind.getStart() >= year) {
 			firstYear = secondYear;
 			secondYear++;
 		}
-		if (ind.getEnd() <= intYear || intYear == 2011) { // FIXME Esto es
-															// porque
-															// el
-															// indicador dice
-															// que
-															// acaba en 2012
-															// pero en
-															// realidad no hay
-															// datos
-															// de 2012 aún,
-															// borrar la segunda
-															// parte del OR
+		if (ind.getEnd() <= year || year == 2011) { // FIXME Esto es
+													// porque
+													// el
+													// indicador dice
+													// que
+													// acaba en 2012
+													// pero en
+													// realidad no hay
+													// datos
+													// de 2012 aún,
+													// borrar la segunda
+													// parte del OR
 			secondYear = firstYear;
 			firstYear--;
 		}
@@ -104,7 +105,23 @@ public class ObservationServices {
 		model.addAttribute("relatedObservations2",
 				deleteIndicator(observationManager.getBarchart(country,
 						secondYear, indicator)));
-		return "redirect:/observation/obs1";
+	}
+
+	@RequestMapping(value = "/{country}/{year}/{indicator}", method = RequestMethod.GET)
+	public String getObservation(@PathVariable String country,
+			@PathVariable String year, @PathVariable String indicator,
+			ModelMap model, final HttpServletRequest request) {
+
+		int intYear = Integer.parseInt(year);
+		String[] paths = observationManager
+				.getAllObservationsByCountries(Collections.singleton(country),
+						Collections.singleton(indicator),
+						Collections.singleton(intYear)).iterator().next()
+				.getUri().split("/");
+		int beginIndex = request.getRequestURI().lastIndexOf(".");
+		String redirection = "redirect:/observation/" + paths[paths.length - 1];
+		return beginIndex == -1 ? redirection : redirection
+				+ request.getRequestURI().substring(beginIndex);
 	}
 
 	private double getTrend(int intYear,
