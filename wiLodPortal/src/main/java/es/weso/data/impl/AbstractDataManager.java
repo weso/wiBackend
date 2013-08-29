@@ -9,7 +9,9 @@ import java.util.List;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 
+import es.weso.model.Component;
 import es.weso.model.Country;
+import es.weso.model.CountryForRegion;
 import es.weso.model.CountryGroup;
 import es.weso.model.Indicator;
 import es.weso.model.NamedUri;
@@ -29,7 +31,7 @@ import es.weso.util.JenaMemcachedClient;
 public abstract class AbstractDataManager {
 
 	protected JenaMemcachedClient client;
-	
+
 	public String toISO3Code(String ISO2Code) {
 		return getString(client.executeQuery(Conf.getQuery("isos", ISO2Code))
 				.next(), "code3");
@@ -40,6 +42,17 @@ public abstract class AbstractDataManager {
 		country.setUri(getURI(qs, "country"));
 		country.setBelongsTo(Collections
 				.singleton(querySolutionToNamedUriRegion(qs)));
+		country.setIsoCode2(getString(qs, "code2"));
+		country.setIsoCode3(getString(qs, "code3"));
+		country.setName(getString(qs, "countryLabel"));
+		country.setLat(getDouble(qs, "lat"));
+		country.setLon(getDouble(qs, "long"));
+		return country;
+	}
+	
+	protected CountryForRegion querySolutionToCountryForRegion(QuerySolution qs) {
+		CountryForRegion country = new CountryForRegion();
+		country.setUri(getURI(qs, "country"));
 		country.setIsoCode2(getString(qs, "code2"));
 		country.setIsoCode3(getString(qs, "code3"));
 		country.setName(getString(qs, "countryLabel"));
@@ -81,18 +94,18 @@ public abstract class AbstractDataManager {
 		country.setObservations(observations);
 		return country;
 	}
-	
+
 	protected CountryGroup resultSetToCountryGroup(ResultSet rs) {
 		CountryGroup cg = new CountryGroup();
 		QuerySolution qs = rs.next();
 		cg.setContinent(getURI(qs, "type").endsWith("Region"));
 		cg.setUri(getURI(qs, "region"));
 		cg.setName(getString(qs, "regionLabel"));
-		Collection<NamedUri> countries = new HashSet<NamedUri>();
-		countries.add(querySolutionToNamedUriCountry(qs));
+		Collection<CountryForRegion> countries = new HashSet<CountryForRegion>();
+		countries.add(querySolutionToCountryForRegion(qs));
 		while (rs.hasNext()) {
 			qs = rs.next();
-			countries.add(querySolutionToNamedUriCountry(qs));
+			countries.add(querySolutionToCountryForRegion(qs));
 		}
 		cg.setCountries(countries);
 		return cg;
@@ -116,15 +129,15 @@ public abstract class AbstractDataManager {
 
 	protected CountryGroup querySolutionToContinent(QuerySolution qs) {
 		CountryGroup g = new CountryGroup();
-		HashSet<NamedUri> s = new HashSet<NamedUri>();
-		s.add(querySolutionToNamedUriCountry(qs));
+		HashSet<CountryForRegion> s = new HashSet<CountryForRegion>();
+		s.add(querySolutionToCountryForRegion(qs));
 		g.setContinent(true);
 		g.setName(getString(qs, "regionLabel"));
 		g.setUri(getURI(qs, "region"));
 		g.setCountries(s);
 		return g;
 	}
-	
+
 	protected Indicator querySolutionToIndicator(QuerySolution qs) {
 		Indicator indicator = new Indicator();
 		indicator.setComment(getString(qs, "comment"));
@@ -134,6 +147,41 @@ public abstract class AbstractDataManager {
 		indicator.setUri(getURI(qs, "indicator"));
 		indicator.setLabel(getString(qs, "indicatorLabel"));
 		return indicator;
+	}
+
+	protected Component resultSetToComponent(ResultSet rs) {
+		Component component = new Component();
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			if (component.getIndicators() == null
+					|| component.getIndicators().isEmpty()) {
+				component.setUri(getURI(qs, "component"));
+				component.setLabel(getString(qs, "componentLabel"));
+			}
+			component.addIndicator(querySolutionToNamedUriIndicator(qs));
+		}
+		return component;
+	}
+
+	protected Collection<Component> resultSetToComponentCollection(ResultSet rs) {
+		List<Component> components = new LinkedList<Component>();
+		String oldUri = "";
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			String currentUri = getURI(qs, "component");
+			if (oldUri.equalsIgnoreCase(currentUri)) {
+				components.get(components.size() - 1).addIndicator(
+						querySolutionToNamedUriIndicator(qs));
+			} else {
+				oldUri = currentUri;
+				Component component = new Component();
+				component.setUri(currentUri);
+				component.setLabel(getString(qs, "componentLabel"));
+				component.addIndicator(querySolutionToNamedUriIndicator(qs));
+				components.add(component);
+			}
+		}
+		return components;
 	}
 
 	private ValuedNamedUri querySolutionToValuedNamedUri(QuerySolution qs) {
@@ -146,10 +194,6 @@ public abstract class AbstractDataManager {
 
 	private NamedUri querySolutionToNamedUriRegion(QuerySolution qs) {
 		return querySolutionToNamedUri(qs, "region");
-	}
-
-	private NamedUri querySolutionToNamedUriCountry(QuerySolution qs) {
-		return querySolutionToNamedUri(qs, "country");
 	}
 
 	private NamedUri querySolutionToNamedUriIndicator(QuerySolution qs) {

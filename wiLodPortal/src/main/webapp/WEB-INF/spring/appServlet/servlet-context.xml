@@ -27,8 +27,9 @@
 							class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
 							<constructor-arg>
 								<map>
+									<entry key="rdf" value="application/rdf+xml" />
+									<entry key="ttl" value="text/turtle" />
 									<entry key="json" value="application/json" />
-									<entry key="jsonp" value="application/javascript" />
 									<entry key="xml" value="application/xml" />
 								</map>
 							</constructor-arg>
@@ -44,7 +45,8 @@
 			<list>
 				<bean
 					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-				<bean class="es.weso.views.JSONPView" />
+				<bean class="es.weso.views.RDFView" />
+				<bean class="es.weso.views.TTLView" />
 				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
 					<constructor-arg>
 						<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">

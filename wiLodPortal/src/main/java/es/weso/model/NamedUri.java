@@ -31,10 +31,35 @@ public class NamedUri {
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
-	
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((uri == null) ? 0 : uri.toLowerCase().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NamedUri other = (NamedUri) obj;
+		if (uri == null) {
+			if (other.uri != null)
+				return false;
+		} else if (!uri.equalsIgnoreCase(other.uri))
+			return false;
+		return true;
 	}
 
 }
