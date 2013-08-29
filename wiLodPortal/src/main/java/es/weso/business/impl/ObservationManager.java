@@ -3,10 +3,18 @@ package es.weso.business.impl;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
+import es.weso.business.CountryManagement;
+import es.weso.business.IndicatorManagement;
 import es.weso.business.ObservationManagement;
 import es.weso.data.ObservationDataManagement;
+import es.weso.model.Indicator;
 import es.weso.model.Observation;
+import es.weso.model.ObservationWithoutIndicator;
+import es.weso.model.Stats;
+import es.weso.model.Trend;
 
 /**
  * Implementation of {@link Observation} management operations
@@ -18,6 +26,16 @@ import es.weso.model.Observation;
 public class ObservationManager implements ObservationManagement {
 
 	private static ObservationDataManagement observationDataManager;
+	private static IndicatorManagement indicatorManager;
+	private static CountryManagement countryManager;
+
+	public void setIndicatorManager(IndicatorManagement indicatorManager) {
+		ObservationManager.indicatorManager = indicatorManager;
+	}
+
+	public void setCountryManager(CountryManagement countryManager) {
+		ObservationManager.countryManager = countryManager;
+	}
 
 	public void setObservationDataManager(
 			ObservationDataManagement observationDataManager) {
@@ -114,5 +132,83 @@ public class ObservationManager implements ObservationManagement {
 	public Collection<Observation> getHistory(String country, String indicator) {
 		return getAllObservationsByCountries(Collections.singleton(country),
 				Collections.singleton(indicator));
+	}
+
+	@Override
+	public Map<String, Object> getObservationForWebpage(String country,
+			int year, String indicator) {
+		Map<String, Object> info = new HashMap<String, Object>();
+		Collection<ObservationWithoutIndicator> ranking = deleteIndicator(getRanking(
+				indicator, year));
+		double[] values = new double[ranking.size()];
+		int i = 0;
+		for (ObservationWithoutIndicator obs : ranking) {
+			values[i++] = obs.getValue();
+		}
+		info.put("stats", new Stats(values));
+		info.put("country", countryManager.getCountry(country));
+		info.put("ranking", ranking);
+		Collection<ObservationWithoutIndicator> history = deleteIndicator(getHistory(
+				country, indicator));
+		info.put("trend", new Trend(getTrend(year, history)));
+		info.put("history", history);
+		info.put("observations",
+				deleteIndicator(getBarchart(country, year, indicator)));
+		Indicator ind = indicatorManager.getIndicator(indicator);
+		info.put("indicator", ind);
+		info.put("indicatorHirearchy", indicatorManager.getAllIndicators());
+		int firstYear = year - 1;
+		int secondYear = year + 1;
+		if (ind.getStart() >= year) {
+			firstYear = secondYear;
+			secondYear++;
+		}
+		if (ind.getEnd() <= year || year == 2011) { // FIXME Esto es
+													// porque
+													// el
+													// indicador dice
+													// que
+													// acaba en 2012
+													// pero en
+													// realidad no hay
+													// datos
+													// de 2012 aún,
+													// borrar la segunda
+													// parte del OR
+			secondYear = firstYear;
+			firstYear--;
+		}
+		info.put("relatedObservations1",
+				deleteIndicator(getBarchart(country, firstYear, indicator)));
+		info.put("relatedObservations2",
+				deleteIndicator(getBarchart(country, secondYear, indicator)));
+		return info;
+	}
+
+	private double getTrend(int intYear,
+			Collection<ObservationWithoutIndicator> history) {
+		double currentValue = 0, pastValue = 0;
+		int valuesFound = 0;
+		for (ObservationWithoutIndicator obs : history) {
+			if (obs.getYear() == intYear - 1) {
+				pastValue = obs.getValue();
+				valuesFound++;
+			}
+			if (obs.getYear() == intYear) {
+				currentValue = obs.getValue();
+				valuesFound++;
+			}
+		}
+		return valuesFound == 2 ? currentValue - pastValue : 0;
+	}
+
+	private Collection<ObservationWithoutIndicator> deleteIndicator(
+			Collection<Observation> observations) {
+		Collection<ObservationWithoutIndicator> obs = new ArrayDeque<ObservationWithoutIndicator>(
+				observations.size());
+		for (Observation o : observations) {
+			obs.add(new ObservationWithoutIndicator(o));
+		}
+		return obs;
 	}
 }

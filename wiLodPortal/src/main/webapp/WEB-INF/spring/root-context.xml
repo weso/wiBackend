@@ -3,12 +3,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="countryGroupServices" class="es.weso.rest.CountryGroupServices">
+	<bean id="countryGroupServices" class="es.weso.rest.RegionServices">
 		<property name="countryGroupManager">
 			<ref bean="countryGroupManager" />
 		</property>
 		<property name="countryManager">
 			<ref bean="countryManager" />
+		</property>
+	</bean>
+	
+	<bean id="rootServices" class="es.weso.rest.RootServices">
+		<property name="countryGroupManager">
+			<ref bean="countryGroupManager" />
+		</property>
+		<property name="indicatorManager">
+			<ref bean="indicatorManager" />
 		</property>
 	</bean>
 
@@ -22,17 +31,23 @@
 		<property name="observationManager">
 			<ref bean="observationManager" />
 		</property>
+	</bean>
+	
+	<bean id="indicatorServices" class="es.weso.rest.IndicatorServices">
 		<property name="indicatorManager">
 			<ref bean="indicatorManager" />
-		</property>
-		<property name="countryManager">
-			<ref bean="countryManager" />
 		</property>
 	</bean>
 
 	<bean id="observationsServices" class="es.weso.rest.ObservationsServices">
 		<property name="observationManager">
 			<ref bean="observationManager" />
+		</property>
+	</bean>
+	
+	<bean id="conponentServices" class="es.weso.rest.ComponentServices">
+		<property name="componentManager">
+			<ref bean="componentManager" />
 		</property>
 	</bean>
 
@@ -61,6 +76,12 @@
 		<property name="observationDataManager">
 			<ref bean="observationDataManager" />
 		</property>
+		<property name="indicatorManager">
+			<ref bean="indicatorManager" />
+		</property>
+		<property name="countryManager">
+			<ref bean="countryManager" />
+		</property>
 	</bean>
 
 	<bean id="indicatorManager" class="es.weso.business.impl.IndicatorManager">
@@ -68,9 +89,16 @@
 			<ref bean="indicatorDataManager" />
 		</property>
 	</bean>
+	
+	<bean id="componentManager" class="es.weso.business.impl.ComponentManager">
+		<property name="componentDataManager">
+			<ref bean="componentDataManager" />
+		</property>
+	</bean>
 
 	<bean id="countryDataManager" class="es.weso.data.impl.CountryDataManager" />
 	<bean id="countryGroupDataManager" class="es.weso.data.impl.CountryGroupDataManager" />
 	<bean id="observationDataManager" class="es.weso.data.impl.ObservationDataManager" />
 	<bean id="indicatorDataManager" class="es.weso.data.impl.IndicatorDataManager" />
+	<bean id="componentDataManager" class="es.weso.data.impl.ComponentDataManager" />
 </beans>

@@ -72,4 +72,12 @@ public class IndicatorDataManager extends AbstractDataManager implements
 		elements.put(element, indicators);
 		result.put(subindex, elements);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Indicator getIndicatorByURI(String uri) {
+		return querySolutionToIndicator(client.executeQuery(
+				Conf.getQueryWithFilters("indicatorByURI",
+						Collections.singleton(uri))).next());
+	}
 }

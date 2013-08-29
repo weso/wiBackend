@@ -18,18 +18,18 @@ import es.weso.business.CountryManagement;
  */
 @Controller
 @RequestMapping("/groups")
-public class CountryGroupServices {
+public class RegionServices {
 
 	private static CountryGroupManagement countryGroupManager;
 	private static CountryManagement countryManager;
 
 	public void setCountryGroupManager(
 			CountryGroupManagement countryGroupManager) {
-		CountryGroupServices.countryGroupManager = countryGroupManager;
+		RegionServices.countryGroupManager = countryGroupManager;
 	}
 
 	public void setCountryManager(CountryManagement countryManager) {
-		CountryGroupServices.countryManager = countryManager;
+		RegionServices.countryManager = countryManager;
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
