@@ -156,7 +156,7 @@ public class ObservationManager implements ObservationManagement {
 				deleteIndicator(getBarchart(country, year, indicator)));
 		Indicator ind = indicatorManager.getIndicator(indicator);
 		info.put("indicator", ind);
-		info.put("indicatorHirearchy", indicatorManager.getAllIndicators());
+		info.put("indicatorHirearchy", indicatorManager.getIndicatorsHierarchy());
 		int firstYear = year - 1;
 		int secondYear = year + 1;
 		if (ind.getStart() >= year) {

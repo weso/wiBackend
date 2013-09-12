@@ -27,7 +27,7 @@ public class IndicatorServices {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String getAllObservations(ModelMap model) {
-		model.addAttribute("indicators", indicatorManager.getAllIndicators());
+		model.addAttribute("indicators", indicatorManager.getIndicatorsHierarchy());
 		return "indicators";
 	}
 

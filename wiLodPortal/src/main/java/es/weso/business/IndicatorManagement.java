@@ -36,5 +36,13 @@ public interface IndicatorManagement {
 	 * 
 	 * @return
 	 */
-	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators();
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getIndicatorsHierarchy();
+	
+	
+	/**
+	 * Gets all the {@link Indicator}s
+	 * 
+	 * @return
+	 */
+	public Collection<Indicator> getAllIndicators();
 }

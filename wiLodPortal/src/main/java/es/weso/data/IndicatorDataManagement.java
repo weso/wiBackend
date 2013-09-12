@@ -29,7 +29,7 @@ public interface IndicatorDataManagement {
 	 * 
 	 * @return
 	 */
-	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators();
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getHierarchy();
 
 	/**
 	 * Retrieves an {@link Indicator} from the SPARQL endpoint with the given
@@ -39,4 +39,11 @@ public interface IndicatorDataManagement {
 	 * @return
 	 */
 	public Indicator getIndicatorByURI(String uri);
+
+	/**
+	 * Gets all the {@link Indicator}s
+	 * 
+	 * @return
+	 */
+	public Collection<Indicator> geAllIndicators();
 }

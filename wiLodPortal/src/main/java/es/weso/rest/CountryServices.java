@@ -18,7 +18,7 @@ import es.weso.model.ItemCollection;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/countries")
+@RequestMapping("/country")
 public class CountryServices {
 
 	private static CountryManagement countryManager;

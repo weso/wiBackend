@@ -37,7 +37,7 @@ public class RootServices {
 				countryGroupManager.getAllCountryGroupsByType(false));
 		model.addAttribute("regions",
 				countryGroupManager.getAllCountryGroupsByType(true));
-		model.addAttribute("indicators", indicatorManager.getAllIndicators());
+		model.addAttribute("indicators", indicatorManager.getIndicatorsHierarchy());
 		return "index";
 	}
 	
