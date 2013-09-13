@@ -3,6 +3,7 @@ package es.weso.data.impl;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -37,9 +38,9 @@ public class IndicatorDataManager extends AbstractDataManager implements
 	}
 
 	@Override
-	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators() {
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getHierarchy() {
 		JSONHashMap<String, JSONHashMap<String, Collection<String>>> result = new JSONHashMap<String, JSONHashMap<String, Collection<String>>>();
-		ResultSet rs = client.executeQuery(Conf.getQuery("allIndicators"));
+		ResultSet rs = client.executeQuery(Conf.getQuery("indicatorsHierarchy"));
 		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
 			String subindex = getString(qs, "subindexLabel");
@@ -79,5 +80,15 @@ public class IndicatorDataManager extends AbstractDataManager implements
 		return querySolutionToIndicator(client.executeQuery(
 				Conf.getQueryWithFilters("indicatorByURI",
 						Collections.singleton(uri))).next());
+	}
+
+	@Override
+	public Collection<Indicator> geAllIndicators() {
+		Collection<Indicator> indicators = new HashSet<Indicator>();
+		ResultSet rs = client.executeQuery(Conf.getQuery("allIndicators"));
+		while(rs.hasNext()) {
+			indicators.add(querySolutionToIndicator(rs.next()));
+		}
+		return indicators;
 	}
 }

@@ -45,9 +45,15 @@
 		</property>
 	</bean>
 	
-	<bean id="conponentServices" class="es.weso.rest.ComponentServices">
+	<bean id="componentServices" class="es.weso.rest.ComponentServices">
 		<property name="componentManager">
 			<ref bean="componentManager" />
+		</property>
+	</bean>
+	
+	<bean id="datasetServices" class="es.weso.rest.DatasetServices">
+		<property name="datasetManager">
+			<ref bean="datasetManager" />
 		</property>
 	</bean>
 
@@ -95,10 +101,17 @@
 			<ref bean="componentDataManager" />
 		</property>
 	</bean>
+	
+	<bean id="datasetManager" class="es.weso.business.impl.DatasetManager">
+		<property name="datasetDataManager">
+			<ref bean="datasetDataManager" />
+		</property>
+	</bean>
 
 	<bean id="countryDataManager" class="es.weso.data.impl.CountryDataManager" />
 	<bean id="countryGroupDataManager" class="es.weso.data.impl.CountryGroupDataManager" />
 	<bean id="observationDataManager" class="es.weso.data.impl.ObservationDataManager" />
 	<bean id="indicatorDataManager" class="es.weso.data.impl.IndicatorDataManager" />
 	<bean id="componentDataManager" class="es.weso.data.impl.ComponentDataManager" />
+	<bean id="datasetDataManager" class="es.weso.data.impl.DatasetDataManager" />
 </beans>

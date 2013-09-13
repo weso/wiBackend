@@ -13,6 +13,7 @@ import es.weso.model.Component;
 import es.weso.model.Country;
 import es.weso.model.CountryForRegion;
 import es.weso.model.CountryGroup;
+import es.weso.model.Dataset;
 import es.weso.model.Indicator;
 import es.weso.model.NamedUri;
 import es.weso.model.Observation;
@@ -146,6 +147,7 @@ public abstract class AbstractDataManager {
 		indicator.setHigherBetter(getURI(qs, "high").endsWith("igh"));
 		indicator.setUri(getURI(qs, "indicator"));
 		indicator.setLabel(getString(qs, "indicatorLabel"));
+		indicator.setComponent(querySolutionToNamedUriComponent(qs));
 		return indicator;
 	}
 
@@ -183,6 +185,20 @@ public abstract class AbstractDataManager {
 		}
 		return components;
 	}
+	
+	protected Dataset querySolutionToDataset(QuerySolution qs) {
+		Dataset dataset = new Dataset();
+		dataset.setContributor(getURI(qs, "contributor"));
+		dataset.setIssued(getString(qs, "issued"));
+		dataset.setName(getString(qs, "label"));
+		dataset.setPublisher(getURI(qs, "publisher"));
+		dataset.setSlice(getURI(qs, "slice"));
+		dataset.setStructure(getURI(qs, "structure"));
+		dataset.setSubject(getURI(qs, "subject"));
+		dataset.setUnitMeasure(getURI(qs, "unitMeasure"));
+		dataset.setUri(getURI(qs, "dataset"));
+		return dataset;
+	}
 
 	private ValuedNamedUri querySolutionToValuedNamedUri(QuerySolution qs) {
 		ValuedNamedUri vnu = new ValuedNamedUri();
@@ -198,6 +214,10 @@ public abstract class AbstractDataManager {
 
 	private NamedUri querySolutionToNamedUriIndicator(QuerySolution qs) {
 		return querySolutionToNamedUri(qs, "indicator");
+	}
+	
+	private NamedUri querySolutionToNamedUriComponent(QuerySolution qs) {
+		return querySolutionToNamedUri(qs, "component");
 	}
 
 	private NamedUri querySolutionToNamedUri(QuerySolution qs, String type) {
@@ -230,6 +250,7 @@ public abstract class AbstractDataManager {
 			return 0.0;
 		}
 	}
+
 
 	private Integer getInt(QuerySolution qs, String literal) {
 		try {

@@ -16,6 +16,7 @@ public class Indicator {
 	private String uri, label, comment;
 	private boolean higherBetter;
 	private int start, end;
+	private NamedUri component;
 
 	public String getUri() {
 		return uri;
@@ -64,7 +65,15 @@ public class Indicator {
 	public void setEnd(int end) {
 		this.end = end;
 	}
-	
+
+	public NamedUri getComponent() {
+		return component;
+	}
+
+	public void setComponent(NamedUri component) {
+		this.component = component;
+	}
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
