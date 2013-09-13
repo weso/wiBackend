@@ -18,6 +18,7 @@ import es.weso.model.Indicator;
 import es.weso.model.NamedUri;
 import es.weso.model.Observation;
 import es.weso.model.ValuedNamedUri;
+import es.weso.model.WeightSchema;
 import es.weso.util.Conf;
 import es.weso.util.JenaMemcachedClient;
 
@@ -50,7 +51,7 @@ public abstract class AbstractDataManager {
 		country.setLon(getDouble(qs, "long"));
 		return country;
 	}
-	
+
 	protected CountryForRegion querySolutionToCountryForRegion(QuerySolution qs) {
 		CountryForRegion country = new CountryForRegion();
 		country.setUri(getURI(qs, "country"));
@@ -185,7 +186,7 @@ public abstract class AbstractDataManager {
 		}
 		return components;
 	}
-	
+
 	protected Dataset querySolutionToDataset(QuerySolution qs) {
 		Dataset dataset = new Dataset();
 		dataset.setContributor(getURI(qs, "contributor"));
@@ -198,6 +199,39 @@ public abstract class AbstractDataManager {
 		dataset.setUnitMeasure(getURI(qs, "unitMeasure"));
 		dataset.setUri(getURI(qs, "dataset"));
 		return dataset;
+	}
+
+	protected Collection<WeightSchema> resultSetToWeightSchemaCollection(
+			ResultSet rs) {
+		List<WeightSchema> weightSchemas = new LinkedList<WeightSchema>();
+		String oldUri = "";
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			String currentUri = getURI(qs, "weightSchema");
+			if (oldUri.equalsIgnoreCase(currentUri)) {
+				weightSchemas.get(weightSchemas.size() - 1).addWeight(getURI(qs, "element"), getDouble(qs, "value"));
+			} else {
+				oldUri = currentUri;
+				WeightSchema weightSchema = new WeightSchema();
+				weightSchema.setUri(currentUri);
+				weightSchema.addWeight(getURI(qs, "element"), getDouble(qs, "value"));
+				weightSchemas.add(weightSchema);
+			}
+		}
+		return weightSchemas;
+	}
+
+	protected WeightSchema resultSetToWeightSchema(ResultSet rs) {
+		WeightSchema weightSchema = new WeightSchema();
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			if (weightSchema.getSchema() == null
+					|| weightSchema.getSchema().isEmpty()) {
+				weightSchema.setUri(getURI(qs, "weightSchema"));
+			}
+			weightSchema.addWeight(getURI(qs, "element"), getDouble(qs, "value"));
+		}
+		return weightSchema;
 	}
 
 	private ValuedNamedUri querySolutionToValuedNamedUri(QuerySolution qs) {
@@ -215,7 +249,7 @@ public abstract class AbstractDataManager {
 	private NamedUri querySolutionToNamedUriIndicator(QuerySolution qs) {
 		return querySolutionToNamedUri(qs, "indicator");
 	}
-	
+
 	private NamedUri querySolutionToNamedUriComponent(QuerySolution qs) {
 		return querySolutionToNamedUri(qs, "component");
 	}
@@ -250,7 +284,6 @@ public abstract class AbstractDataManager {
 			return 0.0;
 		}
 	}
-
 
 	private Integer getInt(QuerySolution qs, String literal) {
 		try {

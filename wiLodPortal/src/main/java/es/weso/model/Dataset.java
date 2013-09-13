@@ -1,5 +1,7 @@
 package es.weso.model;
 
+import com.google.gson.Gson;
+
 public class Dataset {
 	private String uri, name, structure, slice, issued, contributor, publisher,
 			subject, unitMeasure;
@@ -74,5 +76,10 @@ public class Dataset {
 
 	public void setUnitMeasure(String unitMeasure) {
 		this.unitMeasure = unitMeasure;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 }

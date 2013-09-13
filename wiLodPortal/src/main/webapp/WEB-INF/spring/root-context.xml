@@ -56,6 +56,12 @@
 			<ref bean="datasetManager" />
 		</property>
 	</bean>
+	
+	<bean id="weightSchemaServices" class="es.weso.rest.WeightSchemaServices">
+		<property name="weightSchemaManager">
+			<ref bean="weightSchemaManager" />
+		</property>
+	</bean>
 
 	<bean id="namedRegion" class="es.weso.wirouter.country.NamedRegion">
 		<property name="countryGroupManager">
@@ -107,6 +113,12 @@
 			<ref bean="datasetDataManager" />
 		</property>
 	</bean>
+	
+	<bean id="weightSchemaManager" class="es.weso.business.impl.WeightSchemaManager">
+		<property name="weightSchemaDataManager">
+			<ref bean="weightSchemaDataManager" />
+		</property>
+	</bean>
 
 	<bean id="countryDataManager" class="es.weso.data.impl.CountryDataManager" />
 	<bean id="countryGroupDataManager" class="es.weso.data.impl.CountryGroupDataManager" />
@@ -114,4 +126,5 @@
 	<bean id="indicatorDataManager" class="es.weso.data.impl.IndicatorDataManager" />
 	<bean id="componentDataManager" class="es.weso.data.impl.ComponentDataManager" />
 	<bean id="datasetDataManager" class="es.weso.data.impl.DatasetDataManager" />
+	<bean id="weightSchemaDataManager" class="es.weso.data.impl.WeightSchemaDataManager" />
 </beans>
