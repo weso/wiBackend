@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.weso.business.CountryGroupManagement;
-import es.weso.business.CountryManagement;
 
 /**
  * Web services to retrieve {@link es.weso.model.CountryGroup CountryGroups}
@@ -17,56 +16,28 @@ import es.weso.business.CountryManagement;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/groups")
+@RequestMapping("/region")
 public class RegionServices {
 
 	private static CountryGroupManagement countryGroupManager;
-	private static CountryManagement countryManager;
 
 	public void setCountryGroupManager(
 			CountryGroupManagement countryGroupManager) {
 		RegionServices.countryGroupManager = countryGroupManager;
 	}
 
-	public void setCountryManager(CountryManagement countryManager) {
-		RegionServices.countryManager = countryManager;
-	}
-
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String getCountryGroups(ModelMap model) {
-		model.addAttribute("organizations",
-				countryGroupManager.getAllCountryGroupsByType(false));
-		model.addAttribute("regions",
-				countryGroupManager.getAllCountryGroupsByType(true));
-		return "countryGroups";
-	}
-
-	@RequestMapping(value = "/regions", method = RequestMethod.GET)
 	public String getAllRegions(ModelMap model) {
 		model.addAttribute("regions",
-				countryGroupManager.getAllCountryGroupsByType(true));
-		return "continents";
+				countryGroupManager.getAllCountryGroups());
+		return "regions";
 	}
 
-	@RequestMapping(value = "/regions/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
 	public String getCountriesFromRegion(@PathVariable String name, ModelMap model) {
-		model.addAttribute("countries",
-				countryManager.getCountriesFrom(name));
-		return "countries";
-	}
-
-	@RequestMapping(value = "/organizations", method = RequestMethod.GET)
-	public String getAllOrganizations(ModelMap model) {
-		model.addAttribute("organizations",
-				countryGroupManager.getAllCountryGroupsByType(false));
-		return "organizations";
-	}
-
-	@RequestMapping(value = "/organizations/{name}", method = RequestMethod.GET)
-	public String getCountriesFromOrganization(@PathVariable String name, ModelMap model) {
-		model.addAttribute("countries",
-				countryManager.getCountriesFrom(name));
-		return "countries";
+		model.addAttribute("region",
+				countryGroupManager.getCountryGroup(name));
+		return "region";
 	}
 
 }

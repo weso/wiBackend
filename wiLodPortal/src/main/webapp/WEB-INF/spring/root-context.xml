@@ -7,9 +7,6 @@
 		<property name="countryGroupManager">
 			<ref bean="countryGroupManager" />
 		</property>
-		<property name="countryManager">
-			<ref bean="countryManager" />
-		</property>
 	</bean>
 	
 	<bean id="rootServices" class="es.weso.rest.RootServices">

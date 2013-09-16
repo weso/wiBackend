@@ -17,7 +17,7 @@ import es.weso.business.IndicatorManagement;
 @Controller
 @RequestMapping("")
 public class RootServices {
-	
+
 	private static CountryGroupManagement countryGroupManager;
 	private static IndicatorManagement indicatorManager;
 
@@ -25,22 +25,19 @@ public class RootServices {
 			CountryGroupManagement countryGroupManager) {
 		RootServices.countryGroupManager = countryGroupManager;
 	}
-	
-	public void setIndicatorManager(
-			IndicatorManagement indicatorManager) {
+
+	public void setIndicatorManager(IndicatorManagement indicatorManager) {
 		RootServices.indicatorManager = indicatorManager;
 	}
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap model) {
-		model.addAttribute("groups",
-				countryGroupManager.getAllCountryGroupsByType(false));
-		model.addAttribute("regions",
-				countryGroupManager.getAllCountryGroupsByType(true));
-		model.addAttribute("indicators", indicatorManager.getIndicatorsHierarchy());
+		model.addAttribute("regions", countryGroupManager.getAllCountryGroups());
+		model.addAttribute("indicators",
+				indicatorManager.getIndicatorsHierarchy());
 		return "index";
 	}
-	
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index2(ModelMap model) {
 		return index(model);
