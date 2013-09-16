@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import es.weso.business.impl.ComponentManager;
+import es.weso.business.ComponentManagement;
 
 /**
  * Web services to retrieve {@link es.weso.model.Component}s
@@ -19,9 +19,9 @@ import es.weso.business.impl.ComponentManager;
 @RequestMapping("/component")
 public class ComponentServices {
 
-	private static ComponentManager componentManager;
+	private static ComponentManagement componentManager;
 
-	public void setComponentManager(ComponentManager componentManager) {
+	public void setComponentManager(ComponentManagement componentManager) {
 		ComponentServices.componentManager = componentManager;
 	}
 

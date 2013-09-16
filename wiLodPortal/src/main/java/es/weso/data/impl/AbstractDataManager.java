@@ -17,6 +17,7 @@ import es.weso.model.Dataset;
 import es.weso.model.Indicator;
 import es.weso.model.NamedUri;
 import es.weso.model.Observation;
+import es.weso.model.Subindex;
 import es.weso.model.ValuedNamedUri;
 import es.weso.model.WeightSchema;
 import es.weso.util.Conf;
@@ -209,12 +210,14 @@ public abstract class AbstractDataManager {
 			QuerySolution qs = rs.next();
 			String currentUri = getURI(qs, "weightSchema");
 			if (oldUri.equalsIgnoreCase(currentUri)) {
-				weightSchemas.get(weightSchemas.size() - 1).addWeight(getURI(qs, "element"), getDouble(qs, "value"));
+				weightSchemas.get(weightSchemas.size() - 1).addWeight(
+						getURI(qs, "element"), getDouble(qs, "value"));
 			} else {
 				oldUri = currentUri;
 				WeightSchema weightSchema = new WeightSchema();
 				weightSchema.setUri(currentUri);
-				weightSchema.addWeight(getURI(qs, "element"), getDouble(qs, "value"));
+				weightSchema.addWeight(getURI(qs, "element"),
+						getDouble(qs, "value"));
 				weightSchemas.add(weightSchema);
 			}
 		}
@@ -229,9 +232,47 @@ public abstract class AbstractDataManager {
 					|| weightSchema.getSchema().isEmpty()) {
 				weightSchema.setUri(getURI(qs, "weightSchema"));
 			}
-			weightSchema.addWeight(getURI(qs, "element"), getDouble(qs, "value"));
+			weightSchema.addWeight(getURI(qs, "element"),
+					getDouble(qs, "value"));
 		}
 		return weightSchema;
+	}
+
+	protected Subindex resultSetToSubindex(ResultSet rs) {
+		Subindex subindex = new Subindex();
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			if (subindex.getComponents() == null
+					|| subindex.getComponents().isEmpty()) {
+				subindex.setUri(getURI(qs, "subindex"));
+				subindex.setLabel(getString(qs, "label"));
+				subindex.setComment(getString(qs, "comment"));
+			}
+			subindex.addComponent(querySolutionToNamedUriComponent(qs));
+		}
+		return subindex;
+	}
+
+	protected Collection<Subindex> resultSetToSubindexCollection(ResultSet rs) {
+		List<Subindex> subindexes = new LinkedList<Subindex>();
+		String oldUri = "";
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			String currentUri = getURI(qs, "subindex");
+			if (oldUri.equalsIgnoreCase(currentUri)) {
+				subindexes.get(subindexes.size() - 1).addComponent(
+						querySolutionToNamedUriComponent(qs));
+			} else {
+				oldUri = currentUri;
+				Subindex subindex = new Subindex();
+				subindex.setUri(currentUri);
+				subindex.setLabel(getString(qs, "label"));
+				subindex.setComment(getString(qs, "comment"));
+				subindex.addComponent(querySolutionToNamedUriComponent(qs));
+				subindexes.add(subindex);
+			}
+		}
+		return subindexes;
 	}
 
 	private ValuedNamedUri querySolutionToValuedNamedUri(QuerySolution qs) {

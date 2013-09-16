@@ -62,6 +62,12 @@
 			<ref bean="weightSchemaManager" />
 		</property>
 	</bean>
+	
+	<bean id="subindexServices" class="es.weso.rest.SubindexServices">
+		<property name="subindexManager">
+			<ref bean="subindexManager" />
+		</property>
+	</bean>
 
 	<bean id="namedRegion" class="es.weso.wirouter.country.NamedRegion">
 		<property name="countryGroupManager">
@@ -119,6 +125,12 @@
 			<ref bean="weightSchemaDataManager" />
 		</property>
 	</bean>
+	
+	<bean id="subindexManager" class="es.weso.business.impl.SubindexManager">
+		<property name="subindexDataManager">
+			<ref bean="subindexDataManager" />
+		</property>
+	</bean>
 
 	<bean id="countryDataManager" class="es.weso.data.impl.CountryDataManager" />
 	<bean id="countryGroupDataManager" class="es.weso.data.impl.CountryGroupDataManager" />
@@ -127,4 +139,5 @@
 	<bean id="componentDataManager" class="es.weso.data.impl.ComponentDataManager" />
 	<bean id="datasetDataManager" class="es.weso.data.impl.DatasetDataManager" />
 	<bean id="weightSchemaDataManager" class="es.weso.data.impl.WeightSchemaDataManager" />
+	<bean id="subindexDataManager" class="es.weso.data.impl.SubindexDataManager" />
 </beans>
