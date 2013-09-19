@@ -18,27 +18,20 @@ import es.weso.wirouter.country.CountryExpr;
 import es.weso.wirouter.year.YearExpr;
 
 /**
- * Web services to retrieve {@link es.weso.model.Observation observations}
+ * Web services to retrieve comparisons
  * 
  * @author Alejandro Montes García
  * @since 03/07/2013
  * @version 1.0
  */
 @Controller
-@RequestMapping("/observations")
-public class ObservationsServices {
+@RequestMapping("/compare")
+public class CompareServices {
 
 	private static ObservationManagement observationManager;
 
 	public void setObservationManager(ObservationManagement observationManager) {
-		ObservationsServices.observationManager = observationManager;
-	}
-
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String getObservations(ModelMap model) {
-		model.addAttribute("observations", new ItemCollection<Observation>(
-				observationManager.getAllObservations()));
-		return "observations";
+		CompareServices.observationManager = observationManager;
 	}
 
 	@RequestMapping(value = "/{country}", method = RequestMethod.GET)
@@ -48,7 +41,7 @@ public class ObservationsServices {
 				new ItemCollection<Observation>(
 						observationManager
 								.getAllObservationsByCountries(parseCountryCodes(country))));
-		return "observations";
+		return "comparison";
 	}
 
 	@RequestMapping(value = "/{country}/{year}", method = RequestMethod.GET)
@@ -59,7 +52,7 @@ public class ObservationsServices {
 				new ItemCollection<Observation>(observationManager
 						.getAllObservationsByYear(parseYears(year),
 								parseCountryCodes(country))));
-		return "observations";
+		return "comparison";
 	}
 
 	@RequestMapping(value = "/{country}/{year}/{observation}", method = RequestMethod.GET)
@@ -73,15 +66,7 @@ public class ObservationsServices {
 								parseCountryCodes(country),
 								parseObservations(observation),
 								parseYears(year))));
-		return "observations";
-	}
-	
-	@RequestMapping(value = "/barchart/{code}/{year}/{indicator}", method = RequestMethod.GET)
-	public String getBarchart(@PathVariable String code,
-			@PathVariable String year, @PathVariable String indicator,
-			ModelMap model) {
-		model.addAttribute("observations", observationManager.getBarchart(code, Integer.parseInt(year), indicator));
-		return "observations";
+		return "comparison";
 	}
 
 	/**

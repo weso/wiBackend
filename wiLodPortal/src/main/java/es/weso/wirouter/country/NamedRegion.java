@@ -29,11 +29,11 @@ public class NamedRegion extends CountryExpr {
 
 	@Override
 	public Collection<String> getCountryCodes() {
-		Collection<CountryForRegion> namedUris = countryGroupManager.getCountryGroup(
+		Collection<CountryForRegion> countries = countryGroupManager.getCountryGroup(
 				name).getCountries();
 		Collection<String> codes = new ArrayDeque<String>();
-		for (CountryForRegion namedUri : namedUris) {
-			codes.add(namedUri.getIsoCode3());
+		for (CountryForRegion country : countries) {
+			codes.add(country.getIsoCode3());
 		}
 		return codes;
 	}

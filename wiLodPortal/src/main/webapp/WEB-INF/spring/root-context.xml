@@ -36,7 +36,7 @@
 		</property>
 	</bean>
 
-	<bean id="observationsServices" class="es.weso.rest.ObservationsServices">
+	<bean id="comparisonServices" class="es.weso.rest.CompareServices">
 		<property name="observationManager">
 			<ref bean="observationManager" />
 		</property>
