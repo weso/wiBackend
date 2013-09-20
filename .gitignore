@@ -15,3 +15,22 @@ start_OS_X.sh
 wiLodPortal/logs/
 
 start_OS_X.command
+
+
+
+wiLodPortalPlay/logs
+wiLodPortalPlay/project/project
+wiLodPortalPlay/project/target
+wiLodPortalPlay/target
+wiLodPortalPlay/.target
+wiLodPortalPlay/tmp
+wiLodPortalPlay/.history
+wiLodPortalPlay/dist
+wiLodPortalPlay/.idea
+wiLodPortalPlay/*.iml
+wiLodPortalPlay/out
+wiLodPortalPlay/.idea_modules
+wiLodPortalPlay/.classpath
+wiLodPortalPlay/.project
+wiLodPortalPlay/RUNNING_PID
+wiLodPortalPlay/.settings
