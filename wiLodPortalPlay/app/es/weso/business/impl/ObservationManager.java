@@ -1,5 +1,6 @@
 package es.weso.business.impl;
 
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import es.weso.business.CountryManagement;
 import es.weso.business.IndicatorManagement;
 import es.weso.business.ObservationManagement;
 import es.weso.data.ObservationDataManagement;
+import es.weso.data.impl.ObservationDataManager;
 import models.Indicator;
 import models.Observation;
 import models.ObservationWithoutIndicator;
@@ -28,18 +30,22 @@ public class ObservationManager implements ObservationManagement {
 	private static ObservationDataManagement observationDataManager;
 	private static IndicatorManagement indicatorManager;
 	private static CountryManagement countryManager;
-
-	public void setIndicatorManager(IndicatorManagement indicatorManager) {
-		ObservationManager.indicatorManager = indicatorManager;
-	}
-
-	public void setCountryManager(CountryManagement countryManager) {
-		ObservationManager.countryManager = countryManager;
-	}
-
-	public void setObservationDataManager(
-			ObservationDataManagement observationDataManager) {
-		ObservationManager.observationDataManager = observationDataManager;
+	private static ObservationManager instance;
+	
+	private ObservationManager() {}
+	
+	public static ObservationManager getInstance() {
+		if(instance == null) {
+			try {
+				instance = new ObservationManager();
+				observationDataManager = new ObservationDataManager();
+				countryManager = CountryManager.getInstance();
+				indicatorManager = IndicatorManager.getInstance();
+			} catch(IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return instance;
 	}
 
 	public Collection<Observation> getAllObservations() {

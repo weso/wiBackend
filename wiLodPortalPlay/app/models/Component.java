@@ -3,8 +3,6 @@ package models;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.google.gson.Gson;
-
 public class Component {
 
 	private String uri, label;
@@ -39,11 +37,6 @@ public class Component {
 			indicators = new HashSet<NamedUri>();
 		}
 		indicators.add(indicator);
-	}
-
-	@Override
-	public String toString() {
-		return new Gson().toJson(this);
 	}
 
 }

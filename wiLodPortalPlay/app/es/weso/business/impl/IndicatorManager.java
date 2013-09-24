@@ -1,11 +1,13 @@
 package es.weso.business.impl;
 
+import java.io.IOException;
 import java.util.Collection;
 
-import es.weso.business.IndicatorManagement;
-import es.weso.data.IndicatorDataManagement;
 import models.Indicator;
 import models.JSONHashMap;
+import es.weso.business.IndicatorManagement;
+import es.weso.data.IndicatorDataManagement;
+import es.weso.data.impl.IndicatorDataManager;
 
 /**
  * Implementation of {@link Indicator} management operations
@@ -17,10 +19,21 @@ import models.JSONHashMap;
 public class IndicatorManager implements IndicatorManagement {
 
 	private static IndicatorDataManagement indicatorDataManager;
+	private static IndicatorManager instance;
 
-	public void setIndicatorDataManager(
-			IndicatorDataManagement indicatorDataManager) {
-		IndicatorManager.indicatorDataManager = indicatorDataManager;
+	private IndicatorManager() {
+	}
+
+	public static IndicatorManager getInstance() {
+		if (instance == null) {
+			try {
+				instance = new IndicatorManager();
+				indicatorDataManager = new IndicatorDataManager();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return instance;
 	}
 
 	@Override

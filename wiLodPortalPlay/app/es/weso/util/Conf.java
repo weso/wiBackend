@@ -1,11 +1,10 @@
 package es.weso.util;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
+
+import play.Play;
 
 /**
  * Loads externalized data like queries or configurations from the file that
@@ -18,30 +17,13 @@ import java.util.Properties;
  */
 public class Conf {
 
-	private static Properties config, queries, prefix;
+	private static Properties config, queries;
 
 	private static final String QUERIES_FILE = "queries.properties";
 	private static final String CONFIG_FILE = "config.properties";
-	private static final String PREFIX_FILE = "prefix.properties";
-
-	public static Map<String, String> getPrefixes() {
-		if (prefix == null) {
-			prefix = new Properties();
-			try {
-				prefix.load(getLocalStream(PREFIX_FILE));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		Map<String, String> prefixes = new HashMap<String, String>();
-		for (String str : prefix.stringPropertyNames()) {
-			prefixes.put(str, prefix.getProperty(str));
-		}
-		return prefixes;
-	}
 
 	/**
-	 * Gets troperties from the configuration file
+	 * Gets properties from the configuration file
 	 * 
 	 * @param propertyName
 	 *            The name of the property
@@ -172,24 +154,12 @@ public class Conf {
 		if (prop == null) {
 			prop = new Properties();
 			try {
-				prop.load(getLocalStream(fileName));
+				prop.load(Play.application().resourceAsStream(fileName));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return prop.getProperty(propertyName);
-	}
-
-	/**
-	 * Opens an input stream
-	 * 
-	 * @param resourceName
-	 *            The name of the resource to open the stream
-	 * @return The opened input stream
-	 */
-	private static InputStream getLocalStream(String resourceName) {
-		return Thread.currentThread().getContextClassLoader()
-				.getResourceAsStream(resourceName);
 	}
 
 }

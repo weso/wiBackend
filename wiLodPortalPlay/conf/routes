@@ -33,3 +33,5 @@ GET	/subindex/:id	controllers.Application.subindex(id: String)
 
 GET	/weightSchema	controllers.Application.weightSchemas()
 GET	/weightSchema/:id	controllers.Application.weightSchema(id: String)
+
+GET /compare/:countries/:years/:indicators	controllers.Application.compare(countries: String, years: String, indicators: String)

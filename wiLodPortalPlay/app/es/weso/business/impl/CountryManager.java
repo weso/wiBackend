@@ -1,14 +1,17 @@
 package es.weso.business.impl;
 
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
-import es.weso.business.CountryManagement;
-import es.weso.data.CountryDataManagement;
-import es.weso.data.CountryGroupDataManagement;
 import models.Country;
 import models.CountryForRegion;
 import models.CountryGroup;
+import es.weso.business.CountryManagement;
+import es.weso.data.CountryDataManagement;
+import es.weso.data.CountryGroupDataManagement;
+import es.weso.data.impl.CountryDataManager;
+import es.weso.data.impl.CountryGroupDataManager;
 
 /**
  * Implementation of {@link Country} management operations
@@ -21,14 +24,23 @@ public class CountryManager implements CountryManagement {
 
 	private static CountryDataManagement countryDataManager;
 	private static CountryGroupDataManagement countryGroupDataManager;
-
-	public void setCountryDataManager(CountryDataManagement countryDataManager) {
-		CountryManager.countryDataManager = countryDataManager;
+	private static CountryManager instance;
+	
+	private CountryManager(){}
+	
+	public static CountryManager getInstance() {
+		if(instance == null) {
+			instance = new CountryManager();
+			try {
+				countryDataManager = new CountryDataManager();
+				countryGroupDataManager = new CountryGroupDataManager();
+			} catch(IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return instance;
 	}
 	
-	public void setCountryGroupDataManager(CountryGroupDataManagement countryGroupDataManager) {
-		CountryManager.countryGroupDataManager = countryGroupDataManager;
-	}
 
 	public Collection<Country> getAllCountries() {
 		return countryDataManager.getCountries();
