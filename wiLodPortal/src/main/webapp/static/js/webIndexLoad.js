@@ -13,15 +13,15 @@ var charts = [];
 $(function(){
 	//loadIndicatorInfo(COUNTRYCODE, INDICATOR, YEAR, MINYEAR, MAXYEAR);
 
-	processCountryData(webIndexData, webIndexData.countryCode, webIndexData.indicator.label, webIndexData.year);
+	processCountryData(webIndexData, webIndexData.country, webIndexData.indicator.label, webIndexData.year);
 	
 	$.ajax({
 	  type: "GET",
-	  url: URL_BASE + "/observations/" +  webIndexData.countryCode + "/" + webIndexData.year,
+	  url: URL_BASE + "/observations/" +  webIndexData.country.isoCode3 + "/" + webIndexData.year,
 	  dataType: "json",
 	  contentType: "application/javascript; charset=UTF-8"
 	}).done(function ( data ) {
-		processCountryListData(data, webIndexData.countryCode, webIndexData.indicator.label);
+		processCountryListData(data, webIndexData.country.isoCode3, webIndexData.indicator.label);
 	});
 });
 
@@ -88,7 +88,7 @@ if (indicator.name.length > 1) continue;
 	new IndicatorList(accordion, [ indicatorList ], autocompleteTags);
 }
 
-function processCountryData(data, countryCode, indicator, year) {
+function processCountryData(data, country, indicator, year) {
 /*	var indicatorsPerYear = [];
 	var maxYear = 0;
 	var minYear = Number.MAX_VALUE;
@@ -137,23 +137,61 @@ function processCountryData(data, countryCode, indicator, year) {
 
 	new IndicatorList(accordion, [ indicatorList ], autocompleteTags);
 */	
-	new YearSelector("year-selector", 15, data.indicator.start, data.indicator.end - 1, year, new AfterClick(countryCode, indicator));
+
+	// Flag
+	var countryFlag = document.getElementById("country-flag");
+	countryFlag.className = "f32 " + country.isoCode2.toLowerCase();
+	
+	// Country name
+	document.getElementById("country-title").innerHTML = country.name;
+	
+	// Region name
+	document.getElementById("region-title").innerHTML = country.belongsTo[0].name;
+	
+	// Map
+	// '#world-map', regionSelectedFunction, 'world_mill_en', 'ES', 40.46, -3.75
+	var code = country.isoCode2.toUpperCase();
+
+	var map = new jvm.WorldMap({
+        container: $("#country-map"),
+        map: 'world_merc_en',
+        zoomOnScroll: false,
+        regionsSelectable: true,
+        regionStyle: {
+	    initial: {
+		        fill: '#c9e1ab'
+		    },
+		    selected: {
+		        fill: '#91bf39'
+		    }
+		},
+        onRegionSelected: function(){},
+        backgroundColor: "#FFFFFF"
+    });
+	
+    map.setFocus(code);
+    var selectedRegions = new Array(code);
+    map.setSelectedRegions(selectedRegions);
+	
+	//countryFlag.src += 'flags32.png';
+
+	new YearSelector("year-selector", 15, data.indicator.start, data.indicator.end - 1, year, new AfterClick(country.isoCode3, indicator));
 	//setBasicYearSelector("year-select", data.indicator.start, data.indicator.end - 1);
 	
 	// World ranking
 	//processRanking(data, countryCode, indicator);
 	
 	// Country comparison
-	processComparingCountries(data, countryCode, indicator);
+	processComparingCountries(data, country.isoCode3, indicator);
 	
 	// Previous year country comparison
-	processPreviousComparingCountries(data, countryCode, indicator);
+	processPreviousComparingCountries(data, country.isoCode3, indicator);
 	
 	// Following year country comparison
-	processNextComparingCountries(data, countryCode, indicator);
+	processNextComparingCountries(data, country.isoCode3, indicator);
 	
 	// Year progression
-	processProgressionBarChart(data, "#indicator-progression-years", countryCode, indicator);
+	processProgressionBarChart(data, "#indicator-progression-years", country.isoCode3, indicator);
 }
 
 function processComparingCountries(data, countryCode, indicator) {

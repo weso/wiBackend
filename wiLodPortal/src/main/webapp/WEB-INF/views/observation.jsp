@@ -11,7 +11,7 @@
 	<head>
 		<script>
 			var webIndexData = {
-				countryCode: "${country}",
+				country: ${country},
 				year: ${year},
 				ranking: ${ranking},
 				history: ${history},
@@ -35,7 +35,7 @@
 		<link rel="stylesheet" href="<c:url value="/static/css/foundation.min.css" />">
 		<link rel="stylesheet" href="<c:url value="/static/css/app.css" />">
 		<link rel="stylesheet" href="<c:url value="/static/css/wesCountry.css" />">
-		<link rel="stylesheet" href="<c:url value="/static/css/flags.css" />">
+		<link rel="stylesheet" href="<c:url value="/static/css/flags32.css" />">
 		<script src="<c:url value="/static/js/vendor/custom.modernizr.js" />"></script>
 		<script>
 			document.write('<script src=<c:url value="/static/js/vendor/" />' + ('__proto__' in {} ? 'zepto' : 'jquery') + '.js><\/script>');
@@ -108,13 +108,12 @@
 				</div>
 				<div id="country-info" class="small-12 large-4 columns">
 					<div class="large-8 small-8 columns">
-						<span id="region-title">Europe & Central Asia</span>
+						<span id="region-title"></span>
 						<br />
-						<span id="country-title">Spain</span>
+						<span id="country-title"></span>
 					</div>
-					<div id="flag" class="large-4 small-4 columns">
-					<!--	<img src="<c:url value="/static/img/spain.png" />" alt="Country flag" /> -->
-						<img src="<c:url value="/static/img/blank.png" />" class="flag flag-ind" alt="Country flag"
+					<div id="flag" class="large-4 small-4 columns f32">
+						<div id="country-flag" alt="Country flag" />
 					</div>
 				</div>
 			</div>
@@ -160,7 +159,6 @@
 						</div>
 					</div>
 					<div id="country-map" class="small-6 large-6 columns">
-						<img src="<c:url value="/static/img/map.png" />" alt="Country map" />
 					</div>
 				</div>
 			</div>

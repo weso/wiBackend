@@ -421,6 +421,9 @@ div.country-table td.country:hover, div.country-table td.country-hover {
 #country-map {
 	text-align: right;
 	padding-right: 0;
+	width: 100px;
+	height: 100px;
+	margin-top: 15px;
 }
 
 .organizations-title {
