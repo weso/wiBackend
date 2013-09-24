@@ -22,11 +22,27 @@ public interface IndicatorManagement {
 	 * @return
 	 */
 	public Indicator getIndicator(String label);
+	
+	/**
+	 * Gets an {@link Indicator} by its uri
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public Indicator getIndicatorByURI(String uri);
 
 	/**
 	 * Gets all the {@link Indicator}s in a hierarchical structure
 	 * 
 	 * @return
 	 */
-	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators();
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getIndicatorsHierarchy();
+	
+	
+	/**
+	 * Gets all the {@link Indicator}s
+	 * 
+	 * @return
+	 */
+	public Collection<Indicator> getAllIndicators();
 }

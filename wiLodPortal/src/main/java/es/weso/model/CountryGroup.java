@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 public class CountryGroup {
 
 	private String name, uri;
-	private Collection<NamedUri> countries;
+	private Collection<CountryForRegion> countries;
 	private boolean isContinent;
 
 	public String getName() {
@@ -36,11 +36,11 @@ public class CountryGroup {
 		this.uri = uri;
 	}
 
-	public Collection<NamedUri> getCountries() {
+	public Collection<CountryForRegion> getCountries() {
 		return countries;
 	}
 
-	public void setCountries(Collection<NamedUri> countries) {
+	public void setCountries(Collection<CountryForRegion> countries) {
 		this.countries = countries;
 	}
 

@@ -7,8 +7,8 @@ import es.weso.business.CountryManagement;
 import es.weso.data.CountryDataManagement;
 import es.weso.data.CountryGroupDataManagement;
 import es.weso.model.Country;
+import es.weso.model.CountryForRegion;
 import es.weso.model.CountryGroup;
-import es.weso.model.NamedUri;
 
 /**
  * Implementation of {@link Country} management operations
@@ -37,9 +37,9 @@ public class CountryManager implements CountryManagement {
 	public Collection<Country> getCountriesFrom(String countryGroup) {
 		CountryGroup cg = countryGroupDataManager.getCountryGroup(countryGroup);
 		Collection<Country> countries = new ArrayDeque<Country>(cg.getCountries().size());
-		for(NamedUri nu : cg.getCountries()) {
+		for(CountryForRegion nu : cg.getCountries()) {
 			try {
-				countries.add(getCountry(nu.getName()));
+				countries.add(getCountry(nu.getIsoCode3()));
 			} catch(IllegalArgumentException iae) {
 				//Country without observations
 			}

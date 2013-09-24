@@ -34,9 +34,4 @@ public class CountryGroupDataManager extends AbstractDataManager implements
 				.getQuery("allContinents")));
 	}
 
-	public Collection<CountryGroup> getOrganizations() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

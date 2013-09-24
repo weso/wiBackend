@@ -23,40 +23,11 @@ public class CountryGroupManager implements CountryGroupManagement {
 	}
 
 	public Collection<CountryGroup> getAllCountryGroups() {
-		Collection<CountryGroup> groups = getAllContinents();
-		groups.addAll(getAllOrganizations());
-		return groups;
-	}
-
-	public Collection<CountryGroup> getAllCountryGroupsByType(
-			boolean isContinent) {
-		if (isContinent) {
-			return getAllContinents();
-		} else {
-			return getAllOrganizations();
-		}
+		return countryGroupDataManager.getContinents();
 	}
 
 	public CountryGroup getCountryGroup(String name) {
 		return countryGroupDataManager.getCountryGroup(name);
-	}
-
-	/**
-	 * Gets all the continents available
-	 * 
-	 * @return A {@link Collection} containing all the continents available
-	 */
-	private Collection<CountryGroup> getAllContinents() {
-		return countryGroupDataManager.getContinents();
-	}
-
-	/**
-	 * Gets all the organizations available
-	 * 
-	 * @return A {@link Collection} containing all the organizations available
-	 */
-	private Collection<CountryGroup> getAllOrganizations() {
-		return countryGroupDataManager.getOrganizations();
 	}
 
 }

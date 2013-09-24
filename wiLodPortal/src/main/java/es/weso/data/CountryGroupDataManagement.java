@@ -30,11 +30,4 @@ public interface CountryGroupDataManagement {
 	 */
 	public Collection<CountryGroup> getContinents();
 
-	/**
-	 * Gets all the organizations available
-	 * 
-	 * @return A {@link Collection} containing all the organizations available
-	 */
-	public Collection<CountryGroup> getOrganizations();
-
 }

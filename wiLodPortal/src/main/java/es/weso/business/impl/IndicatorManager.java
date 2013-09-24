@@ -29,7 +29,17 @@ public class IndicatorManager implements IndicatorManagement {
 	}
 
 	@Override
-	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getAllIndicators() {
-		return indicatorDataManager.getAllIndicators();
+	public JSONHashMap<String, JSONHashMap<String, Collection<String>>> getIndicatorsHierarchy() {
+		return indicatorDataManager.getHierarchy();
+	}
+
+	@Override
+	public Indicator getIndicatorByURI(String uri) {
+		return indicatorDataManager.getIndicatorByURI(uri);
+	}
+
+	@Override
+	public Collection<Indicator> getAllIndicators() {
+		return indicatorDataManager.geAllIndicators();
 	}
 }

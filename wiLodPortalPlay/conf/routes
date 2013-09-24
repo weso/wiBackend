@@ -1,0 +1,35 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+GET	/component	controllers.Application.components()
+GET	/component/:id	controllers.Application.component(id: String)
+
+GET	/country	controllers.Application.countries()
+GET	/country/:code	controllers.Application.country(code: String)
+
+GET	/dataset	controllers.Application.datasets()
+GET	/dataset/:id	controllers.Application.dataset(id: String)
+
+GET	/indicator	controllers.Application.indicators()
+GET	/indicator/:id	controllers.Application.indicator(id: String)
+
+GET	/observation	controllers.Application.observations()
+GET	/observation/:id	controllers.Application.observation(id: String)
+GET	/observation/:country/:year/:indicator	controllers.Application.observationByCountry(country: String, year: Integer, indicator: String)
+
+GET	/region	controllers.Application.regions()
+GET	/region/:name	controllers.Application.region(name: String)
+
+GET	/subindex	controllers.Application.subindexes()
+GET	/subindex/:id	controllers.Application.subindex(id: String)
+
+GET	/weightSchema	controllers.Application.weightSchemas()
+GET	/weightSchema/:id	controllers.Application.weightSchema(id: String)

@@ -1,6 +1,7 @@
 package es.weso.business;
 
 import java.util.Collection;
+import java.util.Map;
 
 import es.weso.model.Observation;
 
@@ -143,10 +144,12 @@ public interface ObservationManagement {
 	 * @param indicator
 	 * @return
 	 */
-	public Collection<Observation> getBarchart(String code, Integer year, String indicator);
+	public Collection<Observation> getBarchart(String code, Integer year,
+			String indicator);
 
 	/**
 	 * Gets the ranking of an indicator in a specific year
+	 * 
 	 * @param country
 	 * @param parseInt
 	 * @return
@@ -155,9 +158,22 @@ public interface ObservationManagement {
 
 	/**
 	 * Gets the historic of a country for a specific indicator
+	 * 
 	 * @param country
 	 * @param indicator
 	 * @return
 	 */
 	public Collection<Observation> getHistory(String country, String indicator);
+
+	/**
+	 * Gets all the information needed to display an {@link Observation} in the
+	 * webpage
+	 * 
+	 * @param country
+	 * @param year
+	 * @param indicator
+	 * @return
+	 */
+	public Map<String, Object> getObservationForWebpage(String country,
+			int year, String indicator);
 }

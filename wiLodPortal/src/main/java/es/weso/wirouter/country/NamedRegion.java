@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 
 import es.weso.business.CountryGroupManagement;
-import es.weso.model.NamedUri;
+import es.weso.model.CountryForRegion;
 
 public class NamedRegion extends CountryExpr {
 	private final String name;
@@ -29,11 +29,11 @@ public class NamedRegion extends CountryExpr {
 
 	@Override
 	public Collection<String> getCountryCodes() {
-		Collection<NamedUri> namedUris = countryGroupManager.getCountryGroup(
+		Collection<CountryForRegion> countries = countryGroupManager.getCountryGroup(
 				name).getCountries();
 		Collection<String> codes = new ArrayDeque<String>();
-		for (NamedUri namedUri : namedUris) {
-			codes.add(namedUri.getName());
+		for (CountryForRegion country : countries) {
+			codes.add(country.getIsoCode3());
 		}
 		return codes;
 	}

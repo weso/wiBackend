@@ -15,24 +15,12 @@ import es.weso.model.CountryGroup;
 public interface CountryGroupManagement {
 
 	/**
-	 * Gets all the {@link CountryGroup}s (continents and organizations)
+	 * Gets all the {@link CountryGroup}s
 	 * 
 	 * @return A {@link Collection} with all the {@link CountryGroup}s
 	 */
 	public Collection<CountryGroup> getAllCountryGroups();
 
-	/**
-	 * Gets all the {@link CountryGroup}s that are continents XOR organizations
-	 * 
-	 * @param isContinent
-	 *            <code>true</code> if the method is wanted to return
-	 *            continents, <code>false</code> if it is wanted to return
-	 *            organizations
-	 * @return All the {@link CountryGroup}s that are continents XOR
-	 *         organizations
-	 */
-	public Collection<CountryGroup> getAllCountryGroupsByType(
-			boolean isContinent);
 
 	/**
 	 * Gets the data of a specific {@link CountryGroup}
