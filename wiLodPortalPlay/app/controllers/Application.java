@@ -1,14 +1,23 @@
 package controllers;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+import play.api.templates.Html;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 
 import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import es.weso.business.ComponentManagement;
 import es.weso.business.CountryGroupManagement;
@@ -34,6 +43,7 @@ import es.weso.wirouter.year.YearExpr;
 public class Application extends Controller {
 
 	private static Gson gson = new Gson();
+	private static XStream xstream = new XStream(new DomDriver());
 	private static ComponentManagement componentManager = ComponentManager
 			.getInstance();
 	private static CountryGroupManagement countryGroupManager = CountryGroupManager
@@ -51,15 +61,71 @@ public class Application extends Controller {
 	private static WeightSchemaManagement weightSchemaManager = WeightSchemaManager
 			.getInstance();
 
-	private static Result render(Object obj) {
+	private static Result render(Object obj, Html html) {
+		if (request().accepts("text/html")) {
+			return ok(html);
+		}
+		if (request().accepts("text/turtle")) {
+			return renderTTL();
+		}
+		if (request().accepts("application/rdf+xml")) {
+			return renderRDF();
+		}
 		if (request().accepts("application/json")) {
 			return renderJSON(obj);
 		}
-		return TODO;
+		if (request().accepts("application/xml")) {
+			return renderXML(obj);
+		}
+		return badRequest(); // Should return 415
+	}
+
+	private static Result renderXML(Object obj) {
+		return ok(xstream.toXML(obj));
 	}
 
 	private static Result renderJSON(Object obj) {
 		return ok(gson.toJson(obj));
+	}
+
+	private static Result renderTTL() {
+		try {
+			return renderLD("text");
+		} catch (Exception e) {
+			return internalServerError();
+		}
+	}
+
+	private static Result renderRDF() {
+		try {
+			return renderLD("xml");
+		} catch (Exception e) {
+			return internalServerError();
+		}
+	}
+
+	private static Result renderLD(String output) throws Exception {
+		// FIXME This is fuseki dependant and dirty...
+		System.out.println(request().path());
+		String relativeUri = URLEncoder.encode(
+				request().path().substring(request().path().indexOf('/', 0)),
+				"UTF-8");
+		String url = "http://localhost:3030/computex/query?query=CONSTRUCT%7B%3Chttp%3A%2F%2Fdata.webfoundation.org%2Fwebindex%2Fv2013"
+				+ relativeUri
+				+ "%3E+%3Fp+%3Fl%7DWHERE%7B%3Chttp%3A%2F%2Fdata.webfoundation.org%2Fwebindex%2Fv2013"
+				+ relativeUri + "%3E+%3Fp+%3Fl%7D&output=" + output;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				con.getInputStream()));
+		String inputLine;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		while ((inputLine = in.readLine()) != null) {
+			baos.write(inputLine.getBytes());
+			baos.write("\n".getBytes());
+		}
+		in.close();
+		return ok(baos.toString());
 	}
 
 	public static Result index() {
@@ -67,81 +133,84 @@ public class Application extends Controller {
 	}
 
 	public static Result components() {
-		return render(componentManager.getAll());
+		return render(componentManager.getAll(), null);
 	}
 
 	public static Result component(String id) {
-		return render(componentManager.getOne(id));
+		return render(componentManager.getOne(id), null);
 	}
 
 	public static Result countries() {
-		return render(countryManager.getAllCountries());
+		return render(countryManager.getAllCountries(), null);
 	}
 
 	public static Result country(String code) {
-		return render(countryManager.getCountry(code));
+		return render(countryManager.getCountry(code), null);
 	}
 
 	public static Result datasets() {
-		return render(datasetManager.getAll());
+		return render(datasetManager.getAll(), null);
 	}
 
 	public static Result dataset(String id) {
-		return render(datasetManager.getOne(id));
+		return render(datasetManager.getOne(id), null);
 	}
 
 	public static Result indicators() {
-		return render(indicatorManager.getAllIndicators());
+		return render(indicatorManager.getAllIndicators(), null);
 	}
 
 	public static Result indicator(String id) {
-		return render(indicatorManager.getIndicatorByURI(id));
+		return render(indicatorManager.getIndicatorByURI(id), null);
 	}
 
 	public static Result observations() {
-		return render(observationManager.getAllObservations());
+		return render(observationManager.getAllObservations(), null);
 	}
 
 	public static Result observation(String id) {
-		return render(observationManager.getObservationByURI(id));
+		return render(observationManager.getObservationByURI(id), null);
 	}
 
 	public static Result observationByCountry(String country, int year,
 			String indicator) {
-		return render(observationManager.getAllObservationsByCountries(
-				Collections.singleton(country),
-				Collections.singleton(indicator), Collections.singleton(year)));
+		// TODO Redirect
+		return render(
+				observationManager.getAllObservationsByCountries(
+						Collections.singleton(country),
+						Collections.singleton(indicator),
+						Collections.singleton(year)), null);
 	}
 
 	public static Result regions() {
-		return render(countryGroupManager.getAllCountryGroups());
+		return render(countryGroupManager.getAllCountryGroups(), null);
 	}
 
 	public static Result region(String name) {
-		return render(countryGroupManager.getCountryGroup(name));
+		return render(countryGroupManager.getCountryGroup(name), null);
 	}
 
 	public static Result subindexes() {
-		return render(subindexManager.getAll());
+		return render(subindexManager.getAll(), null);
 	}
 
 	public static Result subindex(String id) {
-		return render(subindexManager.getOne(id));
+		return render(subindexManager.getOne(id), null);
 	}
 
 	public static Result weightSchemas() {
-		return render(weightSchemaManager.getAll());
+		return render(weightSchemaManager.getAll(), null);
 	}
 
 	public static Result weightSchema(String id) {
-		return render(weightSchemaManager.getOne(id));
+		return render(weightSchemaManager.getOne(id), null);
 	}
 
 	public static Result compare(String countries, String years,
 			String indicators) {
 		return render(observationManager.getAllObservationsByCountries(
 				parseCountryCodes(countries), parseObservations(indicators),
-				parseYears(years)));
+				parseYears(years)), null);
 	}
 
 	/**
