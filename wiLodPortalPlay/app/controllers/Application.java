@@ -8,6 +8,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 import views.html.chart;
+import views.html.chartToPNG;
 
 import com.google.gson.Gson;
 
@@ -34,6 +35,7 @@ import es.weso.wirouter.year.YearExpr;
 
 public class Application extends Controller {
 
+	private static String DEFAULT = "";
 	private static Gson gson = new Gson();
 	private static ComponentManagement componentManager = ComponentManager
 			.getInstance();
@@ -52,9 +54,12 @@ public class Application extends Controller {
 	private static WeightSchemaManagement weightSchemaManager = WeightSchemaManager
 			.getInstance();
 
-	private static Result render(Object obj) {
+	private static Result render(Object obj, String format) {
 		if (request().accepts("text/html")) 
-			return ok(chart.render("Chart Generator", obj));			
+			if (format.toUpperCase().equals("PNG"))
+				return ok(chartToPNG.render("Chart Generator", obj));			
+			else
+				return ok(chart.render("Chart Generator", obj));
 		
 		return renderJSON(obj);
 	}
@@ -68,81 +73,81 @@ public class Application extends Controller {
 	}
 
 	public static Result components() {
-		return render(componentManager.getAll());
+		return render(componentManager.getAll(), DEFAULT);
 	}
 
 	public static Result component(String id) {
-		return render(componentManager.getOne(id));
+		return render(componentManager.getOne(id), DEFAULT);
 	}
 
 	public static Result countries() {
-		return render(countryManager.getAllCountries());
+		return render(countryManager.getAllCountries(), DEFAULT);
 	}
 
 	public static Result country(String code) {
-		return render(countryManager.getCountry(code));
+		return render(countryManager.getCountry(code), DEFAULT);
 	}
 
 	public static Result datasets() {
-		return render(datasetManager.getAll());
+		return render(datasetManager.getAll(), DEFAULT);
 	}
 
 	public static Result dataset(String id) {
-		return render(datasetManager.getOne(id));
+		return render(datasetManager.getOne(id), DEFAULT);
 	}
 
 	public static Result indicators() {
-		return render(indicatorManager.getAllIndicators());
+		return render(indicatorManager.getAllIndicators(), DEFAULT);
 	}
 
 	public static Result indicator(String id) {
-		return render(indicatorManager.getIndicatorByURI(id));
+		return render(indicatorManager.getIndicatorByURI(id), DEFAULT);
 	}
 
 	public static Result observations() {
-		return render(observationManager.getAllObservations());
+		return render(observationManager.getAllObservations(), DEFAULT);
 	}
 
 	public static Result observation(String id) {
-		return render(observationManager.getObservationByURI(id));
+		return render(observationManager.getObservationByURI(id), DEFAULT);
 	}
 
 	public static Result observationByCountry(String country, int year,
 			String indicator) {
 		return render(observationManager.getAllObservationsByCountries(
 				Collections.singleton(country),
-				Collections.singleton(indicator), Collections.singleton(year)));
+				Collections.singleton(indicator), Collections.singleton(year)), DEFAULT);
 	}
 
 	public static Result regions() {
-		return render(countryGroupManager.getAllCountryGroups());
+		return render(countryGroupManager.getAllCountryGroups(), DEFAULT);
 	}
 
 	public static Result region(String name) {
-		return render(countryGroupManager.getCountryGroup(name));
+		return render(countryGroupManager.getCountryGroup(name), DEFAULT);
 	}
 
 	public static Result subindexes() {
-		return render(subindexManager.getAll());
+		return render(subindexManager.getAll(), DEFAULT);
 	}
 
 	public static Result subindex(String id) {
-		return render(subindexManager.getOne(id));
+		return render(subindexManager.getOne(id), DEFAULT);
 	}
 
 	public static Result weightSchemas() {
-		return render(weightSchemaManager.getAll());
+		return render(weightSchemaManager.getAll(), DEFAULT);
 	}
 
 	public static Result weightSchema(String id) {
-		return render(weightSchemaManager.getOne(id));
+		return render(weightSchemaManager.getOne(id), DEFAULT);
 	}
 
 	public static Result compare(String countries, String years,
-			String indicators) {
+			String indicators, String format) {
 		return render(observationManager.getAllObservationsByCountries(
 				parseCountryCodes(countries), parseObservations(indicators),
-				parseYears(years)));
+				parseYears(years)), format);
 	}
 
 	/**

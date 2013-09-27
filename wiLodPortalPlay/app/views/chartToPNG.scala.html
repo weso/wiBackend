@@ -1,0 +1,26 @@
+@(title: String, json: Object)
+
+@import com.google.gson.Gson
+
+@main("Chart Generator") {
+    <script>
+    	var chartData = @{Html(new Gson().toJson(json))};
+    </script>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/wesCountry.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script src="@routes.Assets.at("javascripts/vendor/d3.v3.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/util/SortedArray.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/util/HashTable.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/charts/wesCountry/wesCountry.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/charts/wesCountry/D3Connector.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/charts/toPNG.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/vendor/canvg.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/charts/processWSData.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/charts/util/overlay.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/charts/util/scrolling.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/charts/barChart.options.js")" type="text/javascript"></script>
+	<div class="content">
+        <div id="result"></div>
+        <div id="images"></div>
+	</div>
+}
