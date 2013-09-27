@@ -1,4 +1,5 @@
-function Region(name, data, url) {
+function Region(code, name, data, url) {
+	this.code = code;
 	this.name = name;
 	this.data = data;
 	this.url = url;
@@ -11,7 +12,7 @@ function Params() {
 	this.options = new Options();
 }
 
-function Options() {
+function Options(params) {
 	this.width = 0;
 	this.height = 0;
 	this.margins = [0, 0, 0, 0];
@@ -42,6 +43,10 @@ function Options() {
 	this.yAxisName = 'Value';
 	this.xAxisName = 'Domain';
 	this.axisColour = '#000';
+	
+	for (var param in params) {
+		this[param] = params[param];
+	}
 }
 
 function composeParams(params) {

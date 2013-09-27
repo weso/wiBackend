@@ -7,6 +7,7 @@ import java.util.HashSet;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.chart;
 
 import com.google.gson.Gson;
 
@@ -52,10 +53,10 @@ public class Application extends Controller {
 			.getInstance();
 
 	private static Result render(Object obj) {
-		if (request().accepts("application/json")) {
-			return renderJSON(obj);
-		}
-		return TODO;
+		if (request().accepts("text/html"))
+			return ok(chart.render("Chart Generator", obj));			
+		
+		return renderJSON(obj);
 	}
 
 	private static Result renderJSON(Object obj) {

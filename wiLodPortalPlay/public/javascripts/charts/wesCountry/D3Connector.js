@@ -25,7 +25,7 @@ function D3Connector() {
 			}
 		});
 	};
-
+/*
 	var addLegend = function(params) {
 		$(params.container).append('<div class="legend"></div>');
 		var labels = [];
@@ -56,7 +56,7 @@ function D3Connector() {
 			height : "25px"
 		});
 	};
-
+*/
 	this.drawLineChart = function(params) {
 		params = composeParams(params);
 		//minMargins(params.options.margins);
@@ -81,56 +81,64 @@ function D3Connector() {
 		y.domain([params.options.min, params.options.max]);
 
 		if (params.options.showXAxisLabel) {
-			svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + params.options.height + ")").attr("style", "fill: " + params.options.axisColour + ";").call(xAxis);
+			svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + params.options.height + ")")
+			.attr("style", "fill: none; stroke-width: 1px; stroke: " + params.options.axisColour + ";").call(xAxis);
 		}
-		svg.append("g").attr("class", "y axis").attr("style", "fill: none; stroke-width: 1px; stroke: " + params.options.axisColour + ";").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end");
+		svg.append("g").attr("class", "y axis")
+		.attr("style", "fill: none; stroke-width: 1px; stroke: " + params.options.axisColour + ";").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end");
 
 		var region = svg.selectAll(".region").data(params.regions).enter().append("g").attr("class", "region");
 		var currentSeries = -1;
+		var mappedDataArray = [];
 		for(var reg = 0; reg < params.regions.length; reg++) {
 			var mappedData = params.regions[reg].data.map(function(d, i) {
-			return [i, d];
-		});
-		var line2 = d3.svg.line().x(function(d) {
-			return x(d[0]) + (params.options.width / params.indexes.length) / 2;
-		}).y(function(d) {
-			return y(d[1]);
-		});
-		region.append("path").attr("class", "line").style("stroke", function(d, i) {
-			return params.options.colours[i % params.options.colours.length];
-		}).attr("d", function(d, i) {
-			line2(mappedData[0]);
-		}).transition().duration(mappedData[0].length / 0.002).attrTween("d", function(d) {
-			svg.selectAll(params.container + " svg").data(d.data).enter().append("svg:circle").attr("cx", function(d, i) {
-				if (i == 0) {
-					currentSeries++;
-				}
-				return x(i) + (params.options.width / params.indexes.length) / 2;
-			}).attr("cy", function(d) {
-				return y(d);
-			}).attr("r", 4).style("fill", params.options.colours[currentSeries % params.options.colours.length]).attr("series", currentSeries).attr("indicator", function(d, i) {
-				return i;
-			}).on("click", function(d, i) {
-				params.options.onClickDatum(d3.select(this.attributes));
-			}).on("mouseover", function() {
-				d3.select(this).transition().duration(100).attr("r", 8);
-			}).on("mouseout", function() {
-				d3.select(this).transition().duration(100).attr("r", 4);
+				return [i, d];
 			});
-			var interpolate = d3.scale.quantile().domain([0, 1]).range(d3.range(1, mappedData.length + 1));
-			return function(t) {
-				return line2(mappedData.slice(0, interpolate(t)));
-			}
-		}).attr("fill", "none");
+			mappedDataArray.push(mappedData);
 		}
-		
+		var animateLine = function(mappedData) {
+			var line2 = d3.svg.line().x(function(d) {
+				return x(d[0]) + (params.options.width / params.indexes.length) / 2;
+			}).y(function(d) {
+				return y(d[1]);
+			});
+			region.append("path").attr("class", "line").style("stroke", function(d, i) {
+				return params.options.colours[i % params.options.colours.length];
+			}).attr("d", function(d, i) {
+				line2(mappedData[0]);
+			}).transition().duration(mappedData[0].length / 0.002).attrTween("d", function(d) {
+				svg.selectAll(params.container + " svg").data(d.data).enter().append("svg:circle").attr("cx", function(d, i) {
+					if (i == 0) {
+						currentSeries++;
+					}
+					return x(i) + (params.options.width / params.indexes.length) / 2;
+				}).attr("cy", function(d) {
+					return y(d);
+				}).attr("r", 4).style("fill", params.options.colours[currentSeries % params.options.colours.length]).attr("series", currentSeries).attr("indicator", function(d, i) {
+					return i;
+				}).on("click", function(d, i) {
+					params.options.onClickDatum(d3.select(this.attributes));
+				}).on("mouseover", function() {
+					d3.select(this).transition().duration(100).attr("r", 8);
+				}).on("mouseout", function() {
+					d3.select(this).transition().duration(100).attr("r", 4);
+				});
+				var interpolate = d3.scale.quantile().domain([0, 1]).range(d3.range(1, mappedData.length + 1));
+				return function(t) {
+					return line2(mappedData.slice(0, interpolate(t)));
+				}
+			}).attr("fill", "none");
+		};
+		for(var mappedDataIndex = 0; mappedDataIndex < mappedDataArray.length; mappedDataIndex++) {
+			animateLine(mappedDataArray[mappedDataIndex]);
+		}
 
 		if (params.options.legend) {
-			addLegend(params);
+		//	addLegend(params);
 		}
 
 		if (params.options.tooltipEnabled) {
-			addTooltips(params);
+		//	addTooltips(params);
 		}
 	}
 
@@ -244,6 +252,169 @@ function D3Connector() {
 		});
 	}
 
+	////////////////////////////////////////////////////////////////////////////////
+	//
+	//		BAR CHART
+	//
+	////////////////////////////////////////////////////////////////////////////////
+
+	this.drawBarChart = function(params) {
+		params = composeParams(params);
+	
+	  // This is a reimplementation of the Grouped Bar Chart by Mike Bostock
+	  // (http://bl.ocks.org/882152). Although useful, I found the original's
+	  // minimal comments and inverted axes hard to follow, so I created the
+	  // version you see here.
+	
+	  // First, we define sizes and colours...
+	  var outerW = params.options.width;
+	  var outerH = params.options.height;
+	  //var padding = { t: 0, r: 0, b: 0, l: 0 };
+	  var width = outerW - params.options.margins[3] - params.options.margins[1]; // inner width
+	  var height = outerH - params.options.margins[0] - params.options.margins[2]; // inner height
+	  var colours = params.options.colours; // ColorBrewer Set 1
+	
+	  // Second, we define our data...
+	  // Create a two-dimensional array.
+	  // The first dimension has as many Array elements as there are series.
+	  // The second dimension has as many Number elements as there are groups.
+	  // It looks something like this...
+	  
+	  var data = [];
+	  var topValue = 0;
+	  var labels = [];
+	  
+	  for (var i = 0; i < params.regions.length; i++)
+	  {
+	  	data[i] = params.regions[i].data;
+	  	topValue = Math.max(topValue, Math.max.apply(null, data[i]));
+	  	labels.push(params.regions[i].name);
+	  }
+	
+	  var numberGroups = data[0].length; // groups
+	  var numberSeries = data.length;  // series in each group
+	  //var data = d3.range(numberSeries).map(function () { return d3.range(numberGroups).map(Math.random); });
+	
+	  this.svgID = "svg" + Math.floor(Math.random() * 10000);
+	
+	  // Visualisation selection
+	  var svg = d3.select(params.container)
+	      .append("svg:svg")
+	      .attr("id", this.svgID)
+	      .attr("width", outerW)
+	      .attr("height", outerH);
+	      
+	  svg.append("style").attr("type", "text/css").text(" line { fill: none; stroke: #ccc; shape-rendering: crispEdges; } path { display: none; }");
+	      
+	  svg = svg.append("g")
+	    .attr("transform", "translate(" + params.options.margins[3] + "," + params.options.margins[0] + ")");
+	
+	  // Third, we define our scales...
+	  // Groups scale, x axis
+	  var x0 = d3.scale.ordinal()
+	      .domain(params.indexes)
+	      .rangeBands([0, width], 0.2);
+	
+	  // Series scale, x axis
+	  // It might help to think of the series scale as a child of the groups scale
+	  var x1 = d3.scale.ordinal()
+	      .domain(d3.range(numberSeries))
+	      .rangeBands([0, x0.rangeBand()], 0.1);
+	
+	  // Values scale, y axis
+	  
+	   var y = d3.scale.linear()
+	      .domain([0, topValue])
+	      .range([height, 0]);
+	
+	var xAxis = d3.svg.axis()
+	    .scale(x0)
+	    .orient("bottom");
+	
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left")
+	    .tickFormat(d3.format(".2s"))
+	    .tickSize(-width, 0, 0)
+	
+	svg.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis)
+	      .append("text")
+	      .attr("y", 30)
+	      .attr("x", width / 2)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "middle")
+	      .text(params.options.xAxisName);
+	      
+	  svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis)
+	    .append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", -40)
+	      .attr("x", - height / 2)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "middle")
+	      .text(params.options.yAxisName);
+	
+	  // Series selection
+	  // We place each series into its own SVG group element. In other words,
+	  // each SVG group element contains one series (i.e. bars of the same colour).
+	  // It might be helpful to think of each SVG group element as containing one bar chart.
+	  var series = svg.selectAll("g.series")
+	      .data(data)
+	    .enter().append("svg:g")
+	      .attr("class", "series") // Not strictly necessary, but helpful when inspecting the DOM
+	      .attr("fill", function (d, i) { return colours[i]; })
+	      .attr("transform", function (d, i) { return "translate(" + x1(i) + ")"; });
+	
+	  // Groups selection
+	  var groups = series.selectAll("rect")
+	      .data(Object) // The second dimension in the two-dimensional data array
+	    .enter().append("svg:rect")
+	        .attr("x", 0)
+	        .attr("y", function (d) { return y(d); })
+	        .attr("width", x1.rangeBand())
+	        .attr("height", function (d) { return height - y(d); })
+	        .attr("transform", function (d, i) { return "translate(" + x0(i) + ")"; });
+	        
+	  var text = svg.selectAll("text")
+	    .data(d3.range(numberGroups))
+	  .enter().append("svg:text")
+	    .attr("class", "group")
+	    .attr("transform", function(d, i) { return "translate(" + x0(i) + ",0)"; })
+	    .attr("x", x0.rangeBand() / 2)
+	    .attr("y", height)
+	    .attr("dy", ".71em")
+	    .attr("text-anchor", "middle")
+	    .text(function(d, i) { return labels[i]; });
+	    
+	    // Legend
+	    
+	    if (params.options.legend) {
+			var legend = svg.selectAll(".legend")
+		     	.data(labels)
+		     	.enter().append("g")
+		     	.attr("class", "legend")
+		     	.attr("transform", function(d, i) { return "translate(0," + i * 30 + ")"; });
+		 
+		    legend.append("circle")
+		    	.attr("cx", width - 10 + params.options.margins[1])
+		    	.attr("r", 9)
+		    	.style("fill", function (d, i) { return colours[i]; });
+		 
+		    legend.append("text")
+		    	.attr("x", width - 30 + params.options.margins[1])
+		    	.attr("y", 0)
+		    	.attr("dy", ".35em")
+		    	.style("text-anchor", "end")
+		    	.text(function(d) { return d; });
+		 }
+	}
+
+/*
 	this.drawBarChart = function(params) {
 		var series = null;
 		var x0 = null;
@@ -500,6 +671,7 @@ function D3Connector() {
 			}, 1000);
 		}
 	}
+*/
 
 	this.drawScatterplot = function(params) {
 		params = composeParams(params);
