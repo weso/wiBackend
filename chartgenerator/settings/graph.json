@@ -1,0 +1,46 @@
+{
+	"container": "body",
+	"width": 600,
+	"height": 400,
+	"margins": [10, 20, 10, 5],
+	"backgroundColour": "none",
+	"serieColours": ["#FCD271", "#FA5882", "#2BBBD8", "#102E37"],
+	"groupMargin": 4,
+	"barMargin": 8,
+	"xAxis": {
+		"title": "Meses",
+		"colour": "none",
+		"margin": 10,
+		"tickColour": "none",
+		"values": ["Ene", "Feb", "Mar", "Abr", "May"],
+		"font-family": "Helvetica",
+		"font-colour": "#666",
+		"font-size": "16px"
+	},
+	"yAxis": {
+		"title": "Values",
+		"colour": "none",
+		"margin": 10,
+		"tickColour": "#ccc",
+		"font-family": "Helvetica",
+		"font-colour": "#aaa",
+		"font-size": "16px"
+	},
+	"series": [{
+	    "name": "Primero",
+	    "values": [-1, 4, 5, 3, 6]
+	}, {
+	    "name": "Segundo",
+	    "values": [1, 7, 5, 6, 4]
+	}, {
+		"name": "Tercero",
+		"values": [0, 1, 2, 3, 4]
+	}],
+	"legend": {
+	    "show": true,
+	    "itemSize": 1,
+	    "font-colour": "#666",
+		"font-family": "Helvetica",
+		"font-size": "16px"
+	}
+}
