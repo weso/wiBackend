@@ -1,5 +1,6 @@
 var fs = require('fs');
 var svg2png = require('svg2png');
+var extend = require('util')._extend;
 
 var graphSettings = require('../settings/graph.js');
 
@@ -28,28 +29,47 @@ exports.index = function(req, res){
 		return;	
 	}
 	
-	var where = {
-		$and: [
-			{ "year" : { $in: params.data.years.getArray() } },
-			{ "indicatorCode" : { $in: params.data.indicators.getArray() } },
-			{ "countryCode" : { $in: params.data.countries.getArray() } },
-		]	
-	};
+	/*
+		WHERE CONDITION
+	*/
+	
+	var yearCondition = params.data.years.getArray();
+	var indicatorCondition = params.data.indicators.getArray();
+	var countryCondition = params.data.countries.getArray();
+	
+	var where = { };
+	var conditions = [];
+	
+	if (yearCondition.length > 0)
+		conditions.push({ "year" : { $in: yearCondition } });
+		
+	if (indicatorCondition.length > 0)
+		conditions.push({ "indicatorCode" : { $in: indicatorCondition } });
+		
+	if (countryCondition.length > 0)
+		conditions.push({ "countryCode" : { $in: countryCondition } });
+		
+	if (conditions.length > 0)
+		where["$and"] = conditions;
+	
+	/*
+		SORT
+	*/	
 	
 	var sort = { 
 			"indicatorCode": 1, 
 			"countryCode": 1, 
 			"year": 1 };
+			
+	/*
+		DATABASE SEARCH
+	*/
 
 	new DataBase().find(where, sort, function(data) {
 		data = processData(data);
 		generatePNG(res, chart, data.series, data.years.getArray(), req.query);
 	});
 };
-
-function showHelp(response) {
-	response.redirect("/help");
-}
 
 ////////////////////////////////////////////////////////////////
 //                     PROCESS PARAMS
@@ -190,30 +210,33 @@ function processData(data) {
 
 function generatePNG(response, chart, series, values, querySettings) {
 		 
-	mergeQuerySettingsAndDefaultSettings(querySettings, graphSettings);
+	// Default graph setting cloning
+	var settings = extend({}, graphSettings);	 
+		 
+	mergeQuerySettingsAndDefaultSettings(querySettings, settings);
 		
 	// Assign serie values
-	graphSettings.series = series;
+	settings.series = series;
 	
 	// Assign X Axis labels
-	if (!graphSettings.xAxis)
-		graphSettings.xAxis = new Object();
+	if (!settings.xAxis)
+		settings.xAxis = new Object();
 		
-	graphSettings.xAxis.values = values;
+	settings.xAxis.values = values;
 
 	switch(chart.toUpperCase()) {
 		case "LINE":
-			chart = jGraf.lineChart(graphSettings);
+			chart = jGraf.lineChart(settings);
 			break;
 		case "PIE":
-			chart = jGraf.pieChart(graphSettings);
+			chart = jGraf.pieChart(settings);
 			break;
 		case "POLAR":
-			chart = jGraf.polarChart(graphSettings);
+			chart = jGraf.polarChart(settings);
 			break;
 		case "BAR":
 		default:
-			chart = jGraf.barChart(graphSettings);
+			chart = jGraf.barChart(settings);
 			break;
 	}
 
@@ -280,6 +303,10 @@ function mergeQuerySettingsAndDefaultSettings(querySettings, defaultSettings) {
 		}
 	}
 }
+
+////////////////////////////////////////////////////////////////
+//                     AUX FILE FUNCTIONS
+////////////////////////////////////////////////////////////////
 
 function deleteFile(file) {
 	fs.unlink(file, function (err) {
