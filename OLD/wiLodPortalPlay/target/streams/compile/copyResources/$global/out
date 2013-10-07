@@ -1,0 +1,6 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/conf/application.conf,/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/target/scala-2.10/classes/application.conf)[0m
+[0m[[0mdebug[0m] [0m	(/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/conf/config.properties,/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/target/scala-2.10/classes/config.properties)[0m
+[0m[[0mdebug[0m] [0m	(/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/conf/log4j.properties,/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/target/scala-2.10/classes/log4j.properties)[0m
+[0m[[0mdebug[0m] [0m	(/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/conf/queries.properties,/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/target/scala-2.10/classes/queries.properties)[0m
+[0m[[0mdebug[0m] [0m	(/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/conf/routes,/Users/castrofernandez/Desarrollo/wiBackend/wiLodPortalPlay/target/scala-2.10/classes/routes)[0m
