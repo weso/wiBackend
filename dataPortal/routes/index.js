@@ -6,7 +6,7 @@ var graphSettings = require('../settings/graph.js');
 
 var DataBase = require('../src/db/database.js').DataBase;
 var SortedArray = require('../src/util/SortedArray.js').SortedArray;
-var jGraf = require('../src/chart/jGraf.js').jGraf;
+var jGraf = require('../src/chart/jGraf.min.js').jGraf;
 
 var yearCheck = /^YEAR\(((\d{4})(,\d{4})*)\)$/;
 var indicatorCheck = /^INDICATOR\(((\w+)(,\w+)*)\)$/;
