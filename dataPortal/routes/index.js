@@ -9,7 +9,7 @@ var SortedArray = require('../src/util/SortedArray.js').SortedArray;
 var jGraf = require('../src/chart/jGraf.min.js').jGraf;
 
 var yearCheck = /^YEAR\(((\d{4})(,\d{4})*)\)$/;
-var indicatorCheck = /^INDICATOR\(((\w+)(,\w+)*)\)$/;
+var indicatorCheck = /^INDICATOR\((([\w\s]+)(,[\w\s]+)*)\)$/;
 var countryCheck = /^COUNTRY\((([a-zA-Z]{3})(,[a-zA-Z]{3})*)\)$/;
 
 ////////////////////////////////////////////////////////////////
@@ -170,7 +170,7 @@ function processData(data) {
 
 	for (var i = 0; i < length; i++) {
 		var observation = data[i];
-	
+
 		var indicatorCode = observation.indicatorCode;
 		var countryCode = observation.countryCode;
 		var countryName = observation.countryName;
@@ -182,7 +182,7 @@ function processData(data) {
 			country = null;
 		}
 		
-		if (previousCountryCode != countryCode) {
+		if (previousCountryCode != countryCode || !country) {
 			country = {
 				name: countryName,
 				values: []

@@ -1,5 +1,166 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    title Chart Help
+    style().
+      body {
+      margin: 0 auto;
+      width: 80%;
+      font-family: "trebuchet MS"
+      }
+      strong {
+      color: #333;
+      }
+      p.ie {
+      background-color: #eee;
+      color: #0f4bb5;
+      margin: 0.5em 0;
+      padding: 0.5em;
+      }
+      p.important {
+      background-color: #eee;
+      color: #be0d28;
+      padding: 0.5em;
+      line-height: 1.4em;
+      }
+      p.important strong {
+      color: #901414;
+      }
+    h1 Chart Help
+    h2 ULR format
+    | HOST/charts/CHART/[CONDITION_1]/[CONDITION_2]/[CONDITION_3][?OPTIONS]
+    p Examples
+    ul
+      li
+        | HOST/charts/bar/YEAR(2010)
+      li
+        | HOST/charts/bar/YEAR(2010)/COUNTRY(ESP,FRA,BRA,EGY)
+      li
+        | HOST/charts/bar/YEAR(2010)/COUNTRY(ESP,FRA,BRA,EGY)/INDICATOR(ITU G)
+      li
+        | HOST/charts/line/YEAR(2010)/COUNTRY(ESP,FRA,BRA,EGY)/INDICATOR(ITU G)?width=900&height=500
+      li
+        | HOST/charts/pie/YEAR(2010)/COUNTRY(ESP)/INDICATOR(ITU A)
+    | CHART values
+    ul
+      li
+        strong bar
+        | Bar chart
+      li
+        strong line
+        | Line chart
+      li
+        strong pie
+        | Pie chart
+      li
+        strong polar
+        | Polar chart
+    p.important
+      strong NOTE
+      br
+      | URLs MUST be encoded.
+      br
+      | So the following URL:
+      br
+      | HOST/charts/bar/YEAR(2010)/COUNTRY(ESP,FRA,BRA,EGY)/INDICATOR(ITU G)
+      br
+      | Must be encoded as:
+      br
+      | HOST/charts/bar/YEAR(2010)/COUNTRY(ESP,FRA,BRA,EGY)/INDICATOR(
+      strong ITU%20G
+      | )
+    h2 Default options
+    ul
+      li
+        strong width
+        | Number. Sets graph width in pixels
+        p.ie i.e. width=500
+      li
+        strong height
+        | Number. Sets graph height in pixels
+      li
+        strong margins
+        | Array of numbers. Sets graph margins.
+        p.ie
+          | i.e. margins=[1, 1, 1, 1] set margins in order [top, right, bottom, left] to value 1% of the graph width, for left and right margins, and height, for top and bottom margins.
+      li
+        strong backgroundColour
+        | String representing a color.
+        p.ie i.e. "none", "#666666", "#333", "red"
+        p.ie backgroundColor="#333"
+      li
+        strong serieColours
+        | Array of strings representing colours. Colours for each serie.
+        p.ie i.e. serieColours=["#333", "#444"]
+      li
+        strong groupMargin
+        | Number. Percentage of space in between of bar groups. Only applicable to bar charts.
+      li
+        strong barMargin
+        | Number. Percentage of space in between of bars. Only applicable to bar charts.
+    h2 Axis options
+    | The following options are valid for X and Y axes. Each option must be preceded by either "xAxis" or "yAxis".
+    ul
+      li
+        strong title
+        | String. Sets axis name.
+        p.ie i.e. xAxis.title = "Years"
+      li
+        strong colour
+        | String representing a colour. Sets the axis border colour.
+      li
+        strong margin
+        | Number. It's the margin between the chart and the axis.
+      li
+        strong tickColour
+        | String representing a colour. Colour for each tick line.
+      li
+        strong font-family
+        | String. Font family for axis labels.
+        p.ie i.e. xAxis.font-family="Helvetica".
+      li
+        strong font-colour
+        | String representing a colour. Sets axis font colour.
+      li
+        strong font-size
+        | String representing a size. Sets axis font size.
+        p.ie i.e. xAxis.font-size="16px"
+      li
+        strong values
+        | Array of strings. Only applicable for X axis with discrete values.
+        p.ie i.e. xAxis.values=["January", "February", "March"]
+    h2 Legend options
+    | The following options must be preceded by "legend".
+    ul
+      li
+        strong show
+        | Boolean. Indicates whether to show the legend.
+        p.ie i.e. legend.show=false.
+      li
+        strong itemSize
+        | Number. Size of each legend colour bubble. It is measured in total graph width percentage.
+      li
+        strong font-family
+        | String. Font family for legend labels.
+        p.ie i.e. legend.font-family="Helvetica".
+      li
+        strong font-colour
+        | String representing a colour. Sets legend font colour.
+      li
+        strong font-size
+        | String representing a size. Sets legend font size.
+        p.ie i.e. legend.font-size="16px"
+    h2 Series
+    | Series are set as an array of objects. Each object has two values, name of the serie and values, an array of values.
+    p.ie
+      | i.e.
+      | series = [{
+      | name: "First",
+      | values: [-1, 4, 5, 3, 6]
+      | }, {
+      | name: "Second",
+      | values: [1, 7, 5, 6, 4]
+      | }, {
+      | name: "Third",
+      | values: [0, 1, 2, 3, 4]
+      | }]
