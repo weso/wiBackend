@@ -26,6 +26,10 @@ block content
       p.important strong {
       color: #901414;
       }
+      
+      ul li strong {
+      margin-right: 0.5em;
+      }
     h1 Chart Help
     h2 ULR format
     | HOST/charts/CHART/[CONDITION_1]/[CONDITION_2]/[CONDITION_3][?OPTIONS]
@@ -72,12 +76,20 @@ block content
     h2 Default options
     ul
       li
+        strong format
+        | Options (svg, png). Format of generated image.
+        p.ie i.e. format=svg or format=png
+      li
+        strong sheet
+        | Sheet to get data from.
+        p.ie i.e. sheet=Imputed, sheet=Ordered
+      li
         strong width
-        | Number. Sets graph width in pixels
+        | Number. Sets graph width in pixels.
         p.ie i.e. width=500
       li
         strong height
-        | Number. Sets graph height in pixels
+        | Number. Sets graph height in pixels.
       li
         strong margins
         | Array of numbers. Sets graph margins.

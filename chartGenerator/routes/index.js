@@ -50,6 +50,9 @@ exports.index = function(req, res){
 		
 	if (countryCondition.length > 0)
 		conditions.push({ "countryCode" : { $in: countryCondition } });
+	
+	if (req.query.sheet)
+		selectedSheet = req.query.sheet;
 		
 	conditions.push({ "sheet-type" : selectedSheet });	
 		
@@ -71,7 +74,7 @@ exports.index = function(req, res){
 
 	new DataBase().find(where, sort, function(data) {
 		data = processData(data);
-		generatePNG(res, chart, data.series, data.years.getArray(), req.query);
+		generateImage(res, chart, data.series, data.years.getArray(), req.query);
 	});
 };
 
@@ -212,11 +215,11 @@ function processData(data) {
 //                     GENERATE GRAPH
 ////////////////////////////////////////////////////////////////
 
-function generatePNG(response, chart, series, values, querySettings) {
+function generateImage(response, chart, series, values, querySettings) {
 		 
 	// Default graph setting cloning
 	var settings = extend({}, graphSettings);	 
-		 
+	 
 	mergeQuerySettingsAndDefaultSettings(querySettings, settings);
 		
 	// Assign serie values
@@ -245,11 +248,18 @@ function generatePNG(response, chart, series, values, querySettings) {
 	}
 
 	var svg = chart.toString();
+
+	if (querySettings.format && querySettings.format.toLowerCase() == 'svg') {
+		response.setHeader("Content-Type", "image/svg+xml");
+	    response.write(svg, "binary");
+	    response.end();
+	    return;
+	}
 	
 	var fileId = guid();
 	var SVG = "tmp/" + fileId + ".svg";
 	var PNG = "tmp/" + fileId + ".png";
-
+	
 	fs.writeFileSync(SVG, svg); 
 	console.log("File SVG generated");	
 	
