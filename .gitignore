@@ -1,6 +1,8 @@
 #Backup Files
 *~
 
+.metadata/
+
 #Junk File
 *.DS_Store
 
