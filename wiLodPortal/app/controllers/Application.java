@@ -14,6 +14,7 @@ import play.api.templates.Html;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.chart;
 
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
@@ -61,9 +62,9 @@ public class Application extends Controller {
 	private static WeightSchemaManagement weightSchemaManager = WeightSchemaManager
 			.getInstance();
 
-	private static Result render(Object obj, Html html) {
+	private static Result render(Object obj, String format) {
 		if (request().accepts("text/html")) {
-			return ok(html);
+			return ok(chart.render("Chart Generator", obj));
 		}
 		if (request().accepts("text/turtle")) {
 			return renderTTL();
