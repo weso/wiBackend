@@ -12,6 +12,8 @@ var yearCheck = /^YEAR\(((\d{4})(,\d{4})*)\)$/;
 var indicatorCheck = /^INDICATOR\((([\w\s]+)(,[\w\s]+)*)\)$/;
 var countryCheck = /^COUNTRY\((([a-zA-Z]{3})(,[a-zA-Z]{3})*)\)$/;
 
+var selectedSheet = "Imputed";
+
 ////////////////////////////////////////////////////////////////
 //              PARAMETER AND QUERYSTRING PARSING
 ////////////////////////////////////////////////////////////////
@@ -48,6 +50,8 @@ exports.index = function(req, res){
 		
 	if (countryCondition.length > 0)
 		conditions.push({ "countryCode" : { $in: countryCondition } });
+		
+	conditions.push({ "sheet-type" : selectedSheet });	
 		
 	if (conditions.length > 0)
 		where["$and"] = conditions;

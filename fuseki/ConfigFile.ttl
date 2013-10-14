@@ -1,0 +1,35 @@
+@prefix fuseki:  <http://jena.apache.org/fuseki#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix :        <#> .
+
+[] rdf:type fuseki:Server ;
+   fuseki:services (
+     <#service1>
+   ) .
+   
+# Declaration additional assembler items.
+[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
+
+# TDB
+tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+tdb:GraphTDB    rdfs:subClassOf  ja:Model .
+
+<#service1> rdf:type fuseki:Service ;
+    fuseki:name                     "computex" ;   
+    fuseki:serviceQuery             "query" ;    
+    fuseki:serviceReadGraphStore    "data" ;     
+    fuseki:dataset           	    <#computex> ;
+    .
+
+<#computex>    rdf:type ja:RDFDataset ;
+    rdfs:label "Computex" ;
+    ja:defaultGraph
+      [ rdfs:label "example.ttl" ;
+        a ja:MemoryModel ;
+        #	ja:content [ja:externalContent <file:../computex/ontology/examples/example.ttl> ] ;
+	ja:content [ja:externalContent <file:../fuseki/Data/computex100.ttl>] ;
+      ] ;
+    .
