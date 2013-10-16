@@ -3,7 +3,8 @@ GIT_DIR="computex"
 GIT_REPO="https://github.com/weso/computex.git"
 GIT_BRANCH="web"
 FUSEKI_DIR="fuseki"
-PLAY_DIR="wiLodPortal" 
+PUBBY_DIR="pubby"
+PLAY_DIR="wiLodPortal"
 
 #Fetch the latest computex repository:
 if [[ -d "${GIT_DIR}" && ! -L "${GIT_DIR}" ]] ; then
@@ -18,10 +19,10 @@ fi
 export FUSEKI_HOME="${FUSEKI_HOME:-${FUSEKI_DIR}}"
 
 #Starts Fuseki:
-${FUSEKI_DIR}/fuseki-server --config=${FUSEKI_DIR}/ConfigFile.ttl;
+${FUSEKI_DIR}/fuseki-server --config=${FUSEKI_DIR}/ConfigFile.ttl &
 
-# Starts Memchahed
-# memcached
+#Starts Pubby
+(cd ${PUBBY_DIR}; mvn tomcat:run &)
 
 #Starts Play Project
-(cd ${PLAY_DIR}; play ~run)
+(cd ${PLAY_DIR}; play ~run &)

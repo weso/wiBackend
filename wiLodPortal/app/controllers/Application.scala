@@ -1,36 +1,31 @@
 package controllers
 
-import java.net.URL
-import java.net.URLEncoder
 import java.util.Collection
 import java.util.Collections
 
 import scala.collection.JavaConversions.asScalaBuffer
-import scala.io.Source
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
-import com.google.gson.Gson
-import com.thoughtworks.xstream.XStream
-import com.thoughtworks.xstream.io.xml.DomDriver
-
-import es.weso.business.impl.ComponentManager
-import es.weso.business.impl.CountryGroupManager
-import es.weso.business.impl.CountryManager
-import es.weso.business.impl.DatasetManager
-import es.weso.business.impl.IndicatorManager
-import es.weso.business.impl.ObservationManager
-import es.weso.business.impl.SubindexManager
-import es.weso.business.impl.WeightSchemaManager
+import es.weso.wiLodPortal.business.impl.ComponentManager
+import es.weso.wiLodPortal.business.impl.CountryGroupManager
+import es.weso.wiLodPortal.business.impl.CountryManager
+import es.weso.wiLodPortal.business.impl.DatasetManager
+import es.weso.wiLodPortal.business.impl.IndicatorManager
+import es.weso.wiLodPortal.business.impl.ObservationManager
+import es.weso.wiLodPortal.business.impl.SubindexManager
+import es.weso.wiLodPortal.business.impl.WeightSchemaManager
 import es.weso.wirouter.CountryRouteParser
 import es.weso.wirouter.YearRouteParser
+import es.weso.wirouter.year.YearExpr
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.ws.WS
 import play.api.mvc.Action
 import play.api.mvc.Controller
-import play.api.mvc.RequestHeader
 
-object Application extends Controller {
+object Application extends Controller with Renders {
 
-  val gson = new Gson()
-  val xstream = new XStream(new DomDriver());
-  val componentManager = ComponentManager.getInstance;
+  val componentManager = ComponentManager.getInstance
   val countryGroupManager = CountryGroupManager.getInstance
   val countryManager = CountryManager.getInstance
   val datasetManager = DatasetManager.getInstance
@@ -39,60 +34,12 @@ object Application extends Controller {
   val subindexManager = SubindexManager.getInstance
   val weightSchemaManager = WeightSchemaManager.getInstance
 
+  val url = "http://localhost:8080/pubby/"
+  val Data = "data"
+  val Page = "page"
+
   def index = Action { implicit request =>
     Ok(views.html.index("Your new application is ready."))
-  }
-
-  def render(obj: Object, format: String)(implicit request: RequestHeader) = {
-    if (request.accepts("text/html")) {
-      renderChart(obj)
-    } else if (request.accepts("text/turtle")) {
-      renderTTL(obj)
-    } else if (request.accepts("application/rdf+xml")) {
-      renderRDF(obj)
-    } else if (request.accepts("application/json")) {
-      renderJSON(obj)
-    } else if (request.accepts("application/xml")) {
-      renderXML(obj)
-    } else BadRequest // Should return 415
-  }
-
-  private def renderChart(obj: Object)(implicit request: RequestHeader) = Ok(views.html.chart("Chart Generator", obj));
-
-  private def renderXML(obj: Object)(implicit request: RequestHeader) = Ok(xstream.toXML(obj));
-
-  private def renderJSON(obj: Object)(implicit request: RequestHeader) = Ok(gson.toJson(obj));
-
-  private def renderTTL(obj: Object)(implicit request: RequestHeader) = {
-    try {
-      renderLD("text");
-    } catch {
-      case e: Exception => InternalServerError;
-    }
-  }
-
-  private def renderRDF(obj: Object)(implicit request: RequestHeader) = {
-    try {
-      renderLD("xml");
-    } catch {
-      case e: Exception => InternalServerError
-    }
-  }
-
-  private def renderLD(output: String)(implicit request: RequestHeader) = {
-    // FIXME This is fuseki dependant and dirty...
-    println(request.path);
-    val relativeUri: String = URLEncoder.encode(
-      request.path.substring(request.path.indexOf('/', 0)), "UTF-8");
-    val url = "http://localhost:3030/computex/query?query=CONSTRUCT%7B%3Chttp%3A%2F%2Fdata.webfoundation.org%2Fwebindex%2Fv2013" +
-      relativeUri +
-      "%3E+%3Fp+%3Fl%7DWHERE%7B%3Chttp%3A%2F%2Fdata.webfoundation.org%2Fwebindex%2Fv2013" +
-      relativeUri + "%3E+%3Fp+%3Fl%7D&output=" + output;
-    val obj = new URL(url)
-    val con = obj.openConnection()
-    con.setConnectTimeout(4000)
-    con.setReadTimeout(2000)
-    Ok(Source.fromInputStream(con.getInputStream()).getLines.mkString("\n"));
   }
 
   def components = Action { implicit request =>
@@ -174,6 +121,33 @@ object Application extends Controller {
       parseYears(years)), null)
   }
 
+  def fallback(path: String) = Action { implicit request =>
+
+    def inner(mimeType: String, mode: String, suffix: Option[String] = None) = {
+      val query = new StringBuilder(url).append(mode).append("/").append(path)
+      suffix match {
+        case Some(suffix) => query.append(suffix)
+        case None =>
+      }
+      println(query.toString)
+      val future = WS.url(query.toString).withHeaders("Accept" -> mimeType.toString()).get().map {
+        response => Ok("" + response.body).as(mimeType)
+      }
+      Await.result(future, 60 seconds)
+    }
+
+    render {
+      case Html() => inner(Html.mimeType, Page)
+      case Turtle() => inner(Turtle.mimeType, Data, Some("?output=ttl"))
+      case XTurtle() => inner(Turtle.mimeType, Data, Some("?output=ttl"))
+      case RdfXML() => inner(RdfXML.mimeType, Data, Some("?output=xml"))
+      case Json() => inner(Json.mimeType, Data)
+      case Xml() => inner(RdfXML.mimeType, Data, Some("?output=xml"))
+      case _ => BadRequest
+    }
+
+  }
+
   /**
    * Parses a expression to get the country codes contained in that expression
    *
@@ -201,7 +175,7 @@ object Application extends Controller {
     val arr = expression.split(",")
     val observations = new java.util.HashSet[String](arr.length)
     for (expr <- arr) {
-      observations.add(expr.trim())
+      observations.add(expr.trim)
     }
     observations;
   }
@@ -215,10 +189,10 @@ object Application extends Controller {
    */
   private def parseYears(expression: String): Collection[Integer] = {
     val years = new java.util.HashSet[Integer]()
-    val exprs = new YearRouteParser().parseRoute(expression)
+    val exprs: List[YearExpr] = new YearRouteParser().parseRoute(expression).toList
     for (expr <- exprs) {
-      years.addAll(expr.getYears());
+      years.addAll(expr.getYears())
     }
-    years;
+    years
   }
 }
