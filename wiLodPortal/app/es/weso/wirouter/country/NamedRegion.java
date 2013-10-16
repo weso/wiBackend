@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 
 import models.CountryForRegion;
-import es.weso.business.CountryGroupManagement;
+import es.weso.wiLodPortal.business.CountryGroupManagement;
 
 public class NamedRegion extends CountryExpr {
 	private final String name;
