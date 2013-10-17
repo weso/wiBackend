@@ -25,4 +25,4 @@ ${FUSEKI_DIR}/fuseki-server --config=${FUSEKI_DIR}/ConfigFile.ttl &
 (cd ${PUBBY_DIR}; mvn tomcat:run &)
 
 #Starts Play Project
-(cd ${PLAY_DIR}; play ~run 9090 &)
+(cd ${PLAY_DIR}; play "~run 9090" &)
