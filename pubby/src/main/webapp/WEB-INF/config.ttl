@@ -43,7 +43,7 @@
     # Homepage with description of the project for the link in the page header
     conf:projectHomepage <http://thewebindex.org>;
     # The Pubby root, where the webapp is running inside the servlet container.
-    conf:webBase <http://localhost:8080/pubby/>;
+    conf:webBase <http://localhost:8081/pubby/>;
     # URL of an RDF file whose prefix mapping is to be used by the
     # server; defaults to <>, which is *this* file.
     conf:usePrefixesFrom <>;
@@ -52,13 +52,12 @@
     conf:defaultLanguage "en";
     # When the homepage of the server is accessed, this resource will
     # be shown.
-    conf:indexResource <http://localhost:8080/pubby/webindex/v2013/country/ESP>;
+    conf:indexResource <http://localhost:8081/pubby/webindex/v2013/country/ESP>;
 
     conf:dataset [
         # SPARQL endpoint URL of the dataset
-        conf:sparqlEndpoint <http://localhost:3030/computex/query>;
+        conf:sparqlEndpoint <http://localhost:3031/computex/query>;
         # Default graph name to query (not necessary for most endpoints)
-        #conf:sparqlDefaultGraph <http://localhost:8890/WebIndexSimple>;
         # Common URI prefix of all resource URIs in the SPARQL dataset
         conf:datasetBase <http://data.webfoundation.org/>;
         # Will be appended to the conf:webBase to form the public

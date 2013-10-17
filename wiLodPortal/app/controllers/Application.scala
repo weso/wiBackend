@@ -34,7 +34,7 @@ object Application extends Controller with Renders {
   val subindexManager = SubindexManager.getInstance
   val weightSchemaManager = WeightSchemaManager.getInstance
 
-  val url = "http://localhost:8080/pubby/"
+  val url = "http://localhost:8081/pubby/"
   val Data = "data"
   val Page = "page"
 
