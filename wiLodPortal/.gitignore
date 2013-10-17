@@ -18,14 +18,14 @@ public/reports/*.ttl
 
 dist
 
-/.idea
-/*.iml
-/out
-/.idea_modules
-/.classpath
-/.project
-/RUNNING_PID
-/.settings
+.idea
+*.iml
+out
+.idea_modules
+.classpath
+.project
+RUNNING_PID
+.settings
 
 # Sbt specific
 dist/*
@@ -45,6 +45,6 @@ project/plugins/project/
 # Git specific
 *.orig
 
+# OS X Crap
 start_OS_X.sh
-
 start_OS_X.command

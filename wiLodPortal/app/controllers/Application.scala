@@ -121,6 +121,10 @@ object Application extends Controller with Renders {
       parseYears(years)), null)
   }
 
+  def snorql = Action { implicit request =>
+    Ok(views.html.snorql())
+  }
+  
   def fallback(path: String) = Action { implicit request =>
 
     def inner(mimeType: String, mode: String, suffix: Option[String] = None) = {
