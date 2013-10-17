@@ -1,38 +1,16 @@
 #Backup Files
 *~
 
-.metadata/
-
-#Junk File
+# Junk File
 *.DS_Store
 
-#Computex is not part of wiBackend. Therefore:
-computex/
-
+# Logs
 logs/
-wiLodPortal/target/
-
+# OS X Crap
 start_OS_X.sh
-
-wiLodPortal/logs/
-
 start_OS_X.command
 
+#Computex is not part of wiBackend. Therefore:
+computex
 
-
-wiLodPortalPlay/logs
-wiLodPortalPlay/project/project
-wiLodPortalPlay/project/target
-wiLodPortalPlay/target
-wiLodPortalPlay/.target
-wiLodPortalPlay/tmp
-wiLodPortalPlay/.history
-wiLodPortalPlay/dist
-wiLodPortalPlay/.idea
-wiLodPortalPlay/*.iml
-wiLodPortalPlay/out
-wiLodPortalPlay/.idea_modules
-wiLodPortalPlay/.classpath
-wiLodPortalPlay/.project
-wiLodPortalPlay/RUNNING_PID
-wiLodPortalPlay/.settings
+.metadata/
