@@ -38,41 +38,9 @@ exports.index = function(req, res){
 	var yearCondition = params.data.years.getArray();
 	var indicatorCondition = params.data.indicators.getArray();
 	var countryCondition = params.data.countries.getArray();
-	
-	var where = { };
-	var conditions = [];
-	
-	if (yearCondition.length > 0)
-		conditions.push({ "year" : { $in: yearCondition } });
-		
-	if (indicatorCondition.length > 0)
-		conditions.push({ "indicatorCode" : { $in: indicatorCondition } });
-		
-	if (countryCondition.length > 0)
-		conditions.push({ "countryCode" : { $in: countryCondition } });
-	
-	if (req.query.sheet)
-		selectedSheet = req.query.sheet;
-		
-	conditions.push({ "sheet-type" : selectedSheet });	
-		
-	if (conditions.length > 0)
-		where["$and"] = conditions;
-	
-	/*
-		SORT
-	*/	
-	
-	var sort = { 
-			"indicatorCode": 1, 
-			"countryCode": 1, 
-			"year": 1 };
-			
-	/*
-		DATABASE SEARCH
-	*/
 
-	new DataBase().find(where, sort, function(data) {
+
+	new DataBase().find(yearCondition, countryCondition, indicatorCondition, selectedSheet, function(data) {
 		data = processData(data);
 		generateImage(res, chart, data.series, data.years.getArray(), req.query);
 	});
