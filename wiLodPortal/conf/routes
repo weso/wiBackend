@@ -35,6 +35,4 @@ GET   /assets/*file                            controllers.Assets.at(path="/publ
 
 #GET   /compare/:countries/:years/:indicators   controllers.Application.compare(countries: String, years: String, indicators: String)
 
-#GET   /snorql                                  controllers.Application.snorql()
-
 GET   /*path                                   controllers.Application.fallback(path: String)
