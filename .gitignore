@@ -10,7 +10,8 @@ logs/
 start_OS_X.sh
 start_OS_X.command
 
-#Computex is not part of wiBackend. Therefore:
-computex
+#Computex and wiFetcher are not part of wiBackend. Therefore:
+computex/
+wiFetcher/
 
 .metadata/

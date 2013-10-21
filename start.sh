@@ -1,28 +1,46 @@
 #vars
-GIT_DIR="computex"
-GIT_REPO="https://github.com/weso/computex.git"
-GIT_BRANCH="web"
+
+COMPUTEX_DIR="computex"
+GIT_COMPUTEX_REPO="https://github.com/weso/computex.git"
+GIT_COMPUTEX_BRANCH="master"
+
+WIFETCHER_DIR="wiFetcher"
+GIT_WIFETCHER_REPO="https://github.com/weso/wiFetcher.git"
+GIT_WIFETCHER_BRANCH="web"
+
+WILOPORTAL_DIR="wiLodPortal"
 FUSEKI_DIR="fuseki"
 PUBBY_DIR="pubby"
-PLAY_DIR="wiLodPortal"
 
 #Fetch the latest computex repository:
-if [[ -d "${GIT_DIR}" && ! -L "${GIT_DIR}" ]] ; then
-	(cd ${GIT_DIR}; git checkout ${GIT_BRANCH})
-	(cd ${GIT_DIR}; git pull origin ${GIT_BRANCH})
-else
-	git clone ${GIT_REPO}
-	(cd ${GIT_DIR}; git checkout ${GIT_BRANCH})
-fi
+
+function update_repo {
+	if [[ -d "$1" && ! -L "$1" ]] ; then
+		(cd $1; git checkout $3)
+		(cd $1; git pull origin $3)
+	else
+		git clone $2
+		(cd $1; git checkout $3)
+	fi
+}
+
+update_repo ${COMPUTEX_DIR} ${GIT_COMPUTEX_REPO} ${GIT_COMPUTEX_BRANCH}
+update_repo ${WIFETCHER_DIR} ${GIT_WIFETCHER_REPO} ${GIT_WIFETCHER_BRANCH}
 
 #Set FUSEKI_HOME Environment Variable
 export FUSEKI_HOME="${FUSEKI_HOME:-${FUSEKI_DIR}}"
 
 #Starts Fuseki:
-${FUSEKI_DIR}/fuseki-server --config=${FUSEKI_DIR}/ConfigFile.ttl &
+${FUSEKI_DIR}/fuseki-server --config=${FUSEKI_DIR}/ConfigFile.ttl --port=3031 &
 
 #Starts Pubby
-(cd ${PUBBY_DIR}; mvn tomcat:run &)
+(cd ${PUBBY_DIR}; mvn tomcat:run -Dmaven.tomcat.port=8081 &)
+
+#Starts wiLodPortal Project
+(cd ${WILOPORTAL_DIR}; play "~run 9001" &)
 
 #Starts Play Project
-(cd ${PLAY_DIR}; play ~run &)
+(cd ${WIFETCHER_DIR}; play "~run 9002" &)
+
+#Computex
+#(cd ${COMPUTEX_DIR}; play "~run 9003 &)
