@@ -33,6 +33,6 @@ GET   /assets/*file                            controllers.Assets.at(path="/publ
 #GET   /weightSchema                            controllers.Application.weightSchemas()
 #GET   /weightSchema/:id                        controllers.Application.weightSchema(id: String)
 
-#GET   /compare/:countries/:years/:indicators   controllers.Application.compare(countries: String, years: String, indicators: String)
+GET   /compare/:countries/:years/:indicators   controllers.Application.comparePOST(countries: String, years: String, indicators: String)
 
 GET   /*path                                   controllers.Application.fallback(path: String)

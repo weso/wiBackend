@@ -30,9 +30,6 @@ update_repo ${WIFETCHER_DIR} ${GIT_WIFETCHER_REPO} ${GIT_WIFETCHER_BRANCH}
 #Set FUSEKI_HOME Environment Variable
 export FUSEKI_HOME="${FUSEKI_HOME:-${FUSEKI_DIR}}"
 
-#Starts Fuseki:
-${FUSEKI_DIR}/fuseki-server --config=${FUSEKI_DIR}/ConfigFile.ttl --port=3031 &
-
 #Starts Pubby
 (cd ${PUBBY_DIR}; mvn tomcat:run -Dmaven.tomcat.port=8081 &)
 

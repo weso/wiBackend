@@ -115,7 +115,12 @@ object Application extends Controller with Renders {
     render(weightSchemaManager.getOne(id), null)
   }
 
-  def compare(countries: String, years: String, indicators: String) = Action { implicit request =>
+  def compareGET = Action { implicit request => Ok("")}
+  
+  def comparePOST(countries: String, years: String, indicators: String) = Action { implicit request =>
+    println(observationManager.getAllObservationsByCountries(
+      parseCountryCodes(countries), parseObservations(indicators),
+      parseYears(years)));
     render(observationManager.getAllObservationsByCountries(
       parseCountryCodes(countries), parseObservations(indicators),
       parseYears(years)), null)
